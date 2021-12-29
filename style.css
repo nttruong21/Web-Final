@@ -1,0 +1,151 @@
+/* General */
+.scrollable {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.outline-none {
+  outline: none;
+}
+
+.task-heading {
+  background-color: #837c7c;
+  color: #ebe310;
+}
+
+.bg-azure {
+  background-color: azure;
+}
+
+.hide-redundant-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
+
+.data-row:hover {
+  background-color: lightcyan;
+}
+/* ---------------- Admin -------------------- */
+/* index.php */
+.add-account-link {
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s linear;
+}
+
+.add-account-link {
+  text-decoration: none !important;
+}
+
+/* ---------------- Manager ------------------ */
+
+/* ---------------- Employee ----------------- */
+/* File index.php employee folder*/
+/* .navbar {
+	opacity: 0.6;
+  }
+  
+  .navbar-icon {
+	display: none;
+  }
+  
+  .scrollable {
+	height: 500px;
+	overflow-y: auto;
+  }
+  
+  .task-heading {
+	background-color: #837c7c;
+	color: #e3dc13;
+  }
+  
+  .task-name,
+  .task-description {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+  }
+  
+  .task-infomation {
+	background-color: azure;
+  }
+  
+  .task-search-icon {
+	width: 5%;
+  }
+  
+  .task-search-input {
+	width: 90%;
+  } */
+
+/* Tablet */
+/* @media screen and (min-width: 768px) and (max-width: 992px) {
+	.employee-heading {
+	  justify-content: space-between;
+	}
+	.employee-name {
+	  display: none;
+	}
+	.task-search-input {
+	  width: 83%;
+	}
+	.task-btn {
+	  display: none;
+	}
+	.task-time,
+	.task-condition {
+	  display: none;
+	}
+  } */
+
+/* Mobile */
+/* @media screen and (max-width: 576px) {
+	.navbar-info {
+	  display: none;
+	}
+  
+	.nav {
+	  display: none;
+	}
+	.navbar-icon {
+	  display: block;
+	}
+	.employee-name {
+	  display: none;
+	}
+	.day-off {
+	  display: none;
+	}
+	.task-search-input {
+	  width: 73%;
+	}
+	.task-btn {
+	  display: none;
+	}
+	.all-task__heading {
+	  display: none;
+	}
+	.task-description__heading,
+	.task-time,
+	.task-condition,
+	.task-rate {
+	  display: none;
+	}
+  
+	.task-form {
+	  margin-left: 20px;
+	}
+	.task-name {
+	  text-align: center;
+	}
+  } */
