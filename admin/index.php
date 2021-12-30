@@ -14,6 +14,11 @@
 			die();
 		}
 	}
+
+	// Kiểm tra người dùng có phải giám đốc?
+    if (!$_SESSION['maChucVu'] == 'GD') {
+        header("Location: /no_access.html");
+    }
 ?>
 
 <!DOCTYPE html>

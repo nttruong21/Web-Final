@@ -19,8 +19,8 @@
             case 'GD':
                 $chucVu = 'Giám Đốc';
                 break;
-            case 'QL':
-                $chucVu = 'Quản Lý';
+            case 'TP':
+                $chucVu = 'Trưởng phòng';
                 break;
             case 'NV':
                 $chucVu = 'Nhân Viên';

@@ -23,7 +23,7 @@
 				header("Location: /admin/index.php");
 				die();
 				break;
-			case 'QL':
+			case 'TP':
 				// require_once('manager/index.php');
 				header("Location: manager/index.php");
 				die();
