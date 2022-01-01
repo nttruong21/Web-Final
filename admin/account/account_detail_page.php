@@ -134,12 +134,12 @@
                                     if($position_id === 'NV') {
                                         ?>
                                             <option selected>NV - Nhân viên</option>
-                                            <option>QL - Quản lý</option>
+                                            <option>TP - Trưởng phòng</option>
                                         <?php
                                     } else {
                                         ?>
                                             <option>NV - Nhân viên</option>
-                                            <option selected>QL - Quản lý</option>
+                                            <option selected>TP - Trưởng phòng</option>
                                         <?php
                                     }
                                 ?>

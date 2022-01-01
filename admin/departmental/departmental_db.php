@@ -34,7 +34,7 @@
 
     // Thêm một phòng ban
     function add_departmental($id, $name, $number, $desc) {
-        $sql = "INSERT INTO PhongBan values(?, ?, ?, ?)";
+        $sql = "INSERT INTO PhongBan(maPhongBan, tenPhongBan, soPhongBan, moTa) values(?, ?, ?, ?)";
         $conn = connect_db();
 
         $stm = $conn -> prepare($sql);
@@ -50,6 +50,16 @@
         $sql = "UPDATE PhongBan SET tenPhongBan = ?, soPhongBan = ?, moTa = ? WHERE maPhongBan = ?";
         $stm = $conn -> prepare($sql);
         $stm -> bind_param("ssss", $name, $num, $desc, $id);
+        $stm -> execute();
+        return $stm -> affected_rows === 1;
+    }
+
+    // Bổ nhiệm trưởng phòng 
+    function asigned_manager_departmental($id, $employee_id) {
+        $conn = connect_db();
+        $sql = "UPDATE PhongBan SET truongPhong = ? WHERE maPhongBan = ?";
+        $stm = $conn -> prepare($sql);
+        $stm -> bind_param("ss", $employee_id, $id);
         $stm -> execute();
         return $stm -> affected_rows === 1;
     }

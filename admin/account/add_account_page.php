@@ -106,7 +106,7 @@
                         <div class="col-sm-8">
                             <select id="position" name="position" class="form-control" id="position">
                                 <option>NV - Nhân viên</option>
-                                <option>QL - Quản lý</option>
+                                <option>TP - Trưởng phòng</option>
                             </select>
                         </div>
                     </div>

@@ -8,13 +8,13 @@
 <body>
     <!-- Navigation -->
 		<div class="navbar shadow-sm navbar-expand-lg navbar-light bg-light d-flex align-items-center justify-content-between px-5">
-			<div class="">
-				<h4 style="color: #007bff; margin: 0;">TRANG CHỦ GIÁM ĐỐC</h4>
-			</div>
-			<div class="navbar-info nav d-flex">
-				<a class="font-weight-bold mr-4" href="../profile.php">Profile</a>
-				<a class="font-weight-bold" href="../logout.php">Logout</a>
-			</div>
+			<a class="navbar-brand ml-5 font-weight-bold" href="../index.php">
+				<span style="color: #007bff; margin: 0;">TRANG CHỦ GIÁM ĐỐC</span>
+			</a>
+			<div class="d-flex">
+				<a class="font-weight-bold" href="/profile.php">THÔNG TIN CHI TIẾT</a>
+				<a class="mx-5 font-weight-bold" href="/logout.php">ĐĂNG XUẤT</a>
+			</div>	
 			<!-- <div class="navbar-icon">
 				<i class="fas fa-bars"></i	>
 			</div> -->

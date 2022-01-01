@@ -214,59 +214,6 @@
          </div>
         </div>
 
-		<!-- Confirm edit departmental modal -->
-        <div id="confirm-edit-departmental-modal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Cập nhật thông tin phòng ban</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Bạn có chắc rằng muốn cập nhật thông tin phòng ban này?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
-                        <button onclick="handleEditDepartmental(this);" id="btn-confirm-edit-departmental" type="button" class="btn btn-danger">Đồng ý</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-		<!-- Edit departmental success modal -->
-		<div class="modal fade" id="edit-departmental-success-model">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content" id="add-model-content">
-					<div class="modal-header">
-						<h4 class="modal-title">Cập nhật thông tin thành công</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-					<div class="modal-footer text-center">
-						<button onclick="refreshPage();" type="button" class="btn btn-success">OK</button>
-					</div>
-				</div>
-			</div>
-    	</div>
-
-		<!-- Confirm delete departmental modal -->
-        <div id="confirm-delete-departmental-modal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Xóa thông tin phòng ban</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Bạn có chắc rằng muốn xóa phòng ban này?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
-                        <button id="btn-confirm-delete-departmental" onclick="handleDeleteDepartmental(this);" type="button" class="btn btn-danger">Đồng ý</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

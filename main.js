@@ -343,26 +343,29 @@ window.addEventListener("load", (e) => {
       let departmentals = data.data;
       let htmls = departmentals.map((departmental) => {
         return `
-    <div class='d-flex data-row border border-top-0 border-left-0' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
-      <div onclick="showDepartmentalDetail('${departmental.maPhongBan}', '${departmental.tenPhongBan}', '${departmental.soPhongBan}', '${departmental.moTa}');"  class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
-        <p class='hide-redundant-content   mb-0 p-1'>${departmental.maPhongBan}</p>
-      </div>
-      <div onclick="showDepartmentalDetail('${departmental.maPhongBan}', '${departmental.tenPhongBan}', '${departmental.soPhongBan}', '${departmental.moTa}');"  class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
-        <p class='hide-redundant-content  mb-0 p-1'>${departmental.tenPhongBan}</p>
-      </div>
-      <div onclick="showDepartmentalDetail('${departmental.maPhongBan}', '${departmental.tenPhongBan}', '${departmental.soPhongBan}', '${departmental.moTa}');"  class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
-        <p class='hide-redundant-content  mb-0 p-1'>${departmental.soPhongBan}</p>
-      </div>
-      <div onclick="showDepartmentalDetail('${departmental.maPhongBan}', '${departmental.tenPhongBan}', '${departmental.soPhongBan}', '${departmental.moTa}');"  class='col-lg-4 border border-top-0 border-right-0  border-bottom-0'>
-        <p class='hide-redundant-content mb-0 p-1'>${departmental.moTa}</p>
-      </div>
-      <div class='col-lg-1 d-flex align-items-center justify-content-center border border-top-0 border-right-0  border-bottom-0'>
-        <div style="font-size: 20px;" class="f-flex">
-          <i onclick="showEditDepartmentalModal('${departmental.maPhongBan}', '${departmental.tenPhongBan}', '${departmental.soPhongBan}', '${departmental.moTa}');" class="fas fa-edit mr-2 text-primary"></i>
-          <i onclick="showDeleteDepartmentalModal('${departmental.maPhongBan}');" class="fas fa-trash-alt text-danger"></i>
-        </div>
-      </div>
-  </div>`;
+          <a href="departmental/departmental_detail_page.php?id=${departmental.maPhongBan}" class="d-block text-body data-row">
+            <div class='d-flex data-row border border-top-0 border-left-0' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
+              <div class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
+                <p class='hide-redundant-content   mb-0 p-1'>${departmental.maPhongBan}</p>
+              </div>
+              <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                <p class='hide-redundant-content  mb-0 p-1'>${departmental.tenPhongBan}</p>
+              </div>
+              <div class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
+                <p class='hide-redundant-content  mb-0 p-1'>${departmental.soPhongBan}</p>
+              </div>
+              <div class='col-lg-4 border border-top-0 border-right-0  border-bottom-0'>
+                <p class='hide-redundant-content mb-0 p-1'>${departmental.moTa}</p>
+              </div>
+              <div class='col-lg-1 d-flex align-items-center justify-content-center border border-top-0 border-right-0  border-bottom-0'>
+                <div style="font-size: 20px;" class="f-flex">
+                  <i onclick="showEditDepartmentalModal('${departmental.maPhongBan}', '${departmental.tenPhongBan}', '${departmental.soPhongBan}', '${departmental.moTa}');" class="fas fa-edit mr-2 text-primary"></i>
+                  <i onclick="showDeleteDepartmentalModal('${departmental.maPhongBan}');" class="fas fa-trash-alt text-danger"></i>
+                </div>
+              </div>
+            </div>
+          </a>  
+        `;
       });
       if (departmentals_list) {
         departmentals_list.innerHTML = htmls.join("");
@@ -487,12 +490,53 @@ function editDepartmental() {
   }
 }
 
-// Nhấn nút Đồng ý trong Confirm edit departmental model -> cập nhật phòng ban
-function handleEditDepartmental(e) {
-  let id = e.getAttribute("depart-id");
-  let name = e.getAttribute("depart-name");
-  let num = e.getAttribute("depart-num");
-  let desc = e.getAttribute("depart-desc");
+// ------------------------ departmental_detail_page.php ---------------------
+let depart_id = document.getElementById("depart-id");
+let depart_name = document.getElementById("depart-name");
+let depart_num = document.getElementById("depart-num");
+let depart_desc = document.getElementById("depart-desc");
+let depart_manager = document.getElementById("depart-manager");
+let btn_confirm_edit_depart = document.getElementById(
+  "btn-confirm-edit-depart"
+);
+let choose_manager_depart = document.getElementById("choose-manager-depart");
+
+// Nhấn nút Chỉnh sửa -> bật chế độ chỉnh sửa Tên,Số, Mô tả phòng ban
+function enableEditDepartmental() {
+  depart_name.disabled = false;
+  depart_num.disabled = false;
+  depart_desc.disabled = false;
+  btn_confirm_edit_depart.disabled = false;
+}
+
+// Xóa phòng ban
+function confirmDeleteDepartmental(id) {
+  if (id) {
+    let url =
+      "http://localhost:8080/admin/departmental/delete_departmental.php";
+    let data = { id: id };
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json["code"] === 0) {
+          window.location.href = "../departmental_manager_page.php";
+        }
+      });
+  }
+}
+
+// Cập nhật phòng ban
+function ConfirmEditDepartmental() {
+  let id = depart_id.value;
+  let name = depart_name.value;
+  let num = depart_num.value;
+  let desc = depart_desc.value;
   let url = "http://localhost:8080/admin/departmental/update_departmental.php";
   let data = {
     id: id,
@@ -514,33 +558,85 @@ function handleEditDepartmental(e) {
     });
 }
 
-// Nhấn vào icon xóa -> hiển thị modal xóa phòng ban
-function showDeleteDepartmentalModal(id) {
-  $("#confirm-delete-departmental-modal").modal("show");
-  document
-    .getElementById("btn-confirm-delete-departmental")
-    .setAttribute("depart-id", id);
+function showConfirmAssignedManagerDepartmentalModal() {
+  let employee_name = choose_manager_depart.value.split(" - ")[1];
+  $("#assigned-manager-to-departmental-modal").modal("hide");
+  document.getElementById(
+    "confirm-assigned-manager-departmental-modal-header"
+  ).innerHTML =
+    "Bạn có chắc muốn bổ nhiệm " +
+    employee_name +
+    " làm trưởng phòng của phòng ban " +
+    depart_name.value +
+    "?";
 }
 
-// Nhấn nút Đồng ý trong Confirm delete departmental modal-> xóa phòng ban
-function handleDeleteDepartmental(e) {
-  let id = e.getAttribute("depart-id");
-  if (id) {
-    let url =
-      "http://localhost:8080/admin/departmental/delete_departmental.php";
-    let data = { id: id };
-    fetch(url, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json["code"] === 0) {
+// Bổ nhiệm trưởng phòng
+function confirmAssignedManager() {
+  $("#confirm-assigned-manager-departmental-modal").modal("hide");
+  let employee_id = choose_manager_depart.value.split(" - ")[0];
+  let id = depart_id.value;
+  let url =
+    "http://localhost:8080/admin/departmental/assigned_manager_departmental.php";
+  let data = {
+    id: id,
+    employee_id: employee_id,
+  };
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      $("#assigned-manager-to-departmental-modal").modal("hide");
+      $("#assigned-manager-departmental-success-model").modal("show");
+    });
+}
+
+// Cập nhật chức vụ trưởng phòng cho nhân viên
+function updateAccountPosition(manager_id) {
+  let employee_id = choose_manager_depart.value.split(" - ")[0];
+  let url = "http://localhost:8080/admin/account/update_account_manager.php";
+  let data = {
+    user_id: employee_id,
+  };
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      if (json["code"] === 0) {
+        // refreshPage();
+        // Xóa bỏ trưởng phòng cũ -> nhân viên
+        if (manager_id === "") {
           refreshPage();
+        } else {
+          let url =
+            "http://localhost:8080/admin/account/update_account_employee.php";
+          let data = {
+            user_id: manager_id,
+          };
+          fetch(url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => res.json())
+            .then((json) => {
+              if (json["code"] === 0) {
+                refreshPage();
+              }
+            });
         }
-      });
-  }
+      }
+    });
 }

@@ -32,6 +32,22 @@
         }
     }
 
+    // Lấy danh sách nhân viên của một phòng ban 
+    function get_employee_accounts_by_depart_id($depart_id) {
+        $conn = connect_db();
+        $position = "NV";
+        $sql = "SELECT * FROM NhanVien WHERE maPhongBan = ? AND maChucVu = ?";
+        $stm = $conn -> prepare($sql);
+        $stm -> bind_param("ss", $depart_id, $position);
+        $stm -> execute();
+        $result = $stm -> get_result();
+        $accounts = array();
+        while ($row = $result->fetch_assoc()) {
+            $accounts[] = $row;
+        }
+        return $accounts;
+    }
+    
     // Thêm tài khoản -> thêm nhân viên
     function add_account($user_id, $name, $birthday, $sex, $phone_number, $address, $email, $position, $department, $password) {
         $sql = "INSERT INTO NhanVien(maNhanVien, hoTen, ngaySinh, gioiTinh, sdt, diaChi, email, maChucVu, maPhongBan, matKhau) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -50,6 +66,28 @@
         $sql = "UPDATE NhanVien SET hoTen = ?, ngaySinh = ?, gioiTinh = ?, sdt = ?, diaChi = ?, email = ?, maPhongBan = ?, soNgayNghi = ? WHERE maNhanVien = ?";
         $stm = $conn -> prepare($sql);
         $stm -> bind_param("ssissssis", $name, $birthday, $sex, $phone_number, $address, $email, $department, $day, $user_id);
+        $stm -> execute();
+        return $stm -> affected_rows === 1;
+    }
+
+    // Cập nhật chức vụ nhân viên -> trưởng phòng 
+    function update_account_manager($user_id) {
+        $conn = connect_db();
+        $position = "TP";
+        $sql = "UPDATE NhanVien SET maChucVu = ? WHERE maNhanVien = ?";
+        $stm = $conn -> prepare($sql);
+        $stm -> bind_param("ss", $position, $user_id);
+        $stm -> execute();
+        return $stm -> affected_rows === 1;
+    }
+
+    // Cập nhật chức vụ trưởng phòng -> nhân viên
+    function update_account_employee($user_id) {
+        $conn = connect_db();
+        $position = "NV";
+        $sql = "UPDATE NhanVien SET maChucVu = ? WHERE maNhanVien = ?";
+        $stm = $conn -> prepare($sql);
+        $stm -> bind_param("ss", $position, $user_id);
         $stm -> execute();
         return $stm -> affected_rows === 1;
     }
