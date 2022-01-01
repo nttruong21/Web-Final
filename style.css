@@ -49,6 +49,86 @@ a:hover {
 
 /* ---------------- Manager ------------------ */
 
+*{
+  box-sizing: border-box;
+}
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+.box-search{
+	border: 1px solid #c0c0c0;
+	padding: 5px;
+	width: 500px;
+	border-radius: 5px;
+}
+
+
+.menu{
+  list-style-type: none;
+  margin: 10px;
+  padding: 0px;
+  
+}
+.menu li{
+  font-size: 15px;
+  padding: 15px 5px;
+  padding-left: 20px;
+}
+.create-task{
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  
+}
+.add-task{
+  width: 80%;
+  margin-bottom: 30px;
+  border-radius: 50px;
+  border-color: #28a745;
+  box-shadow: 1px 5px 10px rgb(61, 61, 61);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fa-plus-circle{
+  
+}
+
+.fas{
+  color: #1b1b1b;
+}
+.fa-plus-circle{
+  font-size: 30px;
+  text-align: left;
+	margin-right: 5px;
+}
+
+.all-task{
+  height: 550px;
+  border: 1px solid #c0c0c0;
+  padding: 10px 10px;
+  overflow-y: scroll;
+  margin-right: 15px;
+  margin-left: 15px;
+	cursor: pointer;
+}
+/* .task-content{
+} */
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background-color: cadetblue;
+  border-radius: 2px;
+}
+.content{
+  height: 100%;
+}
+
+.nav-link{
+	color:rgb(0, 0, 0);
+}
+
 /* ---------------- Employee ----------------- */
 /* File index.php employee folder*/
 /* .navbar {

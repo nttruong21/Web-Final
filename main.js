@@ -640,3 +640,30 @@ function updateAccountPosition(manager_id) {
       }
     });
 }
+
+
+
+
+// ############################# TRƯỞNG PHÒNG #####################################
+  const readAPI = 'http://localhost:8080/manager/api/get_task.php'
+  // const addAPI = 'http://localhost/lab9/add_product.php'
+  // const deleteAPI = 'http://localhost/lab9/delete_product.php'
+  // const updateAPI = 'http://localhost/lab9/update_product.php'
+
+    function loadTasks() {
+      fetch(readAPI)
+        .then(response => response.json())
+          .then(data => {
+            data.forEach(task => {
+              let tr = $('<tr></tr>')
+                tr.html(`
+                  <td>${task.trangThai}</td>
+                  <td>${task.tenNhiemVu}</td>
+                  <td>${task.hanThucHien}</td>
+               
+                `)
+                $('tbody').append(tr)
+            })
+          })
+    } 
+    loadTasks()
