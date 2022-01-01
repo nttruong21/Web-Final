@@ -60,7 +60,7 @@
 					<div class="col-xl-3 col-lg-2 col-md-3 col-sm-2 col-2">
 						<div class="d-inline-block">
 							<button data-toggle="modal" data-target="#add-departmental-modal" class="d-flex btn btn-primary text-white align-items-center">
-                                <i class="fas fa-plus"></i>
+                                <i class="text-white fas fa-plus"></i>
 								<p class="mb-0 ml-1 day-off">Thêm phòng ban</p>
 							</button>
 						</div>
@@ -72,6 +72,7 @@
 				<!-- Sidebar -->
 				<?php require_once("sidebar.php"); ?>
 
+				<!-- List departmentals -->
 				<div class="task-form col-lg-10">
 					<div class="scrollable">
 						<div class="task-heading d-flex" style="position:sticky; border: 1px solid #837c7c;">
@@ -84,11 +85,11 @@
 							<div class='col-lg-2' style="border-right: 1px solid #9d9b8b">
 								<p class="mb-0 p-1">SỐ PHÒNG BAN</p>
 							</div>
-							<div class='col-lg-4' style="border-right: 1px solid #9d9b8b">
+							<div class='col-lg-3' style="border-right: 1px solid #9d9b8b">
 								<p class="mb-0 p-1">MÔ TẢ</p>
 							</div>
-							<div class='col-lg-1'>
-								<p class="mb-0 p-1"></p>
+							<div class='col-lg-2' style="border-right: 1px solid #9d9b8b">
+								<p class="mb-0 p-1">TRƯỞNG PHÒNG</p>
 							</div>
 						</div>
 						<div id="departmentals-list" class="task-information  bg-azure">

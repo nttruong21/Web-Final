@@ -1,36 +1,54 @@
 "use strict";
-// ------------ ADMIN ---------------
-// ------------ index.php ---------------
+// ---------------------------- ADMIN ------------------------------------------
+// ---------------------------- index.php --------------------------------------
 // Lấy thông tin nhân viên và render ra giao diện
+let accountsListHtml = document.querySelector("#accounts-list");
 window.addEventListener("load", (e) => {
   let url = "http://localhost:8080/admin/account/get_accounts.php";
   fetch(url)
     .then((response) => response.json())
-    .then((data) => {
-      let accounts = data.data;
-      let htmls = accounts.map((account) => {
-        return `
-        <a href="account/account_detail_page.php?maNhanVien=${account.maNhanVien}" class="d-block text-body data-row">
-        <div onclick="moveToDetailPage(${data})" class='d-flex task-list border border-top-0 border-left-0' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
-          <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
-            <p class='task-name  mb-0 p-1'>${account.maNhanVien}</p>
-          </div>
-          <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
-            <p class='task-description mb-0 p-1'>${account.hoTen}</p>
-          </div>
-          <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
-            <p class='mb-0 p-1'>${account.maChucVu}</p>
-          </div>
-          <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
-            <p class='mb-0 p-1'>${account.maPhongBan}</p>
-          </div>
-        </div>
-        </a>`;
+    .then((json) => {
+      let accounts = json.data;
+      accounts.forEach((account) => {
+        let account_row = document.createElement("div");
+        let depart_id = account.maPhongBan;
+        let position;
+        if (account.maChucVu === "NV") {
+          position = "Nhân viên";
+        } else {
+          position = "Trưởng phòng";
+        }
+        // console.log(depart_id);
+        fetch(
+          "http://localhost:8080/admin/departmental/get_departmental.php?id=" +
+            depart_id
+        )
+          .then((response) => response.json())
+          .then((json) => {
+            let depart = json.data;
+            account_row.innerHTML = `
+            <a href="account/account_detail_page.php?maNhanVien=${account.maNhanVien}" class="d-block text-body data-row">
+            <div class='d-flex task-list border border-top-0 border-left-0' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
+              <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                <p class='task-name  mb-0 p-1'>${account.maNhanVien}</p>
+              </div>
+              <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                <p class='task-description mb-0 p-1'>${account.hoTen}</p>
+              </div>
+              <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                <p class='mb-0 p-1'>${position}</p>
+              </div>
+              <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                <p class='mb-0 p-1'>${depart.tenPhongBan}</p>
+              </div>
+            </div>
+            </a>
+              `;
+            if (accountsListHtml) {
+              accountsListHtml.appendChild(account_row);
+            }
+          });
       });
-      let accountsListHtml = document.querySelector("#accounts-list");
-      if (accountsListHtml) {
-        accountsListHtml.innerHTML = htmls.join("");
-      }
     });
 });
 
@@ -43,7 +61,7 @@ function moveToIndexPage() {
   window.location.href = "index.php";
 }
 
-// ------------ add_account_page.php ---------------
+// -------------------------------- add_account_page.php ---------------------------------------
 // Xử lý thêm nhân viên
 let formAddAccount = document.getElementById("form-add-account");
 if (formAddAccount) {
@@ -152,7 +170,7 @@ if (formAddAccount) {
   });
 }
 
-// ------------ account_detail_page.php ---------------
+// ----------------------------------- account_detail_page.php ----------------------------------
 let btnEnableEditAccount = document.getElementById("btn-enable-edit-account");
 let btnDeleleAccount = document.getElementById("btn-delele-account");
 let btnConfirmEditAccount = document.getElementById("btn-confirm-edit-account");
@@ -332,44 +350,76 @@ if (btnConfirmResetAccountPass) {
   });
 }
 
-// ------------------------ departmental_manager_page.php ---------------------
-let departmentals_list = document.getElementById("departmentals-list");
+// -------------------------------------- departmental_manager_page.php -------------------------------------------
 // Lấy thông tin toàn bộ phòng ban và hiển thị ra giao diện
+let departmentals_list = document.getElementById("departmentals-list");
 window.addEventListener("load", (e) => {
   let url = "http://localhost:8080/admin/departmental/get_departmentals.php";
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       let departmentals = data.data;
-      let htmls = departmentals.map((departmental) => {
-        return `
-          <a href="departmental/departmental_detail_page.php?id=${departmental.maPhongBan}" class="d-block text-body data-row">
-            <div class='d-flex data-row border border-top-0 border-left-0' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
-              <div class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
-                <p class='hide-redundant-content   mb-0 p-1'>${departmental.maPhongBan}</p>
-              </div>
-              <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
-                <p class='hide-redundant-content  mb-0 p-1'>${departmental.tenPhongBan}</p>
-              </div>
-              <div class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
-                <p class='hide-redundant-content  mb-0 p-1'>${departmental.soPhongBan}</p>
-              </div>
-              <div class='col-lg-4 border border-top-0 border-right-0  border-bottom-0'>
-                <p class='hide-redundant-content mb-0 p-1'>${departmental.moTa}</p>
-              </div>
-              <div class='col-lg-1 d-flex align-items-center justify-content-center border border-top-0 border-right-0  border-bottom-0'>
-                <div style="font-size: 20px;" class="f-flex">
-                  <i onclick="showEditDepartmentalModal('${departmental.maPhongBan}', '${departmental.tenPhongBan}', '${departmental.soPhongBan}', '${departmental.moTa}');" class="fas fa-edit mr-2 text-primary"></i>
-                  <i onclick="showDeleteDepartmentalModal('${departmental.maPhongBan}');" class="fas fa-trash-alt text-danger"></i>
+      departmentals.forEach((departmental) => {
+        let manager_id = departmental.truongPhong;
+        let departmental_row = document.createElement("div");
+        if (manager_id) {
+          fetch(
+            "http://localhost:8080/admin/account/get_account.php?id=" +
+              manager_id
+          )
+            .then((response) => response.json())
+            .then((json) => {
+              let manager_account = json.data;
+              // console.log(manager_account.hoTen);
+              departmental_row.innerHTML = `
+                  <a href="departmental/departmental_detail_page.php?id=${departmental.maPhongBan}" class="d-block text-body data-row">
+                    <div class='d-flex data-row border border-top-0 border-left-0' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
+                      <div class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
+                        <p class='hide-redundant-content   mb-0 p-1'>${departmental.maPhongBan}</p>
+                      </div>
+                      <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                        <p class='hide-redundant-content  mb-0 p-1'>${departmental.tenPhongBan}</p>
+                      </div>
+                      <div class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
+                        <p class='hide-redundant-content  mb-0 p-1'>${departmental.soPhongBan}</p>
+                      </div>
+                      <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                        <p class='hide-redundant-content mb-0 p-1'>${departmental.moTa}</p>
+                      </div>
+                      <div class='col-lg-2 d-flex align-items-center justify-content-center border border-top-0 border-right-0  border-bottom-0'>
+                        <p class='hide-redundant-content mb-0 p-1'>${manager_account.hoTen}</p>
+                      </div>
+                    </div>
+                  </a>
+                `;
+            });
+        } else {
+          departmental_row.innerHTML = `
+              <a href="departmental/departmental_detail_page.php?id=${departmental.maPhongBan}" class="d-block text-body data-row">
+                <div class='d-flex data-row border border-top-0 border-left-0' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
+                  <div class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='hide-redundant-content   mb-0 p-1'>${departmental.maPhongBan}</p>
+                  </div>
+                  <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='hide-redundant-content  mb-0 p-1'>${departmental.tenPhongBan}</p>
+                  </div>
+                  <div class='col-lg-2 border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='hide-redundant-content  mb-0 p-1'>${departmental.soPhongBan}</p>
+                  </div>
+                  <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='hide-redundant-content mb-0 p-1'>${departmental.moTa}</p>
+                  </div>
+                  <div class='col-lg-2 d-flex align-items-center justify-content-center border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='hide-redundant-content mb-0 p-1'>Không có</p>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </a>  
-        `;
+              </a>
+            `;
+        }
+        if (departmentals_list) {
+          departmentals_list.appendChild(departmental_row);
+        }
       });
-      if (departmentals_list) {
-        departmentals_list.innerHTML = htmls.join("");
-      }
     });
 });
 
@@ -490,7 +540,7 @@ function editDepartmental() {
   }
 }
 
-// ------------------------ departmental_detail_page.php ---------------------
+// ---------------------------------------- departmental_detail_page.php -------------------------------------------
 let depart_id = document.getElementById("depart-id");
 let depart_name = document.getElementById("depart-name");
 let depart_num = document.getElementById("depart-num");
@@ -641,29 +691,26 @@ function updateAccountPosition(manager_id) {
     });
 }
 
-
-
-
 // ############################# TRƯỞNG PHÒNG #####################################
-  const readAPI = 'http://localhost:8080/manager/api/get_task.php'
-  // const addAPI = 'http://localhost/lab9/add_product.php'
-  // const deleteAPI = 'http://localhost/lab9/delete_product.php'
-  // const updateAPI = 'http://localhost/lab9/update_product.php'
+const readAPI = "http://localhost:8080/manager/api/get_task.php";
+// const addAPI = 'http://localhost/lab9/add_product.php'
+// const deleteAPI = 'http://localhost/lab9/delete_product.php'
+// const updateAPI = 'http://localhost/lab9/update_product.php'
 
-    function loadTasks() {
-      fetch(readAPI)
-        .then(response => response.json())
-          .then(data => {
-            data.forEach(task => {
-              let tr = $('<tr></tr>')
-                tr.html(`
+function loadTasks() {
+  fetch(readAPI)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((task) => {
+        let tr = $("<tr></tr>");
+        tr.html(`
                   <td>${task.trangThai}</td>
                   <td>${task.tenNhiemVu}</td>
                   <td>${task.hanThucHien}</td>
                
-                `)
-                $('tbody').append(tr)
-            })
-          })
-    } 
-    loadTasks()
+                `);
+        $("tbody").append(tr);
+      });
+    });
+}
+loadTasks();

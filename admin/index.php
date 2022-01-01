@@ -60,7 +60,7 @@
 					<div class="col-xl-3 col-lg-2 col-md-3 col-sm-2 col-2">
 						<div class="d-inline-block">
 							<a class="add-account-link d-flex bg-primary text-white align-items-center" href="account/add_account_page.php">
-								<i class="fas fa-user-plus"></i>
+								<i class="text-white fas fa-user-plus"></i>
 								<p class="mb-0 ml-1 day-off">Thêm nhân viên</p>
 							</a>
 						</div>

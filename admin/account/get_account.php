@@ -1,5 +1,5 @@
 <?php
-    require_once("departmental_db.php");
+    require_once("account_db.php");
     header("Access-Control-Allow-Origin: *");
     header("Content-type: application/json");
     require_once("../../response_api.php");
@@ -10,7 +10,7 @@
     }
 
     if (!isset($_GET['id'])) {
-        error_response(2, "Chưa truyền id của phòng ban");
+        error_response(2, "Chưa truyền id của nhân viên");
     }
 
     $id = $_GET['id'];
@@ -18,10 +18,10 @@
         error_response(3, "ID rỗng");
     }
     
-    $result = get_departmental($id);
+    $result = get_account($id);
     if ($result) {
-        success_response($result, "Lấy dữ liệu phòng ban thành công");
+        success_response($result, "Đọc thông tin nhân viên thành công");
     } else {
-        error_response(4, "Lấy dữ liệu phòng ban thất bại");
+        error_response(4, "Đọc thông tin nhân viên thất bại");
     }
 ?>

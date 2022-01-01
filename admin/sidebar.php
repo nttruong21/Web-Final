@@ -9,22 +9,22 @@
 
 <body>
     <div class="col-lg-2">
-        <ul class="menu list-unstyled">
-            <li class="mb-2 d-flex">
+        <ul class="menu list-unstyled m-0">
+            <li class="mb-3 d-flex p-0">
                 <button onclick="moveToIndexPage();" class="btn btn-primary w-100 d-flex align-items-center justify-content-center">
-                    <i class="fas fa-book"></i>
+                    <i class="fas fa-book text-white"></i>
                     <p class="mb-0 ml-1 task-btn">QUẢN LÝ NHÂN VIÊN</p>
                 </button>
             </li>
-            <li class="mb-2 d-flex">
+            <li class="mb-3 p-0 d-flex">
                 <button onclick="moveToDepartmentalManagerPage();" class="btn btn-info w-100 d-flex align-items-center justify-content-center">
-                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star text-white"></i>
                     <p class="mb-0 ml-1 task-btn">QUẢN LÝ PHÒNG BAN</p>
                 </button>
             </li>
-            <li class="mb-2 d-flex">
+            <li class="mb-3 p-0 d-flex">
                 <button class="btn btn-success w-100 d-flex align-items-center justify-content-center">
-                    <i class="fas fa-check-double"></i>
+                    <i class="fas fa-check-double text-white"></i>
                     <p class="mb-0 ml-1 task-btn">DUYỆT ĐƠN NGHỈ PHÉP</p>
                 </button>
             </li>
