@@ -124,6 +124,9 @@
                      <label for="add-depart-desc">Mô tả</label>
 					 <textarea name="depart-desc" class="form-control" id="add-depart-desc" cols="30" rows="3"></textarea>
                   </div>
+				  <div class="form-group">
+					<div id="add-depart-error" class="text-center card alert-danger font-weight-bold"></div>
+				</div>
                </div>
                <div  class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>

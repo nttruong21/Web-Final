@@ -83,7 +83,7 @@
                             <?php
                                 if(empty($manager_id)) {
                                     ?>
-                                        <input disabled id="depart-manager" value="Không có có" name="depart-manager" type="text" class="form-control">
+                                        <input disabled id="depart-manager" value="Không có" name="depart-manager" type="text" class="form-control">
                                     <?php
                                 } else {
                                     ?>

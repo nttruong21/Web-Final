@@ -44,14 +44,73 @@
     />
 </head>
 <body>
-    <div class="card mx-auto mt-5" style="width: 18rem;">
-    <img class="card-img-top" src="https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg" alt="User image">
-    <div class="card-body">
-        <h3 class="card-title"><?= $_SESSION['hoTen'] ?></h3>
-        <p class="card-text">Chức vụ: <?= $chucVu ?></p>
-        <a href="#" class="btn btn-primary">Liên hệ</a>
-        <a class="btn btn-primary" href="index.php">Quay lại</a>
-    </div>
+    <!-- Navigation -->
+	<?php require_once("admin/header.php"); ?>
+    
+    <div class="w-75 mx-auto mt-4">
+        <div class="bg-light card pr-5">
+            <div class="row py-4">
+                <div class="col-6 py-4 d-flex flex-column justify-content-between">
+                    <div class="form-group row align-items-center">
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="user-id">Mã nhân viên</label>
+                        <div class="col-sm-8">
+                            <input disabled id="user-id" value="<?= $_SESSION['maNhanVien'] ?>" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="user-birthday">Ngày sinh</label>
+                        <div class="col-sm-8">
+                            <input disabled id="user-birthday" value="<?= $_SESSION['ngaySinh'] ?>" type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="user-address">Địa chỉ</label>
+                        <div class="col-sm-8">
+                            <input disabled id="user-address" value="<?= $_SESSION['diaChi'] ?>" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                    <label class="control-label text-right col-sm-4 p-0 m-0" for="sex">Giới tính:</label>
+                        <div class="col-sm-8 text-left">
+                        <?php
+                            if ($_SESSION['gioiTinh'] === 1) {
+                                ?>
+                                    <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex" checked>Nam</label>
+                                    <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="sex">Nữ</label>
+                                <?php
+                            } else {
+                                ?>
+                                    <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex">Nam</label>
+                                    <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="sex" checked>Nữ</label>
+                                <?php
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="depart-id">Số điện thoại</label>
+                        <div class="col-sm-8">
+                            <input disabled id="depart-id" value="<?= $_SESSION['sdt'] ?>" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="depart-id">Email</label>
+                        <div class="col-sm-8">
+                            <input disabled id="depart-id" value="<?= $_SESSION['email'] ?>" type="email" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 d-flex flex-column justify-content-between">
+                    <div class="card m-auto" style="width: 300px;">
+                        <img class="card-img-top mx-auto" style="width: 200px;" src="https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg" alt="User image">
+                        <div class="card-body">
+                            <h3 class="card-title"><?= $_SESSION['hoTen'] ?></h3>
+                            <p class="card-text">Chức vụ: <?= $chucVu ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

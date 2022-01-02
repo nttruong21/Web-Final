@@ -100,6 +100,11 @@
                 $_SESSION['maChucVu'] = $data['maChucVu'];
                 $_SESSION['anhDaiDien'] = $data['anhDaiDien'];
                 $_SESSION['doiMatKhau'] = $data['doiMatKhau'];
+                $_SESSION['ngaySinh'] = $data['ngaySinh'];
+                $_SESSION['diaChi'] = $data['diaChi'];
+                $_SESSION['gioiTinh'] = $data['gioiTinh'];
+                $_SESSION['sdt'] = $data['sdt'];
+                $_SESSION['email'] = $data['email'];
                 
                 if ($_SESSION['doiMatKhau'] == 0) {
                     header("Location: change_pwd_first.php");

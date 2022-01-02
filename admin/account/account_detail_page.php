@@ -59,15 +59,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-primary d-flex">
-        <a class="navbar-brand ml-5" href="../index.php">
-            <span class="text-white">TRANG CHỦ</span>
-        </a>
-        <div class="d-flex">
-            <a href="/profile.php"><span class="text-white">THÔNG TIN CHI TIẾT</span></a>
-            <a class="mx-5" href="/logout.php"><span class="text-white">ĐĂNG XUẤT</span></a>
-        </div>
-    </nav>
+    <!-- Navigation -->
+	<?php require_once("../header.php"); ?>
+    
     <div class="container text-center">
         <div class="d-flex align-items-center justify-content-between">
             <div class="text-center">
@@ -156,13 +150,13 @@
                             <?php
                                 if ($sex === 1) {
                                     ?>
-                                        <label class="radio-inline mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex" checked>Nam</label>
-                                        <label class="radio-inline"><input disabled id="female" class="mr-2" type="radio" name="sex">Nữ</label>
+                                        <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex" checked>Nam</label>
+                                        <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="sex">Nữ</label>
                                     <?php
                                 } else {
                                     ?>
-                                        <label class="radio-inline mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex">Nam</label>
-                                        <label class="radio-inline"><input disabled id="female" class="mr-2" type="radio" name="sex" checked>Nữ</label>
+                                        <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex">Nam</label>
+                                        <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="sex" checked>Nữ</label>
                                     <?php
                                 }
                             ?>
@@ -309,151 +303,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="/main.js"></script>
-    <!-- <script>
-        let btnEnableEditAccount = document.getElementById("btn-enable-edit-account");
-        let btnDeleleAccount = document.getElementById("btn-delele-account");
-        let btnConfirmEditAccount = document.getElementById("btn-confirm-edit-account");
-        let btnConfirmDeleteAccount = document.getElementById("btn-confirm-delete-account");
-        let btnEditAccountSure = document.getElementById("btn-edit-account-sure");
-        let error_message = document.getElementById("error-message");
-        let btnConfirmResetAccountPass = document.getElementById("btn-confirm-reset-account-pass");
-        let btnResetPassComplete = document.getElementById("btn-reset-pass-complete");
-        
-        // Thực hiện chức năng cập nhật thông tin tài khoản 
-        // Nhấn nút Chỉnh sửa
-        btnEnableEditAccount.addEventListener("click", e => {
-            // Tắt disabled -> bật chế độ chỉnh sửa
-            // document.getElementById("user-id").disabled = false;
-            document.getElementById("name").disabled = false;
-            document.getElementById("birthday").disabled = false;
-            document.getElementById("male").disabled = false;
-            document.getElementById("female").disabled = false;
-            document.getElementById("phone-number").disabled = false;
-            document.getElementById("address").disabled = false;
-            document.getElementById("email").disabled = false;
-            // document.getElementById("position").disabled = false;
-            document.getElementById("departmental").disabled = false;
-            document.getElementById("num-day").disabled = false;
-            btnConfirmEditAccount.disabled = false;     
-        });
 
-        // Nhấn nút Xác nhận -> Update
-        btnConfirmEditAccount.addEventListener("click", e => {
-            let user_id = document.getElementById("user-id").value;
-            let name = document.getElementById("name").value;
-            let birthday = document.getElementById("birthday").value;
-            if (document.getElementById("male").checked) {
-                sex = 1;
-            } else if (document.getElementById("female").checked) {
-                sex = 0;
-            } else {
-                sex = -1;
-            }
-            let phone_number = document.getElementById("phone-number").value;
-            let address = document.getElementById("address").value;
-            let email = document.getElementById("email").value;
-            // let position = document.getElementById("position").value.split(" - ")[0];
-            let departmental = document
-                .getElementById("departmental")
-                .value.split(" - ")[0];
-            let day = document.getElementById("num-day").value;
-
-            if (user_id === "" || name === "" || birthday === "" || sex === -1 || phone_number === "" || address === "" || email === "" || departmental === "" || day === "") {
-                if (!error_message.contains(document.querySelector(".add-product-error"))) {
-                    let error = document.createElement("div");
-                    error.classList.add("alert");
-                    error.classList.add("alert-danger");
-                    error.classList.add("add-product-error");
-                    error.classList.add("font-weight-bold");
-                    error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
-                    error_message.appendChild(error);
-                }
-            } else {
-                $("#confirm-edit-account-model").modal("show");
-                btnEditAccountSure.addEventListener("click", e => {
-                    let url = "http://localhost:8080/admin/account/update_account.php";
-                    let data = {
-                    "user_id": user_id,
-                    "name": name,
-                    "birthday": birthday,
-                    "sex": sex,
-                    "phone_number": phone_number,
-                    "address": address,
-                    "email": email,
-                    "departmental": departmental,
-                    "day": parseInt(day)
-                    };
-                    fetch(url, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                    })
-                    .then(res => res.json())
-                    .then(json => {
-                        location.reload();
-                    });
-                });
-            }
-        });
-
-        // Thực hiện chức năng xóa tài khoản
-        btnDeleleAccount.addEventListener('click', e => {
-            $("#confirm-delete-account-model").modal("show"); 
-            btnConfirmDeleteAccount.addEventListener('click', e => {
-                let user_id = document.getElementById("user-id").value;
-                if(user_id === "") {
-                    location.reload();
-                }
-                let url = "http://localhost:8080/admin/account/delete_account.php";
-                let data = {"user_id": user_id};
-                fetch(url, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-                })
-                    .then(res => res.json())
-                    .then(json => {
-                        if (json['code'] === 0) {
-                            window.location.href = "../index.php";
-                        }   
-                    }); 
-            });        
-        });
-
-        // Chức năng reset mật khẩu
-        btnConfirmResetAccountPass.addEventListener('click', e => {
-            // call api
-            let user_id = document.getElementById("user-id").value;
-            if(user_id === "") {
-                location.reload();
-            }
-            let url = "http://localhost:8080/admin/account/reset_pass.php";
-            let data = {
-            "user_id": user_id
-            };
-            fetch(url, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-            })
-            .then(res => res.json())
-            .then(json => {
-                if(json['code'] === 0) {
-                    $("#confirm-reset-account-password-model").modal("hide");
-                    $("#reset-pass-success-model").modal("show");
-                    btnResetPassComplete.addEventListener("click", e => {
-                        location.reload();
-                    });
-                }
-            });
-        });
-    </script> -->
 </body>
 
 </html>

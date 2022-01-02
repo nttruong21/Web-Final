@@ -41,15 +41,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-primary d-flex">
-        <a class="navbar-brand ml-5" href="../index.php">
-            <span class="text-white">TRANG CHỦ</span>
-        </a>
-        <div class="d-flex">
-            <a href="/profile.php"><span class="text-white">THÔNG TIN CHI TIẾT</span></a>
-            <a class="mx-5" href="/logout.php"><span class="text-white">ĐĂNG XUẤT</span></a>
-        </div>
-    </nav>
+    <!-- Navigation -->
+	<?php require_once("../header.php"); ?>
+    
     <div class="container text-center">
         <div class="text-center">
             <h2 class="my-4">Thêm thông tin nhân viên</h2>
@@ -117,8 +111,8 @@
                     <div class="form-group row align-items-center">
                         <label class="control-label text-right col-sm-4 p-0 m-0" for="sex">Giới tính:</label>
                         <div class="col-sm-8 text-left">
-                            <label class="radio-inline mr-3"><input id="male" class="mr-2" type="radio" name="sex" value="1" checked>Nam</label>
-                            <label class="radio-inline"><input id="female" class="mr-2" type="radio" name="sex" value="0">Nữ</label>
+                            <label class="radio-inline mr-3 mb-0"><input id="male" class="mr-2" type="radio" name="sex" value="1" checked>Nam</label>
+                            <label class="radio-inline mb-0"><input id="female" class="mr-2" type="radio" name="sex" value="0">Nữ</label>
                         </div>
                     </div>
                 </div>
@@ -149,9 +143,9 @@
                     </div>
                 </div>
             </div>
-            <div id="add-error-message" class="form-group">
-
-            </div>
+            <div class="form-group">
+					<div id="add-account-error" class="text-center card alert-danger font-weight-bold"></div>
+			</div>
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Xác nhận</button>
             </div>

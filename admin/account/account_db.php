@@ -32,6 +32,17 @@
         }
     }
 
+    // Lấy thông tin giám đốc 
+    function get_admin_account() {
+        $conn = connect_db();
+        $sql = "SELECT * FROM GiamDoc";
+        $result = $conn -> query($sql);
+        if ($conn -> connect_error) {
+            die("Không thể lấy thông tin giám đốc " . $conn -> connect_error);
+        }
+        return $result->fetch_assoc();
+    }
+
     // Lấy danh sách nhân viên của một phòng ban 
     function get_employee_accounts_by_depart_id($depart_id) {
         $conn = connect_db();
@@ -66,6 +77,16 @@
         $sql = "UPDATE NhanVien SET hoTen = ?, ngaySinh = ?, gioiTinh = ?, sdt = ?, diaChi = ?, email = ?, maPhongBan = ?, soNgayNghi = ? WHERE maNhanVien = ?";
         $stm = $conn -> prepare($sql);
         $stm -> bind_param("ssissssis", $name, $birthday, $sex, $phone_number, $address, $email, $department, $day, $user_id);
+        $stm -> execute();
+        return $stm -> affected_rows === 1;
+    }
+
+    // Cập nhật thông tin giám đốc 
+    function update_account_admin($id, $name, $birthday, $sex, $phone_number, $address, $email) {
+        $conn = connect_db();
+        $sql = "UPDATE GiamDoc SET hoTen = ?, ngaySinh = ?, gioiTinh = ?, sdt = ?, diaChi = ?, email = ? WHERE maNhanVien = ?";
+        $stm = $conn -> prepare($sql);
+        $stm -> bind_param("ssissss", $name, $birthday, $sex, $phone_number, $address, $email, $id);
         $stm -> execute();
         return $stm -> affected_rows === 1;
     }

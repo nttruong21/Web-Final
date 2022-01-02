@@ -12,7 +12,7 @@
 				<span style="color: #007bff; margin: 0;">TRANG CHỦ GIÁM ĐỐC</span>
 			</a>
 			<div class="d-flex">
-				<a class="font-weight-bold" href="/profile.php">THÔNG TIN CHI TIẾT</a>
+				<a class="font-weight-bold" href="/admin/admin_profile.php">THÔNG TIN CHI TIẾT</a>
 				<a class="mx-5 font-weight-bold" href="/logout.php">ĐĂNG XUẤT</a>
 			</div>	
 			<!-- <div class="navbar-icon">

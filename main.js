@@ -86,6 +86,7 @@ if (formAddAccount) {
     let departmental = document
       .getElementById("departmental")
       .value.split(" - ")[0];
+    let add_account_error = document.getElementById("add-account-error");
     if (
       user_id === "" ||
       name === "" ||
@@ -96,20 +97,8 @@ if (formAddAccount) {
       position === "" ||
       departmental === ""
     ) {
-      if (
-        !add_error_message.contains(
-          document.querySelector(".add-product-error")
-        )
-      ) {
-        error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
-        add_error_message.appendChild(error);
-      }
+      add_account_error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
     } else {
-      let error = document.createElement("div");
-      error.classList.add("alert");
-      error.classList.add("alert-danger");
-      error.classList.add("add-product-error");
-      error.classList.add("font-weight-bold");
       let url = "http://localhost:8080/admin/account/add_account.php";
       let data = {
         user_id: user_id,
@@ -133,15 +122,6 @@ if (formAddAccount) {
         .then((json) => {
           // Thành công
           if (json["code"] == 0) {
-            if (
-              add_error_message.contains(
-                document.querySelector(".add-product-error")
-              )
-            ) {
-              add_error_message.removeChild(
-                document.querySelector(".add-product-error")
-              );
-            }
             // let success_model = document.getElementById("success-model");
             $("#success-model").modal("show");
             // success_model.style.display = "block";
@@ -153,17 +133,7 @@ if (formAddAccount) {
           }
           // Thất bại
           else {
-            if (
-              add_error_message.contains(
-                document.querySelector(".add-product-error")
-              )
-            ) {
-              add_error_message.removeChild(
-                document.querySelector(".add-product-error")
-              );
-            }
-            error.innerHTML = "Có lỗi, vui lòng thử lại";
-            add_error_message.appendChild(error);
+            add_account_error.innerHTML = "Có lỗi, vui lòng thử lại";
           }
         });
     }
@@ -433,20 +403,12 @@ function addDepartmental() {
   let name = document.getElementById("add-depart-name").value;
   let num = document.getElementById("add-depart-num").value;
   let desc = document.getElementById("add-depart-desc").value;
-  let add_error_mess = document.getElementById("add-error-mess");
+  let add_depart_error = document.getElementById("add-depart-error");
 
   if (id === "" || name === "" || num === "" || desc === "") {
-    if (!error_mess.contains(document.querySelector(".add-product-error"))) {
-      let error = document.createElement("div");
-      error.classList.add("alert");
-      error.classList.add("alert-danger");
-      error.classList.add("add-product-error");
-      error.classList.add("font-weight-bold");
-      error.classList.add("text-center");
-      error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
-      error_mess.appendChild(error);
-    }
+    add_depart_error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
   } else {
+    add_depart_error.innerHTML = "";
     let url = "http://localhost:8080/admin/departmental/add_departmental.php";
     let data = {
       id: id,
@@ -470,15 +432,7 @@ function addDepartmental() {
         }
         // Thất bại
         else {
-          if (
-            error_mess.contains(document.querySelector(".add-product-error"))
-          ) {
-            error_mess.removeChild(
-              document.querySelector(".add-product-error")
-            );
-          }
-          error.innerHTML = "Có lỗi, vui lòng thử lại";
-          error_mess.appendChild(error);
+          add_depart_error.innerHTML = "Có lỗi, vui lòng thử lại";
         }
       });
   }
@@ -689,6 +643,97 @@ function updateAccountPosition(manager_id) {
         }
       }
     });
+}
+
+// ---------------------------------------- admin_profile.php -------------------------------------------
+// Bật chế độ cho phép chỉnh sửa
+let admin_id = document.getElementById("admin-id");
+let admin_name = document.getElementById("admin-name");
+let admin_birth = document.getElementById("admin-birthday");
+let admin_address = document.getElementById("admin-address");
+let admin_male = document.getElementById("admin-male");
+let admin_female = document.getElementById("admin-female");
+let admin_phone = document.getElementById("admin-phone");
+let admin_email = document.getElementById("admin-email");
+let btn_confirm_edit_admin_profile = document.getElementById(
+  "btn-confirm-edit-admin-profile"
+);
+function enableEditAdminProfileMode() {
+  admin_name.disabled = false;
+  admin_birth.disabled = false;
+  admin_address.disabled = false;
+  admin_male.disabled = false;
+  admin_female.disabled = false;
+  admin_phone.disabled = false;
+  admin_email.disabled = false;
+  btn_confirm_edit_admin_profile.disabled = false;
+}
+
+// Cập nhật thông tin giám đốc
+function updateAdminProfile() {
+  let id = admin_id.value;
+  let name = admin_name.value;
+  let birth = admin_birth.value;
+  let address = admin_address.value;
+  let sex = -1;
+  if (admin_male.checked) {
+    sex = 1;
+  } else if (admin_female.checked) {
+    sex = 0;
+  }
+  let phone_number = admin_phone.value;
+  let email = admin_email.value;
+
+  let url = "http://localhost:8080/admin/account/update_account_admin.php";
+  let data = {
+    id: id,
+    name: name,
+    birthday: birth,
+    sex: sex,
+    phone_number: phone_number,
+    address: address,
+    email: email,
+  };
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      $("#confirm-edit-admin-profile-modal").modal("hide");
+      $("#update-account-admin-success-modal").modal("show");
+    });
+}
+
+// Xử lý thay đổi mật khẩu của giám đốc
+function handleUpdateAdminAccountPass() {
+  let old_pass = document.getElementById(
+    "change-pass-admin-account-old-pass"
+  ).value;
+  let new_pass = document.getElementById(
+    "change-pass-admin-account-new-pass"
+  ).value;
+  let confirm_pass = document.getElementById(
+    "change-pass-admin-account-new-pass-again"
+  ).value;
+  let update_admin_pass_error = document.getElementById(
+    "update-admin-pass-error"
+  );
+  if (old_pass === "" || new_pass === "" || confirm_pass === "") {
+    update_admin_pass_error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
+  } else {
+    update_admin_pass_error.innerHTML = "";
+    // Kiểm tra xem mật khẩu có đúng không?
+    let url = "http://localhost:8080/admin/account/get_admin_account.php";
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+      });
+  }
 }
 
 // ############################# TRƯỞNG PHÒNG #####################################
