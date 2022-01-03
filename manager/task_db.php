@@ -1,22 +1,22 @@
 <?php 
 require_once('../../connect_db.php');
 
-// function add_product($name, $price, $desc){
-//     $sql = "INSERT INTO product(name, price, description) VALUES(?, ?, ?)";
-//     $conn = connect_db();
-//     $stm = $conn->prepare($sql);
-//     $stm->bind_param('sis', $name, $price, $desc);
-//     $stm->execute();
-//     if($stm->affected_rows == 1){
-//         return $stm->insert_id;
-//     }
-//     return -1;
-// }
+function add_task($maNVu, $tenNVu, $maNVien, $maPB,$hanTH,$moTa,$tapTin,$trangThai){
+    $sql = "INSERT INTO NhiemVu VALUES(?, ?, ?,?,?,?,?,?)";
+    $conn = connect_db();
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ssssssss', $maNVu, $tenNVu, $maNVien, $maPB,$hanTH,$moTa,$tapTin,$trangThai);
+    $stm->execute();
+    return $stm->affected_rows == 1;
+}
 
 function get_tasks(){
     $sql = "SELECT * FROM NhiemVu";
     $conn = connect_db();
     $result = $conn->query($sql);
+    // $stm = $conn->prepare($sql);
+    // // $stm->bind_param('ss', $maNhanVien, $maPB);
+    // $stm->execute();
 
     if ($result->num_rows == 0){
         die('Kêt nối thành công, Nhưng không có dữ liệu');

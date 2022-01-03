@@ -105,6 +105,7 @@
                 $_SESSION['gioiTinh'] = $data['gioiTinh'];
                 $_SESSION['sdt'] = $data['sdt'];
                 $_SESSION['email'] = $data['email'];
+                $_SESSION['maPB'] = $data['maPhongBan'];
                 
                 if ($_SESSION['doiMatKhau'] == 0) {
                     header("Location: change_pwd_first.php");
