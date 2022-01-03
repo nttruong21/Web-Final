@@ -28,6 +28,7 @@
     $admin_account = $result->fetch_assoc();
     // print_r($admin_account);
     // print_r($admin_account['gioiTinh'] == 1);
+    $avatar_path = "../images/" . $admin_account['anhDaiDien'];
 ?>
 
 <!DOCTYPE html>
@@ -51,12 +52,12 @@
     <div class="d-flex my-4 w-75 mx-auto flex-row-reverse align-items-center justify-content-between">
         <div class="">
             <button onclick="enableEditAdminProfileMode();" class="btn btn-secondary mr-4">Chỉnh sửa</button>
-            <button class="btn btn-primary mr-4">Đổi ảnh đại diện</button>
+            <button data-toggle="modal" data-target="#change-admin-avatar-modal" class="btn btn-primary mr-4">Đổi ảnh đại diện</button>
             <a href="handle_update_admin_pass.php" class="btn btn-info">Đổi mật khẩu</a>
         </div>
     </div>
     <div class="w-75 mx-auto">
-        <div class="bg-light card pr-5">
+        <div class="bg-light card">
             <div class="row py-4">
                 <div class="col-6 py-4 d-flex flex-column justify-content-between">
                     <div class="form-group row align-items-center">
@@ -116,7 +117,7 @@
                 </div>
                 <div class="col-6 d-flex flex-column justify-content-between">
                     <div class="card m-auto" style="width: 300px;">
-                        <img class="card-img-top mx-auto" style="width: 200px;" src="https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg" alt="admin image">
+                        <img class="card-img-top mx-auto w-100" src="<?= $avatar_path ?>" alt="admin image">
                         <div class="card-body">
                             <h3 class="card-title"><?= $admin_account['hoTen'] ?></h3>
                             <p class="card-text">Chức vụ: Giám đốc</p>
@@ -192,6 +193,33 @@
                     <div  class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
                         <button onclick="handleUpdateAdminAccountPass();" type="button" class="btn btn-primary">Thay đổi</button>
+                    </div>   
+                </form>      
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog đổi ảnh đại diện -->
+    <div class="modal fade" id="change-admin-avatar-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Đổi ảnh đại diện</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="handle_change_admin_avatar.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <input name="admin-avatar" type="file" class="custom-file-input" id="admin-avatar">
+                            <label class="custom-file-label" for="admin-avatar">Choose file</label>
+                        </div>
+                        <div class="form-group mt-3">
+                            <div id="change-admin-avatar-error-message" class="text-center alert-danger font-weight-bold"></div>
+                        </div>
+                    </div>
+                    <div  class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                        <button onclick="handleChangeAdminAvatar(event);" type="submit" class="btn btn-primary">Thay đổi</button>
                     </div>   
                 </form>      
             </div>
