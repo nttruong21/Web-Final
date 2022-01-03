@@ -1,4 +1,11 @@
 "use strict";
+// Jquery upload file
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function () {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
 // ---------------------------- ADMIN ------------------------------------------
 // ---------------------------- index.php --------------------------------------
 // Lấy thông tin nhân viên và render ra giao diện
@@ -67,7 +74,7 @@ let formAddAccount = document.getElementById("form-add-account");
 if (formAddAccount) {
   formAddAccount.addEventListener("submit", (e) => {
     e.preventDefault();
-    let add_error_message = document.getElementById("add-error-message");
+    // let add_error_message = document.getElementById("add-error-message");
 
     let user_id = document.getElementById("user-id").value;
     let name = document.getElementById("name").value;
@@ -98,6 +105,9 @@ if (formAddAccount) {
       departmental === ""
     ) {
       add_account_error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
+    } else if (user_id.toLowerCase() === "admin") {
+      add_account_error.innerHTML =
+        "Mã nhân viên không được nhận giá trị admin";
     } else {
       let url = "http://localhost:8080/admin/account/add_account.php";
       let data = {
@@ -170,7 +180,7 @@ if (btnEnableEditAccount) {
     document.getElementById("address").disabled = false;
     document.getElementById("email").disabled = false;
     // document.getElementById("position").disabled = false;
-    document.getElementById("departmental").disabled = false;
+    // document.getElementById("departmental").disabled = false;
     document.getElementById("num-day").disabled = false;
     btnConfirmEditAccount.disabled = false;
   });
@@ -192,9 +202,9 @@ if (btnConfirmEditAccount) {
     let address = document.getElementById("address").value;
     let email = document.getElementById("email").value;
     // let position = document.getElementById("position").value.split(" - ")[0];
-    let departmental = document
-      .getElementById("departmental")
-      .value.split(" - ")[0];
+    // let departmental = document
+    //   .getElementById("departmental")
+    //   .value.split(" - ")[0];
     let day = document.getElementById("num-day").value;
 
     if (
@@ -205,7 +215,6 @@ if (btnConfirmEditAccount) {
       phone_number === "" ||
       address === "" ||
       email === "" ||
-      departmental === "" ||
       day === ""
     ) {
       if (
@@ -232,7 +241,6 @@ if (btnConfirmEditAccount) {
             phone_number: phone_number,
             address: address,
             email: email,
-            departmental: departmental,
             day: parseInt(day),
           };
           fetch(url, {
@@ -708,31 +716,31 @@ function updateAdminProfile() {
     });
 }
 
-// Xử lý thay đổi mật khẩu của giám đốc
-function handleUpdateAdminAccountPass() {
-  let old_pass = document.getElementById(
-    "change-pass-admin-account-old-pass"
-  ).value;
-  let new_pass = document.getElementById(
-    "change-pass-admin-account-new-pass"
-  ).value;
-  let confirm_pass = document.getElementById(
-    "change-pass-admin-account-new-pass-again"
-  ).value;
-  let update_admin_pass_error = document.getElementById(
-    "update-admin-pass-error"
+// Xử lý, kiểm tra trước khi gửi form thay đổi ảnh đại diện của giám đốc
+function handleChangeAdminAvatar(e) {
+  let avatar = document.getElementById("admin-avatar").value;
+  let change_admin_avatar_error_message = document.getElementById(
+    "change-admin-avatar-error-message"
   );
-  if (old_pass === "" || new_pass === "" || confirm_pass === "") {
-    update_admin_pass_error.innerHTML = "Vui lòng nhập đầy đủ thông tin";
+  // console.log(avatar);
+  if (avatar === "") {
+    e.preventDefault();
+    change_admin_avatar_error_message.classList.add("card");
+    change_admin_avatar_error_message.innerHTML = "Vui lòng chọn tập tin ảnh";
   } else {
-    update_admin_pass_error.innerHTML = "";
-    // Kiểm tra xem mật khẩu có đúng không?
-    let url = "http://localhost:8080/admin/account/get_admin_account.php";
-    fetch(url)
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-      });
+    console.log(avatar);
+    let splitArr = avatar.split("\\");
+    let file_name = splitArr[splitArr.length - 1];
+    let extension = file_name.split(".")[1];
+    console.log(extension);
+    if (extension !== "jpeg" && extension !== "png" && extension !== "jpg") {
+      e.preventDefault();
+      if (!change_admin_avatar_error_message.classList.contains("card")) {
+        change_admin_avatar_error_message.classList.add("card");
+      }
+      change_admin_avatar_error_message.innerHTML =
+        "Tập tin này không phải ảnh";
+    }
   }
 }
 

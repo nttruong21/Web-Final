@@ -72,11 +72,11 @@
     }
 
     // Cập nhật thông tin nhân viên
-    function update_account($user_id, $name, $birthday, $sex, $phone_number, $address, $email, $department, $day) {
+    function update_account($user_id, $name, $birthday, $sex, $phone_number, $address, $email, $day) {
         $conn = connect_db();
-        $sql = "UPDATE NhanVien SET hoTen = ?, ngaySinh = ?, gioiTinh = ?, sdt = ?, diaChi = ?, email = ?, maPhongBan = ?, soNgayNghi = ? WHERE maNhanVien = ?";
+        $sql = "UPDATE NhanVien SET hoTen = ?, ngaySinh = ?, gioiTinh = ?, sdt = ?, diaChi = ?, email = ?, soNgayNghi = ? WHERE maNhanVien = ?";
         $stm = $conn -> prepare($sql);
-        $stm -> bind_param("ssissssis", $name, $birthday, $sex, $phone_number, $address, $email, $department, $day, $user_id);
+        $stm -> bind_param("ssisssis", $name, $birthday, $sex, $phone_number, $address, $email, $day, $user_id);
         $stm -> execute();
         return $stm -> affected_rows === 1;
     }

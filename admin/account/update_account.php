@@ -18,8 +18,7 @@
         }
         if (!property_exists($input, 'user_id') || !property_exists($input, 'name') || !property_exists($input, 'birthday') || 
         !property_exists($input, 'sex') || !property_exists($input, 'phone_number') || !property_exists($input, 'address') || 
-        !property_exists($input, 'email') || !property_exists($input, 'departmental')
-        || !property_exists($input, 'day')) {
+        !property_exists($input, 'email') || !property_exists($input, 'day')) {
             error_response(3, "Dữ liệu không đầy đủ");
         }
 
@@ -31,16 +30,15 @@
         $phone_number = $input -> phone_number;
         $address = $input -> address;
         $email = $input -> email;
-        $departmental = $input -> departmental;
         $day = $input -> day;
 
         // Kiểm tra dữ liệu có hợp lệ?
         if($user_id === "" || $name === "" || ($birthday) === "" || !is_numeric($sex) || $sex === -1 || ($phone_number) === "" || 
-        ($address) === "" || ($email) === "" || ($departmental) === "" || !is_numeric($day)) {
+        ($address) === "" || ($email) === "" || !is_numeric($day)) {
             error_response(4, "Dữ liệu không hợp lệ");
         }
 
-        $result = update_account($user_id, $name, $birthday, $sex, $phone_number, $address, $email, $departmental, $day);
+        $result = update_account($user_id, $name, $birthday, $sex, $phone_number, $address, $email, $day);
         if ($result) {
             success_response(0, "Cập nhật thông tin nhân viên thành công");
         } else {
