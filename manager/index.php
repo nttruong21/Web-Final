@@ -107,7 +107,8 @@
                         <th>CHỨC NĂNG</th>
                     </tr>
                 </thead>
-                <tbody>
+                <!-- manager list task -->
+                <tbody id='list-task'>
             
                 </tbody>
             </table>
@@ -119,7 +120,7 @@
 
 		 <!-- add dialog -->
 		<div class="modal fade" id="add-dialog">
-      <div class="modal-dialog">
+        <div class="modal-dialog">
             <div class="modal-content">
 
                 <div class="modal-header">
@@ -132,33 +133,113 @@
 
                         <p class="text-center text-danger d-none empty">Please fill out all of the information of task</p>
                         <div class="form-group">
-                            <label for="id">Mã Nhiệm Vụ</label>
-                            <input type="text" placeholder="mã nhiệm vụ" class="form-control" id="id" required />
+                            <label for="maNVu">Mã nhiệm vụ</label>
+                            <input type="text" placeholder="Nhập mã nhiệm vụ" class="form-control" id="maNVu" required />
                         </div>
                         <div class="form-group">
-                            <label for="name">Tên nhiệm vụ</label>
-                            <input type="number" placeholder="Tên nhiệm vụ" class="form-control" id="name" required />
+                            <label for="tenNVu">Tên nhiệm vụ</label>
+                            <input type="text" placeholder="Nhập tên nhiệm vụ" class="form-control" id="tenNVu" required />
                         </div>
                         <div class="form-group">
-                            <label for="desc">Mô tả</label>
-                            <textarea rows="2" id="desc" class="form-control" placeholder="Description" required></textarea>
+                            <label for="maNVien">mã nhân viên</label>
+                            <input type="text" readonly class="form-control" id="maNVien" value=<?=$_SESSION['maNhanVien']?> />
                         </div>
-												<div class="form-group">
-                            <label for="dateEx">Hạn thực hiện</label>
-														<input type="text" id="dateEx" class="form-control datepicker" placeholder="chọn ngày"/>
-                            
+                        <div class="form-group">
+                            <label for="maPB">mã phòng ban</label>
+                            <input type="text" readonly class="form-control" id="maPB" value=<?=$_SESSION['maPB']?> />
                         </div>
-												<div class="form-group">
-													<label for="exampleFormControlFile1">Tệp đính kèm (Nếu có)</label>
-													<input type="file" class="form-control-file" id="exampleFormControlFile1">
-												</div>
+                        <div class="form-group">
+                            <label for="time">hạn thực hiện</label>
+                            <input type="text" placeholder="Thời gian thực hiện" class="form-control" id="time" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="moTa">mô tả</label>
+                            <textarea rows="2" id="moTa" class="form-control" placeholder="Nhập mô tả" required></textarea>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="file">Tập tin</label>
+                            <input type="text" placeholder="Chọn tập tin" class="form-control" id="file" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="trangThai">Trạng thái</label>
+                            <input type="text" readonly class="form-control" id="trangThai" value="NEW" />
+                        </div>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="sumit" class="btn btn-success">Add</button>
+                        <button type="submit" class="btn btn-success">Add</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <!-- information dialog -->
+    <div class="modal fade" id="info-dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">INFORMATION TASK</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="tenNVu">Tên nhiệm vụ</label>
+                            <p>aaaa</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="maNVien">Tên nhân viên</label>
+                            <p>Phạm tùng</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Thời gian thực hiện</label>
+                            <p>12:20</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="moTa">mô tả</label>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum labore nam praesentium vel laudantium? Facere dignissimos eius velit magnam, deleniti sed dolorem sapiente incidunt et aliquid ipsa enim saepe adipisci.</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="file">Tệp đính kèm</label>
+                            <p>aa.txt</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="trangThai">Trạng thái</label>
+                            <p>NEW</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="abc"> -->
+     <!-- message respone -->
+   <div class="modal fade" id="message-respone">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Notification</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="responseMess"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                </div>
             </div>
         </div>
     </div>
@@ -170,7 +251,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<script>
 		const readAPI = 'http://localhost:8080/manager/api/get_task.php'
-  // const addAPI = 'http://localhost/lab9/add_product.php'
+  const addAPI = 'http://localhost:8080/manager/api/add_task.php'
   // const deleteAPI = 'http://localhost/lab9/delete_product.php'
   // const updateAPI = 'http://localhost/lab9/update_product.php'
 
@@ -180,15 +261,15 @@
         .then(response => response.json())
           .then(data => {
             data.forEach(task => {
-              let tr = $('<tr></tr>')
+              let tr = $('<tr data-toggle="modal" data-target="#info-dialog"></tr>')
 							// countTask = countTask+1;
                 tr.html(`
-                  <td>${task.trangThai}</td>
+                  <td><span class="badge badge-success">${task.trangThai}</span></td>
                   <td>${task.tenNhiemVu}</td>
                   <td>${task.hanThucHien}</td>
                   
 									<td>
-                    <button onclick="" class="btn btn-primary" data-toggle="modal" data-target="#edit-dialog">
+                    <button onclick="" class="btn btn-dark" data-toggle="modal" data-target="#edit-dialog">
                       <i class="fa fa-edit action"></i>
                     </button>
                     <button onclick="" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">
@@ -196,49 +277,65 @@
                     </button>
                   </td>
                 `)
-                $('tbody').append(tr)
+                $('#list-task').append(tr)
 								
             })
 						document.querySelector('.countTask').innerHTML = (data.length);
           })
     } 
-		function addProduct(e) {
+		//====================thêm task mới==========================
+    function addProduct(e) {
             e.preventDefault()
-            // let name = $('#name').val()
-            // let price = $('#price').val()
-            // let desc = $('#desc').val()
+            let maNVu = $('#maNVu').val()
+            let tenNVu = $('#tenNVu').val()
+            let maNVien = $('#maNVien').val()
+            let maPB = $('#maPB').val()
+            let hanTH = $('#time').val()
+            let moTa = $('#moTa').val()
+            let tapTin = $('#file').val()
+            let trangThai = $('#trangThai').val()
 
-            // if (name == '' || price == '' || desc == '') {
-            //     $('.empty').removeClass('d-none')
-            //     return
-            // } else {
-            //     $('.empty').addClass('d-none')
-            // }
-
-            // fetch(addAPI, {
-            //     'method': 'POST',
-            //     'body': new URLSearchParams({
-            //         name,
-            //         price,
-            //         desc
-            //     })
-            // })
-            //     .then(res => res.json())
-            //     .then(data => {
-            //         if (data.code == 0) {
-            //             $('#add-dialog').modal('toggle')
-            //             $('#responseMess').html(data.message);
-            //             $('#message-respone').modal('show');
+            if (maNVu == '' || tenNVu == '' || maNVien == '' || maPB == '' || hanTH == '' || moTa == '' || tapTin == '' || trangThai == '') {
+                $('.empty').removeClass('d-none')
+                return
+            } else {
+                $('.empty').addClass('d-none')
+            }
+            let data = {
+                "maNVu":maNVu,
+                "tenNVu":tenNVu,
+                "maNVien":maNVien,
+                "maPB":maPB,
+                "hanTH":hanTH,
+                "moTa":moTa,
+                "tapTin":tapTin,
+                "trangThai":trangThai
+            }
+            fetch(addAPI, {
+                'method': 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+                
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code == 0) {
+                        $('#add-dialog').modal('toggle')
+                        $('#responseMess').html(data.message);
+                        $('#message-respone').modal('show');
                         
-            //             $('tbody').children().remove()
-            //             loadProduct()
-            //         } else {
-            //             $('#add-dialog').modal('toggle')
-            //             $('#responseMess').html(data.message);
-            //             $('#message-respone').modal('show');
-            //         }
-            //     })
+                        $('tbody').children().remove()
+                        loadTasks()
+                    } else {
+                        $('#add-dialog').modal('toggle')
+                        $('#responseMess').html(data.message);
+                        $('#message-respone').modal('show');
+                    }
+                })
         }
+		
 // chọn ngày
 	$(function(){
    $('.datepicker').datepicker({
