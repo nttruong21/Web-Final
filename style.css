@@ -1,4 +1,20 @@
 /* General */
+.bg-image {
+  background-image: url("/images/background.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.px-108 {
+  padding-left: 108px;
+  padding-right: 108px;
+}
+
+.h-100-vh {
+  height: 100vh;
+  /* max-height: 100%; */
+}
 .scrollable {
   height: 500px;
   overflow-y: auto;
@@ -34,6 +50,18 @@ a:hover {
 .data-row:hover {
   background-color: lightcyan;
 }
+
+.custom-border-right {
+  border-right: 1px solid #9d9b8b;
+}
+
+.custom-border {
+  border: 1px solid #837c7c;
+}
+
+.position-sticky {
+  position: sticky;
+}
 /* ---------------- Admin -------------------- */
 /* index.php */
 .add-account-link {
@@ -49,38 +77,35 @@ a:hover {
 
 /* ---------------- Manager ------------------ */
 
-*{
+* {
   box-sizing: border-box;
 }
 body {
   width: 100%;
   overflow-x: hidden;
 }
-.box-search{
-	border: 1px solid #c0c0c0;
-	padding: 5px;
-	width: 500px;
-	border-radius: 5px;
+.box-search {
+  border: 1px solid #c0c0c0;
+  padding: 5px;
+  width: 500px;
+  border-radius: 5px;
 }
 
-
-.menu{
+.menu {
   list-style-type: none;
   margin: 10px;
   padding: 0px;
-  
 }
-.menu li{
+.menu li {
   font-size: 15px;
   padding: 15px 5px;
   padding-left: 20px;
 }
-.create-task{
+.create-task {
   border-radius: 5px;
   border: 1px solid #ccc;
-  
 }
-.add-task{
+.add-task {
   width: 80%;
   margin-bottom: 30px;
   border-radius: 50px;
@@ -90,43 +115,42 @@ body {
   justify-content: center;
   align-items: center;
 }
-.fa-plus-circle{
-  
+.fa-plus-circle {
 }
 
-.fas{
+.fas {
   color: #1b1b1b;
 }
-.fa-plus-circle{
+.fa-plus-circle {
   font-size: 30px;
   text-align: left;
-	margin-right: 5px;
+  margin-right: 5px;
 }
 
-.all-task{
+.all-task {
   height: 550px;
   border: 1px solid #c0c0c0;
   padding: 10px 10px;
   overflow-y: scroll;
   margin-right: 15px;
   margin-left: 15px;
-	cursor: pointer;
+  cursor: pointer;
 }
 /* .task-content{
 } */
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 10px;
 }
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   background-color: cadetblue;
   border-radius: 2px;
 }
-.content{
+.content {
   height: 100%;
 }
 
-.nav-link{
-	color:rgb(0, 0, 0);
+.nav-link {
+  color: rgb(0, 0, 0);
 }
 
 /* ---------------- Employee ----------------- */

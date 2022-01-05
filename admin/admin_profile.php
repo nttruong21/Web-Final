@@ -44,12 +44,13 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <!-- Navigation -->
 	<?php require_once("header.php"); ?>
-    
-    <div class="d-flex my-4 w-75 mx-auto flex-row-reverse align-items-center justify-content-between">
+    <div class="container-fluid pt-4 px-108 bg-image">
+    <div class="d-flex mb-4 w-75 mx-auto flex-row-reverse align-items-center justify-content-between">
         <div class="">
             <button onclick="enableEditAdminProfileMode();" class="btn btn-secondary mr-4">Chỉnh sửa</button>
             <button data-toggle="modal" data-target="#change-admin-avatar-modal" class="btn btn-primary mr-4">Đổi ảnh đại diện</button>
@@ -129,6 +130,7 @@
                 <button data-toggle="modal" data-target="#confirm-edit-admin-profile-modal" disabled id="btn-confirm-edit-admin-profile" class="btn btn-primary">Xác nhận</button>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Dialog xác nhận cập nhật thông tin-->

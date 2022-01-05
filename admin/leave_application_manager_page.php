@@ -30,7 +30,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-		<title>Quản lý nhân viên</title>
+		<title>Quản lý đơn xin nghỉ phép</title>
 	</head>
 	<body>
 		<!-- Navigation -->
@@ -57,37 +57,39 @@
 							</form>
 						</div>
 					</div>
-					<div class="col-xl-3 col-lg-2 col-md-3 col-sm-2 col-2">
+					<!-- <div class="col-xl-3 col-lg-2 col-md-3 col-sm-2 col-2">
 						<div class="d-inline-block">
 							<a class="add-account-link d-flex bg-primary text-white align-items-center" href="account/add_account_page.php">
 								<i class="text-white fas fa-user-plus"></i>
 								<p class="mb-0 ml-1 day-off">Thêm nhân viên</p>
 							</a>
 						</div>
-					</div>
+					</div> -->
 
 				</div>
 			</div>
 			<div class="row m-0">
 				<!-- Sidebar -->
 				<?php require_once("sidebar.php"); ?>
+
+                <!-- Danh sách các đơn nghỉ phép -->
 				<div class="task-form col-lg-10">
 					<div class="scrollable">
 						<div class="task-heading d-flex custom-border position-sticky">
 							<div class='col-lg-3 custom-border-right'>
-								<p class="mb-0 p-1">MÃ NHÂN VIÊN</p>
+								<p class="mb-0 p-1">MÃ ĐƠN</p>
 							</div>
 							<div class='col-lg-3 custom-border-right'>
-								<p class="mb-0 p-1">HỌ TÊN</p>
+								<p class="mb-0 p-1">TRƯỞNG PHÒNG</p>
 							</div>
 							<div class='col-lg-3 custom-border-right'>
-								<p class="mb-0 p-1">CHỨC VỤ</p>
+								<p class="mb-0 p-1">NGÀY TẠO</p>
 							</div>
 							<div class='col-lg-3'>
-								<p class="mb-0 p-1">PHÒNG BAN</p>
+								<p class="mb-0 p-1">TRẠNG THÁI</p>
 							</div>
 						</div>
-						<div id="accounts-list" class="task-information  bg-azure">
+						<div id="admin-leave-application-list" class="task-information bg-azure">
 							
 						</div>
 					</div>
@@ -95,9 +97,10 @@
 			</div>
 		</div>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<script src="/main.js"></script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="/main.js"></script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+
 	</body>
 </html>

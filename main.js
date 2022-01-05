@@ -68,6 +68,10 @@ function moveToIndexPage() {
   window.location.href = "index.php";
 }
 
+function moveToLeaveApplicationManagerPage() {
+  window.location.href = "leave_application_manager_page.php";
+}
+
 // -------------------------------- add_account_page.php ---------------------------------------
 // Xử lý thêm nhân viên
 let formAddAccount = document.getElementById("form-add-account");
@@ -744,6 +748,111 @@ function handleChangeAdminAvatar(e) {
   }
 }
 
+// ---------------------------------------- leave_application_manager_page.php -------------------------------------------
+// Lấy danh sách đơn nghỉ phép và render ra giao diện
+let admin_leave_application_list = document.getElementById(
+  "admin-leave-application-list"
+);
+window.addEventListener("load", () => {
+  let url =
+    "http://localhost:8080/admin/application/get_manager_applications.php";
+  fetch(url)
+    .then((response) => response.json())
+    .then((json) => {
+      // Lấy danh sách đơn nghỉ phép của trưởng phòng
+      let applications = json.data;
+      // console.log(applications);
+      applications.forEach((application) => {
+        // console.log(typeof application.trangThai);
+        let application_row = document.createElement("div");
+        let trangThai = "Đã xử lý";
+        if (parseInt(application.trangThai) === 0) {
+          trangThai = "Chưa xử lý";
+          application_row.classList.add("font-weight-bold");
+        }
+        let manager_id = application.maNhanVien;
+        // Lấy thông tin trưởng phòng
+        if (manager_id) {
+          fetch(
+            "http://localhost:8080/admin/account/get_account.php?id=" +
+              manager_id
+          )
+            .then((response) => response.json())
+            .then((json) => {
+              let manager_account = json.data;
+              // console.log(manager_account.hoTen);
+              application_row.innerHTML = `
+                <a href="application/application_detail_page.php?maDon=${application.maDon}&hoTen=${manager_account.hoTen}" class="d-block text-body data-row">
+                <div class='d-flex task-list border border-top-0 border-left-0' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
+                  <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='task-name  mb-0 p-1'>${application.maDon}</p>
+                  </div>
+                  <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='task-description mb-0 p-1'>${manager_account.hoTen}</p>
+                  </div>
+                  <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='mb-0 p-1'>${application.ngayTao}</p>
+                  </div>
+                  <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
+                    <p class='mb-0 p-1'>${trangThai}</p>
+                  </div>
+                </div>
+              </a>
+                `;
+            });
+        }
+        if (admin_leave_application_list) {
+          admin_leave_application_list.appendChild(application_row);
+        }
+      });
+    });
+});
+
+// ---------------------------------------- application_detail_page.php -------------------------------------------
+// Nhấn nút Không đồng ý
+function disagreeLeaveApp(id) {
+  // console.log("disagree");
+  let url =
+    "http://localhost:8080/admin/application/approve_leave_application.php";
+  let data = {
+    id: id,
+    result: 0,
+  };
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      refreshPage();
+    });
+}
+
+// Nhấn nút Đồng ý
+function agreeLeaveApp(id) {
+  // console.log("agree");
+  let url =
+    "http://localhost:8080/admin/application/approve_leave_application.php";
+  let data = {
+    id: id,
+    result: 1,
+  };
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      refreshPage();
+    });
+}
+
 // ############################# TRƯỞNG PHÒNG #####################################
 const readAPI = "http://localhost:8080/manager/api/get_task.php";
 // const addAPI = 'http://localhost/lab9/add_product.php'
@@ -766,4 +875,4 @@ function loadTasks() {
       });
     });
 }
-loadTasks();
+// loadTasks();
