@@ -1,17 +1,18 @@
 <?php 
 require_once('../../connect_db.php');
 
-function add_task($maNVu, $tenNVu, $maNVien, $maPB,$hanTH,$moTa,$tapTin,$trangThai){
-    $sql = "INSERT INTO NhiemVu VALUES(?, ?, ?,?,?,?,?,?)";
-    $conn = connect_db();
-    $stm = $conn->prepare($sql);
-    $stm->bind_param('ssssssss', $maNVu, $tenNVu, $maNVien, $maPB,$hanTH,$moTa,$tapTin,$trangThai);
-    $stm->execute();
-    return $stm->affected_rows == 1;
-}
+// function add_task($maNVu, $tenNVu, $maNVien, $maPB,$hanTH,$moTa,$tapTin,$trangThai){
 
-function get_tasks(){
-    $sql = "SELECT * FROM NhiemVu";
+//     $sql = "INSERT INTO NhiemVu VALUES(?, ?, ?,?,?,?,?,?)";
+//     $conn = connect_db();
+//     $stm = $conn->prepare($sql);
+//     $stm->bind_param('ssssssss', $maNVu, $tenNVu, $maNVien, $maPB,$hanTH,$moTa,$tapTin,$trangThai);
+//     $stm->execute();
+//     return $stm->affected_rows == 1;
+// }
+
+function get_tasks($maPB){
+    $sql = "SELECT * FROM NhiemVu where maPhongBan = '$maPB' Order by maNhiemVu DESC";
     $conn = connect_db();
     $result = $conn->query($sql);
     // $stm = $conn->prepare($sql);

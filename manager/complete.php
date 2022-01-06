@@ -78,15 +78,13 @@
 				<ul class="menu ">
 					<li class="create-task add-task " ><a href="form_add.php" class="d-flex justify-content-between text-success"><i class="fas fa-plus-circle" ></i>   Tạo Task</a></li>
                     <div class="list-group">
-                        <a href="index.php" class="list-group-item list-group-item-action active">
+                        <a href="index.php" class="list-group-item list-group-item-action ">
                         <i class="fas fa-book"></i>   Tất cả Task
                         </a>
-                        <a href="progress.php" class="list-group-item list-group-item-action "><i class="fas fa-spinner"></i> Task in progress</a>
+                        <a href="progress.php" class="list-group-item list-group-item-action"><i class="fas fa-spinner"></i> Task in progress</a>
                         <a href="newTask.php" class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Task Mới</a>
-                        <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
-                        <a href="complete.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
-                        
-                       
+                        <a href="complete.php" class="list-group-item list-group-item-action active"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
+                        <a href="canceled.php" class="list-group-item list-group-item-action "><i class="fas fa-trash"></i> Task đã hủy</a>
                     </div>
 				</ul>
               
@@ -112,7 +110,7 @@
                         <th>TRẠNG THÁI</th>
                         <th>TÊM NHIỆM VỤ</th>
                         <th>THỜI GIAN</th>
-                       
+                        <th>CHỨC NĂNG</th>
                     </tr>
                 </thead>
                 <!-- manager list task -->
@@ -279,13 +277,19 @@
         .then(response => response.json())
           .then(data => {
             data.forEach(task => {
-              let tr = $('<tr></tr>')
+              let tr = $('<tr data-toggle="modal" data-target="#info-dialog"></tr>')
 							// countTask = countTask+1;
                 tr.html(`
-                
                   <td><span class="badge badge-success">${task.trangThai}</span></td>
-                  <td><a href="infor.php?maNVu=${task.maNhiemVu}">${task.tenNhiemVu}</a></td>
+                  <td>${task.tenNhiemVu}</td>
                   <td>${task.hanThucHien}</td>
+                  
+									<td>
+                    <button onclick="" class="btn btn-dark" data-toggle="modal" data-target="#edit-dialog">
+                      <i class="fa fa-edit action"></i>
+                    </button>
+                    
+                  </td>
                 `)
                 $('#list-task').append(tr)
 								
@@ -358,7 +362,7 @@
     });
 	});
 // chọn file
-  
+	
     loadTasks()
 
 
