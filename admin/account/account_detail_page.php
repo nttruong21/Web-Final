@@ -62,7 +62,7 @@
     <!-- Navigation -->
 	<?php require_once("../header.php"); ?>
     
-    <div class="container text-center">
+    <div class="container-fluid px-108 h-100-vh bg-image text-center">
         <div class="d-flex align-items-center justify-content-between">
             <div class="text-center">
                 <h2 class="my-4">Thông tin nhân viên</h2>

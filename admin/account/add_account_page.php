@@ -44,9 +44,9 @@
     <!-- Navigation -->
 	<?php require_once("../header.php"); ?>
     
-    <div class="container text-center">
-        <div class="text-center">
-            <h2 class="my-4">Thêm thông tin nhân viên</h2>
+    <div class="container-fluid px-108 py-4 h-100-vh bg-image">
+        <div class="">
+            <h2 class="mb-4">Thêm thông tin nhân viên</h2>
         </div>
         <form id="form-add-account" class="bg-light card pr-5" action="add_account.php" method="POST">
             <div class="row my-4">

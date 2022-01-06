@@ -37,11 +37,11 @@
 		<?php require_once("header.php"); ?>
 
 		<!-- Content container -->
-		<div class="container-fluid p-0">
+		<div class="container-fluid h-100-vh bg-image p-0">
 			<div class="row py-4 m-0">
 				<div class="d-flex w-100 align-items-center employee-heading">
 					<div class="col-xl-4 col-lg-6 col-md-5 employee-name">
-						<h4 class="">Xin chào <?= $_SESSION['hoTen'] ?></h4>
+						<h4 class=""></h4>
 					</div>
 					<div class="col-xl-5 col-lg-4 col-md-6 col-sm-10 col-10">
 						<div class="form-group border rounded-lg mb-0 bg-light">
@@ -75,20 +75,20 @@
 				<!-- List departmentals -->
 				<div class="task-form col-lg-10">
 					<div class="scrollable">
-						<div class="task-heading d-flex" style="position:sticky; border: 1px solid #837c7c;">
-							<div class='col-lg-2' style="border-right: 1px solid #9d9b8b">
+						<div class="task-heading d-flex custom-border position-sticky" >
+							<div class='col-lg-2 custom-border-right'>
 								<p class="mb-0 p-1">MÃ PHÒNG BAN</p>
 							</div>
-							<div class='col-lg-3' style="border-right: 1px solid #9d9b8b">
+							<div class='col-lg-3 custom-border-right'>
 								<p class="mb-0 p-1">TÊN PHÒNG BAN</p>
 							</div>
-							<div class='col-lg-2' style="border-right: 1px solid #9d9b8b">
+							<div class='col-lg-2 custom-border-right'>
 								<p class="mb-0 p-1">SỐ PHÒNG BAN</p>
 							</div>
-							<div class='col-lg-3' style="border-right: 1px solid #9d9b8b">
+							<div class='col-lg-3 custom-border-right'>
 								<p class="mb-0 p-1">MÔ TẢ</p>
 							</div>
-							<div class='col-lg-2' style="border-right: 1px solid #9d9b8b">
+							<div class='col-lg-2 custom-border-right'>
 								<p class="mb-0 p-1">TRƯỞNG PHÒNG</p>
 							</div>
 						</div>

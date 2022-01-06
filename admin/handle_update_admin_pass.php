@@ -100,13 +100,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Thay đổi mật khẩu</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <!-- Navigation -->
 	<?php require_once("header.php"); ?>
 
-    <div class="container mx-auto mt-5">
-        <div class="text-center">
+    <div class="container-fluid px-108 h-100-vh bg-image mx-auto pt-2">
+        <div class="">
             <h2 class="my-4">Thay đổi mật khẩu</h2>
         </div>
         <div class="w-50 card p-4 bg-light mx-auto">
