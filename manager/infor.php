@@ -43,26 +43,32 @@
           $hanTH = $_POST['time'];
           $moTa = $_POST['moTa'];
           $tapTin = $_FILES["file"]['name'];
-          // $tapTin = $_POST["file"];
-  
           $trangThai = $_POST['trangThai'];
-  
-          $tname = $_FILES["file"]["tmp_name"];
-          $uploads_dir = '../images';
-          
-  
-         
-          $sql = "INSERT INTO NhiemVu VALUES(?, ?, ?,?,?,?,?,?)";
-          $conn = connect_db();
-          $stm = $conn->prepare($sql);
-          $stm->bind_param('ssssssss', $maNVu, $tenNVu, $maNVien, $maPB, $hanTH, $moTa, $tapTin, $trangThai);
-          $stm->execute();
+          // $tapTin = $_POST["file"];
+            if ($tapTin == ''){
+                $sql = "UPDATE NhiemVu SET maNhiemVu = ?, tenNhiemVu = ?, maNhanVien = ? , maPhongBan = ? , hanThucHien = ?, moTa = ?, trangThai = ? WHERE maNhiemVu = '$maNVu'";
+                  $conn = connect_db();
+                  $stm = $conn->prepare($sql);
+                  $stm->bind_param('sssssss', $maNVu, $tenNVu, $maNVien, $maPB, $hanTH, $moTa, $trangThai);
+                  $stm->execute();
+            }else{
+                $tname = $_FILES["file"]["tmp_name"];
+                $uploads_dir = '../files';
+
+                $sql = "UPDATE NhiemVu SET maNhiemVu = ?, tenNhiemVu = ?, maNhanVien = ? , maPhongBan = ? , hanThucHien = ?, moTa = ?, tapTin = ?, trangThai = ? WHERE maNhiemVu = '$maNVu'";
+                $conn = connect_db();
+                $stm = $conn->prepare($sql);
+                $stm->bind_param('ssssssss', $maNVu, $tenNVu, $maNVien, $maPB, $hanTH, $moTa, $tapTin, $trangThai);
+                $stm->execute();
+                move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
+            }
+
         
           if( $stm->affected_rows == 1){
-            move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
+            
             header("Location: index.php");
           }else{
-            $message = "thêm thất bại";
+            $message = "cập nhật thất bại";
           }
         }
 
@@ -161,19 +167,19 @@
                             <div class="modal-body mx-5">
                                 <div class="form-group">
                                     <label for="maNVu">Mã nhiệm vụ</label>
-                                    <input type="text" value="<?=$row['maNhiemVu']?>"class="form-control" id="maNVu" required />
+                                    <input type="text" value="<?=$row['maNhiemVu']?>"class="form-control" id="maNVu" name="maNVu" readonly />
                                 </div>
                                 <div class="form-group">
                                     <label for="tenNVu">Tên nhiệm vụ</label>
-                                    <input type="text" value="<?=$row['tenNhiemVu']?>" class="form-control" id="tenNVu" required />
+                                    <input type="text" value="<?=$row['tenNhiemVu']?>" class="form-control" id="tenNVu" name="tenNVu"required />
                                 </div>
                                 <div class="form-group">
                                     <label for="maNVien">mã nhân viên</label>
-                                    <input type="text" value="<?=$row['maNhanVien']?>" class="form-control" id="maNVien" value=<?=$_SESSION['maNhanVien']?> />
+                                    <input type="text" value="<?=$row['maNhanVien']?>" class="form-control" id="maNVien" name="maNVien" value=<?=$_SESSION['maNhanVien']?> />
                                 </div>
                                 <div class="form-group">
                                     <label for="maPB">mã phòng ban</label>
-                                    <input type="text" value="<?=$row['maPhongBan']?>" class="form-control" id="maPB" value=<?=$_SESSION['maPB']?> />
+                                    <input type="text" value="<?=$row['maPhongBan']?>" class="form-control" id="maPB" name="maPB" value=<?=$_SESSION['maPB']?> />
                                 </div>
                                 <!-- <div class="form-group">
                                     <label for="time">hạn thực hiện</label>
@@ -182,18 +188,18 @@
 
                                 <div class="form-group">
                                     <label for="time">Start date:</label>
-                                    <input type="text" value="<?php echo date('Y/m/d',strtotime($row['hanThucHien']))?>" class="form-control" id="maPB" value=<?=$_SESSION['maPB']?> />
+                                    <input type="text" name="time" value="<?php echo date('Y/m/d',strtotime($row['hanThucHien']))?>" class="form-control" id="maPB" value=<?=$_SESSION['maPB']?> />
 
                                 </div>
                                 <div class="form-group">
                                     <label for="moTa">mô tả</label>
-                                    <input r id="moTa" class="form-control" value="<?php echo $row['moTa'];?>" ></input>
+                                    <input  id="moTa" name="moTa" class="form-control" value="<?php echo $row['moTa'];?>" ></input>
                                 
                                 </div>
                                 <div class="form-group">
                                     <label for="moTa">Tệp hiện tại</label>
-                                    <input r id="moTa" class="form-control my-2" value="<?=$row['tapTin']?>" readonly  ></input>
-                                    <input type="file" name="myFile" id="file" >
+                                    <input  id="moTa" class="form-control my-2" name="fileCurrent" value="<?=$row['tapTin']?>" readonly  ></input>
+                                    <input type="file" name="file" id="file" >
                                 </div>
                                 <!-- <div class="form-group">
                                     <label for="file">Tập tin</label>
@@ -201,13 +207,12 @@
                                 </div> -->
                                 <div class="form-group">
                                     <label for="trangThai">Trạng thái</label>
-                                    <input type="text" readonly  class="form-control" id="trangThai" value="<?=$row['trangThai']?>" />
+                                    <input type="text" readonly  class="form-control" id="trangThai"  name="trangThai" value="<?=$row['trangThai']?>" />
                                 </div>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-success">Add</button>
+                                <button type="submit" id='sbUpdate' class="btn btn-info">Cập Nhật</button>
                             </div>
                         </form>
 					</div>
@@ -228,7 +233,11 @@
 	<script>
 		
     //====================thêm task mới==========================
-    
+    if($('#trangThai').attr('value')=='NEW'){
+        $('#sbUpdate').attr('disabled', false);
+    }else{
+        $('#sbUpdate').attr('disabled', false);
+    }
 // chọn ngày
 	$(function(){
    $('.datepicker').datepicker({
@@ -237,7 +246,7 @@
 	});
 // chọn file
   
-    loadTasks()
+
 
 
 
