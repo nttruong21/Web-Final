@@ -1,50 +1,26 @@
 <?php
 	session_start();
-	
-	// Kiểm tra người dùng đã đăng nhập chưa 
-	if (!isset($_SESSION['maNhanVien'])) {
-		header("Location: ../login.php");
-		die();
-	}
-
-	// Kiểm tra người dùng đã đổi mật khẩu chưa
-	if (isset($_SESSION['doiMatKhau'])) {
-        if ($_SESSION['doiMatKhau'] == 0) {
-            header("Location: ../change_pwd_first.php");
-            die();
-        } 
-    }
-	// Kiểm tra người dùng có phải nhân viên?
-    if (!$_SESSION['maChucVu'] == 'NV') {
-        header("Location: /no_access.html");
-    }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách nhiệm vụ mới</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-	<title>Trang chủ Nhân Viên</title>
+	
 </head>
+
 <style>
 	body {
 		background-image: url(../images/background.jpg);
 		background-repeat: no-repeat;
-    	background-size: cover;
+    	background-size: 100% 100%;
 	}
-	.task-search-input {
-		width: inherit;
-	}
-	.scrollable-task {
-		height: 500px;
-		overflow-x: auto;
-	}
-
 	.e__task__heading {
 		background-color: rgb(131,124,124);
 		position: sticky;
@@ -53,23 +29,28 @@
 	.e__task__infomation {
 		background-color: rgb(240,255,255);
 	}
+	.scrollable-task {
+		height: 500px;
+		overflow-x: auto;
+	}
 </style>
 <body>
-	<div>
-		<div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between mr-2 ml-2">
-			<div class="">
-				<div class="navbar-header">
-					<div class=""><h4>Home page Employee</h4></div>
-				</div>
-			</div>
-			<div class="navbar-info nav d-flex">
-				<a class="font-weight-bold mr-4" href="../profile.php">Profile</a>
-				<a class="font-weight-bold" href="../logout.php">Logout</a>
-			</div>
-			<div class="navbar-icon d-none">
-				<i class="fas fa-bars"></i>
-			</div>
-		</div>
+    
+<div>
+    <div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between mr-2 ml-2">
+        <div class="">
+            <div class="navbar-header">
+                <div class=""><h4>Home page Employee</h4></div>
+            </div>
+        </div>
+        <div class="navbar-info nav d-flex">
+            <a class="font-weight-bold mr-4" href="../profile.php">Profile</a>
+            <a class="font-weight-bold" href="../logout.php">Logout</a>
+        </div>
+        <div class="navbar-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
 
 	</div>
 	<div class="employee m-4">
@@ -83,7 +64,7 @@
 					<div class="form-group border rounded-lg mb-0 bg-light">
 						<form class="" methode="post">
 							<div class="d-flex align-items-center justify-content-between w-100">
-								<div class="task-search-input m-1">
+								<div class="task-search-input m-1" style="width: inherit">
 									<input class="border border-0 border-none rounded p-1 w-100" type="search" placeholder="Search task" aria-label="Search">
 								</div>
 								<div class="task-search-icon m-1">
@@ -111,7 +92,6 @@
 	</div>
 	<div>
 		<div class="row m-0">
-			
 			<?php
 				require_once('sidebar.php');
 			?>
@@ -128,31 +108,30 @@
 									<p class="mb-0 p-1">Thông tin nhiệm vụ</p>
 								</div>
 								<div class='task-time col-xl-2 col-lg-0 col-md-0 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Dealine</p>
-								</div>
+									<p class="mb-0 p-1">Deadline</p>
+								</div>								
 								<div class='task-rate col-xl-2 col-lg-4 col-md-2 border border-top-0 border-left-0 border-right-0'>
 									<p class="mb-0 p-1">Trạng thái</p>
-								</div>								
+								</div>	
 							</div>
 						</div>	
 						<div class="e__task__infomation">
-						<?php
+							<?php
 								require_once("../connect_db.php");
-                                require_once("task_and_dayOff_db.php");
-								$sql = "SELECT * FROM NHIEMVU WHERE trangThai != 'canceled' ORDER BY hanThucHien";
+								require_once("task_and_dayOff_db.php");
+								$sql = "SELECT * FROM NHIEMVU WHERE trangThai = 'waiting' ORDER BY hanThucHien";
 								$result = connect_db()->query($sql);
 
 								while ($row = $result->fetch_assoc()) {
-									$idNV = $row['maNhiemVu'];
+
 									$name = $row['tenNhiemVu'];
 									$desc = $row['moTa'];
 									$time = $row['hanThucHien'];
 									$condition = $row['trangThai'];
 
-									// onclick='moveToTaskInfomationPage();
-									echo	"<div class='d-flex task-list''>
+									echo	"<div class='d-flex task-list' style='cursor: pointer' data-toggle='modal' data-target='#file-info-dialog'>
 												<div class='task-name__heading col-xl-2 col-lg-4 col-md-3 col-sm-12 col-12 border border-top-0 border-left-0'>
-													<p class='task-name  mb-0 p-1'> <a class='' href='task_infomation.php?id=$idNV'> $name </a></p>
+													<p class='task-name  mb-0 p-1'>$name</p>
 												</div>
 												<div class='task-description__heading col-xl-6 col-lg-4 col-md-7 border border-top-0 border-left-0'>
 													<p class='task-description mb-0 p-1'>$desc</p>
@@ -160,21 +139,19 @@
 												<div class='task-time col-xl-2 border border-top-0 border-left-0'>
 													<p class='mb-0 p-1'>$time</p>
 												</div>
-												<div class='task-time col-xl-2 border border-top-0 border-left-0'>
+												<div class='task-condition col-xl-2 border border-top-0 border-left-0'>
 													<p id='employee__task-rate' class='mb-0 p-1'>$condition</p>
-												</div>										
+												</div>												
 											</div>";
 								}
 							?>		
-							
-							
 						</div>
 					</div>
 				</div>
 			</div>
-    	</div>	
-	</div>
-
+		</div>
+    
+    </div>
 
 	<!-- Day off dialog -->
 	<div class="modal fade" id="day-off-dialog">
@@ -194,10 +171,10 @@
 								<form action="" method="POST" onsubmit="return false;">
 									<div class="row">
 										<div class="col">
-											<input type="text" class="form-control" id="maNVDayOff" placeholder="Nhập MSNV">
+											<input type="text" class="form-control" id="maNVDayOff" placeholder="Nhập MSNV" required>
 										</div>
 										<div class="col">
-											<input type="text" class="form-control" id="dayDayOff" placeholder="Số ngày xin nghỉ phép" >
+											<input type="text" class="form-control" id="dayDayOff" placeholder="Số ngày xin nghỉ phép" required>
 										</div>
 										
 									</div>
@@ -225,70 +202,56 @@
          </div>
 	</div>
 
-	<!-- message response -->
-	
-	<div class="modal fade" id="message-respone">
-        <div class="modal-dialog">
-            <div class="modal-content">
 
-                <div class="modal-header">
-                    <h4 class="modal-title">Notification</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-                    <p id="responseMess"></p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-});
-	<script>
-		// function handleChooseOne(e) {
-		// 	var inputChooseOne = document.querySelector('.task-name .task-name__input');
-		// 	var taskInfo = document.querySelector('.task-infomation');
-		// 	inputChooseOne.onclick = function(e) {
-		// 		taskInfo.classList.add('bg-primary');
-		// 	}
-		// }
-
-		// $(document).ready(function() {
-		// 	$('.btn-startTask').onclick = function(e) {
-		// 		e.preventDefault();
-		// 		$('.btn-submitTask').removeAtt('disabled');
-
-		// 	}
-		// })
-		// $(".btn-start").click(function(e){
-		// 	e.preventDefault();
-		// 	$('btn-submit').prop('disabled', false);
-
-		// });
-
+    <script>
 		
-
-		// Thêm thông tin form xin nghỉ phép
-		// const readAPI = 'http://localhost:8080/manager/api/get_task.php';
-  		
-		
-		
-	
-		// function getNewTask(e) {
+		// function addInfoTask(e) {
 		// 	e.preventDefault();
 
-		// 	let 
-		// }
-	</script>
+		// 	let fileTaskInput = $('#fileTaskInput').val()
 
+		// 	// let feedbackTaskInput = $('#feedbackTaskInput').val()
+			
+		// 	if (fileTaskInput == '') {
+		// 		$('.errorTask').removeClass('d-none')
+		// 	} else {
+		// 		$('.errorTask').addClass('d-none')
+		// 	}
+
+		// 	let data = {
+		// 		"fileTaskInput":fileTaskInput
+		// 	}
+
+		// 	fetch(addAPIInputTask, {
+		// 		'method': 'POST',
+		// 		headers: {
+		// 			"Content-Type": "application/json",
+		// 		},
+		// 		body: JSON.stringify(data)
+		// 	})
+		// 	.then(res => res.json())
+		// 	// .then(data => {
+		// 			// if (data.code === 0) {
+		// 				// $('#day-off-dialog').modal('toggle')
+		// 				// $('#responseMess').html(data.message);
+		// 				// $('#message-respone').modal('show');
+						
+		// 				// $('tbody').children().remove()
+		// 				// loadTasks()
+		// 			// } else {
+		// 				// console.log(1)
+		// 				// $('#add-dialog').modal('toggle')
+		// 				// $('#responseMess').html(data.message);
+		// 				// $('#message-respone').modal('show');
+		// 			// }
+		// 		// })
+		// }
+
+    </script>
+    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
-	<script src="/main.js"></script> 
+	<script src="/main.js"></script>
 </body>
-
 </html>

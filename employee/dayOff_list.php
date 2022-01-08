@@ -53,6 +53,12 @@
 	.e__task__infomation {
 		background-color: rgb(240,255,255);
 	}
+    .dayOff-body {
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-left: none;
+        border-right: none;
+    }
 </style>
 <body>
 	<div>
@@ -112,65 +118,80 @@
 	<div>
 		<div class="row m-0">
 			
-			<?php
-				require_once('sidebar.php');
-			?>
+            <?php
+                require_once('sidebar.php');
+            ?>
 
 			<div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 rounded border border-left-0 border-right-0 border-bottom-0">
-				<div class="border border-left-0 border-right-0">
-					<div class="scrollable-task">
-						<div class="e__task__heading">
-							<div class="d-flex">
-								<div class='task-name__heading col-xl-2 col-lg-4 col-md-3 col-sm-12 col-12 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Tên nhiệm vụ</p>
-								</div>
-								<div class='task-description__heading col-xl-6 col-lg-4 col-md-7 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Thông tin nhiệm vụ</p>
-								</div>
-								<div class='task-time col-xl-2 col-lg-0 col-md-0 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Dealine</p>
-								</div>
-								<div class='task-rate col-xl-2 col-lg-4 col-md-2 border border-top-0 border-left-0 border-right-0'>
-									<p class="mb-0 p-1">Trạng thái</p>
-								</div>								
-							</div>
-						</div>	
-						<div class="e__task__infomation">
-						<?php
-								require_once("../connect_db.php");
-                                require_once("task_and_dayOff_db.php");
-								$sql = "SELECT * FROM NHIEMVU WHERE trangThai != 'canceled' ORDER BY hanThucHien";
-								$result = connect_db()->query($sql);
-
-								while ($row = $result->fetch_assoc()) {
-									$idNV = $row['maNhiemVu'];
-									$name = $row['tenNhiemVu'];
-									$desc = $row['moTa'];
-									$time = $row['hanThucHien'];
-									$condition = $row['trangThai'];
-
-									// onclick='moveToTaskInfomationPage();
-									echo	"<div class='d-flex task-list''>
-												<div class='task-name__heading col-xl-2 col-lg-4 col-md-3 col-sm-12 col-12 border border-top-0 border-left-0'>
-													<p class='task-name  mb-0 p-1'> <a class='' href='task_infomation.php?id=$idNV'> $name </a></p>
-												</div>
-												<div class='task-description__heading col-xl-6 col-lg-4 col-md-7 border border-top-0 border-left-0'>
-													<p class='task-description mb-0 p-1'>$desc</p>
-												</div>
-												<div class='task-time col-xl-2 border border-top-0 border-left-0'>
-													<p class='mb-0 p-1'>$time</p>
-												</div>
-												<div class='task-time col-xl-2 border border-top-0 border-left-0'>
-													<p id='employee__task-rate' class='mb-0 p-1'>$condition</p>
-												</div>										
-											</div>";
-								}
-							?>		
-							
-							
-						</div>
+                <div class="dayOff-content bg-success">
+					<h5 class="p-2 d-flex justify-content-center bg-dark text-white tex-center">
+						<i class="fas fa-hand-point-left"></i>
+						Danh sách đơn xin nghỉ phép
+					</h5>
+					<div class="dayOff-body">
+					    <div class="row">
+						    <div class="col-xl-2">
+                                <p class="mb-0">Mã đơn</p>
+                            </div>
+                            <div class="col-xl-6">
+                                <p class="mb-0">Lý do nghỉ</p>
+                            </div>
+                            <div class="col-xl-2">
+                                <p class="mb-0">Ngày viết đơn</p>
+                            </div>
+                            <div class="col-xl-2">
+                                <p class="mb-0">Kết quả phê duyệt</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dayOff-list__body border">
+                        <div class=".scrollable-task">
+                            <div class="row">
+                                <?php
+                                    require_once("../connect_db.php");
+                                    // $idSql = "SELECT maNhanVien FROM NhanVien";
+                                    $sql = "select * from DonXinNghiPhep";
+                                    $result = connect_db()->query($sql);
+    
+                                    while ($row = $result->fetch_assoc()) {
+                                        $idForm = $row['maDon'];
+                                        $reason = $row['lyDo'];
+                                        $dayCreate = $row['ngayTao'];
+                                        $conditionDayOff = $row['trangThai'];								
+                                        echo "
+                                            <div class='col-xl-2'>
+                                                <p class='mb-0'>$idForm</p>
+                                            </div>
+                                            <div class='col-xl-6'>
+                                                <p class='mb-0'>$reason</p>
+                                            </div>
+                                            <div class='col-xl-2'>
+                                                <p class='mb-0'>$dayCreate</p>
+                                            </div>
+                                            <div class='col-xl-2'>
+                                                <p class='mb-0' text-center>$conditionDayOff</p>
+                                            </div>";
+                                    }
+                                ?>
+                            </div>
+                        </div>				
+						
 					</div>
+                    <div class="dayOff-list__footer d-flex justify-content-between">
+                        <?php
+                            $sql = "select * from DonXinNghiPhep";
+                            $result = connect_db()->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                $dayLeftDayOff = $row['soNgayNghi'];
+                            }
+                        ?>
+                        <p>Số ngày đã nghỉ: <?= $dayLeftDayOff ?> </p>
+                        <p>Tổng số ngày có thể nghỉ : 12 </p>                    
+                    </div>
+
 				</div>
+			
 			</div>
     	</div>	
 	</div>
@@ -224,6 +245,103 @@
             </div>
          </div>
 	</div>
+
+
+	<!-- Day off list -->
+	<div class="modal fade" id="day-off-list-dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+	
+				<div class="modal-header">
+					<h4 class="modal-title">Danh sách đơn xin nghỉ phép</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xl-12">
+							<!-- <div class="modal-list text-center">
+								<p>Danh sách đơn xin nghỉ phép</p>
+							</div> -->
+							<div class='modal-list-items scrollable'>
+							
+								<div class="modal-list-item border">
+									<!-- <div class='modal-list-name'>
+										<h5 class='mb-0'>Danh sách đơn xin nghỉ phép</h5>
+									</div> -->
+									<div class="modal-list-info">
+										<div class="modal-list__heading">
+											<div class="row">
+												<div class="col-xl-2">
+													<p>Mã đơn</p>
+												</div>
+												<div class="col-xl-2">
+													<p>Lý do</p>
+												</div>
+												<div class="col-xl-4">
+													<p>Ngày viết đơn</p>
+												</div>
+												<div class="col-xl-4">
+													<p>Kết quả phê duyệt</p>
+												</div>
+											</div>
+										</div>
+										<div class="modal-list__body">
+											<div class="row">
+												<?php
+													// $idSql = "SELECT maNhanVien FROM NhanVien";
+													$sql = "select * from DonXinNghiPhep	";
+													$result = connect_db()->query($sql);
+	
+													while ($row = $result->fetch_assoc()) {
+														$idForm = $row['maDon'];
+														$reason = $row['lyDo'];
+														$dayCreate = $row['ngayTao'];
+														$conditionDayOff = $row['trangThai'];								
+														echo "
+															<div class='col-xl-2'>
+																<p>$idForm</p>
+															</div>
+															<div class='col-xl-2'>
+																<p>$reason</p>
+															</div>
+															<div class='col-xl-4'>
+																<p>$dayCreate</p>
+															</div>
+															<div class='col-xl-4'>
+																<p>$conditionDayOff</p>
+															</div>";
+													}
+												?>
+	
+											</div>
+
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+	
+				<div class="modal-footer d-flex justify-content-between">
+					<?php
+						$sql = "select * from DonXinNghiPhep";
+						$result = connect_db()->query($sql);
+
+						while ($row = $result->fetch_assoc()) {
+							$dayLeftDayOff = $row['soNgayNghi'];
+						}
+					?>
+					<p>Số ngày đã nghỉ: <?= $dayLeftDayOff ?> </p>
+					<p>Tổng số ngày có thể nghỉ : 15 </p>
+				</div>            	
+			</div>
+		<div>
+	</div>
+
 
 	<!-- message response -->
 	

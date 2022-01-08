@@ -876,3 +876,116 @@ function loadTasks() {
     });
 }
 // loadTasks();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -----------------------Employee---------------------------------------- //
+// ------------------------index.php---------------------------------------- //
+// Lấy thông tin task có trạng thái new và render ra giao diện
+
+const addAPI = 'http://localhost:8080/employee/send_dayOff_task.php';
+const addAPIInputTask = 'http://localhost:8080/employee/send_file_task.php';
+const getNewTask = 'http://localhost:8080/employee/get_new_task.php';
+
+
+function moveToGetAllTaskPage() {
+  window.location.href = 'index.php';
+}
+
+function moveToGetNewTaskPage() {
+  window.location.href = 'get_new_task.php';
+}
+
+function moveToGetCompleteTaskPage() {
+  window.location.href = 'get_completed_task.php';
+}
+
+function moveToGetRejectedTaskPage() {
+  window.location.href = 'get_rejected_task.php';
+}
+
+function moveToGetInProgressTaskPage() {
+  window.location.href = 'get_inprogress_task.php';
+}
+
+function moveToGetWaitingTaskPage() {
+  window.location.href = 'get_waiting_task.php';
+}
+
+function moveToTaskInfomationPage() {
+  window.location.href = 'task_infomation.php';
+  
+}
+
+
+function moveToDayOffListPage() {
+  window.location.href = 'dayOff_list.php';
+}
+
+function addDayOffForm(e) {
+  e.preventDefault();
+  // console.log("stopped")
+  let maNVDayOff = $('#maNVDayOff').val()
+  let dayDayOff = $('#dayDayOff').val()
+  let reasonDayOff = $('#reasonDayOff').val()
+  let fileDayOff = $('#fileDayOff').val()
+  
+  // Kiểm tra dữ liệu có rỗng hay không
+  if (maNVDayOff == '' || dayDayOff == '' || reasonDayOff == '' || fileDayOff == '') {
+      $('.empty').removeClass('d-none')
+  } else {
+      $('.empty').addClass('d-none')
+  }
+
+  let data = {
+            "maNVDayOff":maNVDayOff,
+            "dayDayOff":dayDayOff,
+            "reasonDayOff":reasonDayOff,
+            "fileDayOff":fileDayOff,
+        }
+
+  fetch(addAPI, {
+            'method': 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+  .then(res => res.json())
+  // .then(data => {
+        //         if (data.code === 0) {
+  // 			console.log(0)
+                    // $('#day-off-dialog').modal('toggle')
+                    // $('#responseMess').html(data.message);
+                    // $('#message-respone').modal('show');
+                    
+                    // $('tbody').children().remove()
+                    // loadTasks()
+                // } else {
+      // 	console.log(1)
+                    // $('#add-dialog').modal('toggle')
+                    // $('#responseMess').html(data.message);
+                    // $('#message-respone').modal('show');
+                // }
+            // })
+  }
