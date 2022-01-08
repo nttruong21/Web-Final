@@ -31,9 +31,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	<link rel="stylesheet" href="../style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<title>Trưởng Phòng</title>
+    <style>
+       
+    </style>
 </head>
 
 <body>
@@ -78,13 +81,15 @@
 				<ul class="menu ">
 					<li class="create-task add-task " ><a href="form_add.php" class="d-flex justify-content-between text-success"><i class="fas fa-plus-circle" ></i>   Tạo Task</a></li>
                     <div class="list-group">
-                        <a href="index.php" class="list-group-item list-group-item-action active">
-                        <i class="fas fa-book"></i>   Tất cả Task
+                        <a href="index.php" class="list-group-item list-group-item-action activee">
+                        <i class="fas fa-tasks"></i>  Tất cả Task
                         </a>
-                        <a href="progress.php" class="list-group-item list-group-item-action "><i class="fas fa-spinner"></i> Task in progress</a>
                         <a href="newTask.php" class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Task Mới</a>
+                        <a href="progress.php" class="list-group-item list-group-item-action "><i class="fas fa-spinner"></i> Task in progress</a>
+                        <a href="waiting.php" class="list-group-item list-group-item-action"> <i class="fas fa-stopwatch"></i> Task Waiting</a>
+                        <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
-                        <a href="complete.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
+                        <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
                         
                        
                     </div>
@@ -93,13 +98,8 @@
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
 				<div class="d-flex">
-					<div class="p-2">
-						<input type="checkbox" id="choose-all" name="choose-all">
-						<label for="choose-all">Chọn tất cả</label>
-					</div>
-					<div class="p-2"><i class="fas fa-redo-alt"></i>Tải lại</div>
 					<div class="ml-auto p-2 d-flex">
-						<p>Tổng số Task:</p>
+						<p>Tổng số Task: </p>
 						<h5 class='countTask'></h5>
 					</div>
 				</div>
@@ -278,15 +278,65 @@
       fetch(readAPI)
         .then(response => response.json())
           .then(data => {
+             
             data.forEach(task => {
+               
               let tr = $('<tr></tr>')
-							// countTask = countTask+1;
-                tr.html(`
+				
+              // countTask = countTask+1;
+        
+                // console.log(data)
+                if (task.trangThai === 'IS PROGRESS'){
+                    tr.html(`
                 
-                  <td><span class="badge badge-success">${task.trangThai}</span></td>
-                  <td><a href="infor.php?maNVu=${task.maNhiemVu}">${task.tenNhiemVu}</a></td>
-                  <td>${task.hanThucHien}</td>
-                `)
+                        <td><span class="badge mission-status-color badge-primary" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else if (task.trangThai === 'CANCELED'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-danger" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else if (task.trangThai === 'REJECTED'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-warning" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else if (task.trangThai === 'WAITING'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-secondary" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else if (task.trangThai === 'COMPLETED'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-info" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else{
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-success" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }
+                 
+
                 $('#list-task').append(tr)
 								
             })
@@ -296,61 +346,7 @@
 
     
 		//====================thêm task mới==========================
-    function addTask(e) {
-            e.preventDefault()
-
-            // console.log($('#file').files[0])
-
-            let maNVu = $('#maNVu').val()
-            let tenNVu = $('#tenNVu').val()
-            let maNVien = $('#maNVien').val()
-            let maPB = $('#maPB').val()
-            let hanTH = $('#time').val()
-            let moTa = $('#moTa').val()
-            let tapTin = $('#file').val()
-            let trangThai = $('#trangThai').val()
-            
-            if (maNVu == '' || tenNVu == '' || maNVien == '' || maPB == '' || hanTH == '' || moTa == '' || tapTin == '' || trangThai == '') {
-                $('.empty').removeClass('d-none')
-                return
-            } else {
-                $('.empty').addClass('d-none')
-            }
-            let data = {
-                "maNVu":maNVu,
-                "tenNVu":tenNVu,
-                "maNVien":maNVien,
-                "maPB":maPB,
-                "hanTH":hanTH,
-                "moTa":moTa,
-                "tapTin":tapTin,
-                "trangThai":trangThai
-            }
-            fetch(addAPI, {
-                'method': 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-                
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.code == 0) {
-                        $('#add-dialog').modal('toggle')
-                        $('#responseMess').html(data.message);
-                        $('#message-respone').modal('show');
-                        
-                        $('tbody').children().remove()
-                        loadTasks()
-                    } else {
-                        $('#add-dialog').modal('toggle')
-                        $('#responseMess').html(data.message);
-                        $('#message-respone').modal('show');
-                    }
-                })
-        }
-		
+   
 // chọn ngày
 	$(function(){
    $('.datepicker').datepicker({
@@ -360,7 +356,10 @@
 // chọn file
   
     loadTasks()
+    // console.log(($('.badge').text()=='IS PROGRESS')==true)
+    // if($('.badge').text()=='IS PROGRESS'){
 
+    // }
 
 
 	</script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->

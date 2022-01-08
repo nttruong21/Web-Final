@@ -81,9 +81,9 @@
                         <a href="index.php" class="list-group-item list-group-item-action ">
                             <i class="fas fa-tasks"></i>   Tất cả Task
                         </a>
-                        <a href="newTask.php" class="list-group-item list-group-item-action activee"><i class="fas fa-star"></i> Task Mới</a>
+                        <a href="newTask.php" class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Task Mới</a>
                         <a href="progress.php" class="list-group-item list-group-item-action "><i class="fas fa-spinner"></i> Task in progress</a>
-                        <a href="waiting.php" class="list-group-item list-group-item-action"> <i class="fas fa-stopwatch"></i> Task Waiting</a>
+                        <a href="waiting.php" class="list-group-item list-group-item-action activee"> <i class="fas fa-stopwatch"></i> Task Waiting</a>
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
@@ -111,12 +111,12 @@
                     <?php
                         require_once('../connect_db.php');
                         $maPB = $_SESSION['maPB'];
-                        $sql = "SELECT * FROM NhiemVu where maPhongBan = '$maPB' and trangThai='NEW' Order by maNhiemVu DESC";
+                        $sql = "SELECT * FROM NhiemVu where maPhongBan = '$maPB' and trangThai='WAITING' Order by maNhiemVu DESC";
                         $conn = connect_db();
                         $result = $conn->query($sql);
                         
                         if ($result->num_rows == 0){
-                            die('Kêt nối thành công, Nhưng không có dữ liệu');
+                            die();
                         }
                     
                         while ($row = $result->fetch_assoc()){
@@ -125,16 +125,19 @@
                             $time = $row['hanThucHien'];
                             $manv = $row['maNhiemVu'];
                             echo "<tr>";
-                            echo  "<td><span class='badge badge-success'>$trangThai</span></td>";
+                            echo  "<td><span class='badge badge-secondary'>$trangThai</span></td>";
                             echo  " <td><a href='infor.php?maNVu=$manv'  class='tenNhiemVu'>$tenNhiemVu</a></td>";
                             echo  " <td>$time</td>";
                             echo  "</tr>";
                            
                         }
-                       
+                        
                     ?>
+                   
                 </tbody>
+                
             </table>
+                       
 					</div>
 				</div>
 		</div>
@@ -150,7 +153,6 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<script>
-		
 		
 // chọn ngày
 	$(function(){

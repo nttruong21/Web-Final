@@ -31,7 +31,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	<link rel="stylesheet" href="../style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<title>Trưởng Phòng</title>
 </head>
@@ -79,28 +79,21 @@
 					<li class="create-task add-task " ><a href="form_add.php" class="d-flex justify-content-between text-success"><i class="fas fa-plus-circle" ></i>   Tạo Task</a></li>
                     <div class="list-group">
                         <a href="index.php" class="list-group-item list-group-item-action ">
-                        <i class="fas fa-book"></i>   Tất cả Task
+                            <i class="fas fa-tasks"></i>   Tất cả Task
                         </a>
-                        <a href="progress.php" class="list-group-item list-group-item-action active"><i class="fas fa-spinner"></i> Task in progress</a>
                         <a href="newTask.php" class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Task Mới</a>
+                        <a href="progress.php" class="list-group-item list-group-item-action activee"><i class="fas fa-spinner"></i> Task in progress</a>
+                        <a href="waiting.php" class="list-group-item list-group-item-action"> <i class="fas fa-stopwatch"></i> Task Waiting</a>
+                        <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
-                        <a href="canceled.php" class="list-group-item list-group-item-action "><i class="fas fa-trash"></i> Task đã hủy</a>
+                        <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
+                        
                     </div>
 				</ul>
               
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
-				<div class="d-flex">
-					<div class="p-2">
-						<input type="checkbox" id="choose-all" name="choose-all">
-						<label for="choose-all">Chọn tất cả</label>
-					</div>
-					<div class="p-2"><i class="fas fa-redo-alt"></i>Tải lại</div>
-					<div class="ml-auto p-2 d-flex">
-						<p>Tổng số Task:</p>
-						<h5 class='countTask'></h5>
-					</div>
-				</div>
+				
 
 				<div class="all-task">
 					<div class="task-content">
@@ -110,12 +103,36 @@
                         <th>TRẠNG THÁI</th>
                         <th>TÊM NHIỆM VỤ</th>
                         <th>THỜI GIAN</th>
-                        <th>CHỨC NĂNG</th>
                     </tr>
                 </thead>
                 <!-- manager list task -->
+
                 <tbody id='list-task'>
-            
+                    <?php
+                        require_once('../connect_db.php');
+                        $maPB = $_SESSION['maPB'];
+                        $sql = "SELECT * FROM NhiemVu where maPhongBan = '$maPB' and trangThai='IS PROGRESS' Order by maNhiemVu DESC";
+                        $conn = connect_db();
+                        $result = $conn->query($sql);
+                        
+                        if ($result->num_rows == 0){
+                            die('Kêt nối thành công, Nhưng không có dữ liệu');
+                        }
+                    
+                        while ($row = $result->fetch_assoc()){
+                            $trangThai = $row['trangThai'];
+                            $tenNhiemVu = $row['tenNhiemVu'];
+                            $time = $row['hanThucHien'];
+                            $manv = $row['maNhiemVu'];
+                            echo "<tr>";
+                            echo  "<td><span class='badge badge-primary'>$trangThai</span></td>";
+                            echo  " <td><a href='infor.php?maNVu=$manv'  class='tenNhiemVu'>$tenNhiemVu</a></td>";
+                            echo  " <td>$time</td>";
+                            echo  "</tr>";
+                           
+                        }
+                       
+                    ?>
                 </tbody>
             </table>
 					</div>
@@ -124,141 +141,8 @@
 		</div>
 			
 
-		 <!-- add dialog -->
-		<div class="modal fade" id="add-dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h4 class="modal-title">Add new task</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <form onsubmit="addTask(event)">
-
-                    <div class="modal-body">
-
-                        <p class="text-center text-danger d-none empty">Please fill out all of the information of task</p>
-                        <div class="form-group">
-                            <label for="maNVu">Mã nhiệm vụ</label>
-                            <input type="text" placeholder="Nhập mã nhiệm vụ" class="form-control" id="maNVu" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="tenNVu">Tên nhiệm vụ</label>
-                            <input type="text" placeholder="Nhập tên nhiệm vụ" class="form-control" id="tenNVu" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="maNVien">mã nhân viên</label>
-                            <input type="text" readonly class="form-control" id="maNVien" value=<?=$_SESSION['maNhanVien']?> />
-                        </div>
-                        <div class="form-group">
-                            <label for="maPB">mã phòng ban</label>
-                            <input type="text" readonly class="form-control" id="maPB" value=<?=$_SESSION['maPB']?> />
-                        </div>
-                        <!-- <div class="form-group">
-                            <label for="time">hạn thực hiện</label>
-                            <input type="text" placeholder="Thời gian thực hiện" class="form-control" id="time" required />
-                        </div> -->
-
-                        <div class="form-group">
-                            <label for="time">Start date:</label>
-                            <input type="date" id="time" name="trip-start"
-                                value="2022-01-01"
-                                min="2022-01-01" max="3000-12-31">
-                        </div>
-                        <div class="form-group">
-                            <label for="moTa">mô tả</label>
-                            <textarea rows="2" id="moTa" class="form-control" placeholder="Nhập mô tả" required></textarea>
-
-                        </div>
-                        <div class="form-group">
-                            <input type="file" name="myFile" id="file">
-                        </div>
-                        <!-- <div class="form-group">
-                            <label for="file">Tập tin</label>
-                            <input type="text" placeholder="Chọn tập tin" class="form-control" id="file" required />
-                        </div> -->
-                        <div class="form-group">
-                            <label for="trangThai">Trạng thái</label>
-                            <input type="text" readonly class="form-control" id="trangThai" value="NEW" />
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- information dialog -->
-    <div class="modal fade" id="info-dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h4 class="modal-title">INFORMATION TASK</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <form>
-
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="tenNVu">Tên nhiệm vụ</label>
-                            <p>aaaa</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="maNVien">Tên nhân viên</label>
-                            <p>Phạm tùng</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="time">Thời gian thực hiện</label>
-                            <p>12:20</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="moTa">mô tả</label>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum labore nam praesentium vel laudantium? Facere dignissimos eius velit magnam, deleniti sed dolorem sapiente incidunt et aliquid ipsa enim saepe adipisci.</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="file">Tệp đính kèm</label>
-                            <p>aa.txt</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="trangThai">Trạng thái</label>
-                            <p>NEW</p>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="abc"> -->
-     <!-- message respone -->
-   <div class="modal fade" id="message-respone">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h4 class="modal-title">Notification</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-                    <p id="responseMess"></p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
+		
+ 
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -266,95 +150,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<script>
-		const readAPI = 'http://localhost:8080/manager/api/get_task.php'
-        const addAPI = 'http://localhost:8080/manager/api/add_task.php'
-  // const deleteAPI = 'http://localhost/lab9/delete_product.php'
-  // const updateAPI = 'http://localhost/lab9/update_product.php'
-
-    function loadTasks() {
-			const countTask = 0;
-      fetch(readAPI)
-        .then(response => response.json())
-          .then(data => {
-            data.forEach(task => {
-              let tr = $('<tr data-toggle="modal" data-target="#info-dialog"></tr>')
-							// countTask = countTask+1;
-                tr.html(`
-                  <td><span class="badge badge-success">${task.trangThai}</span></td>
-                  <td>${task.tenNhiemVu}</td>
-                  <td>${task.hanThucHien}</td>
-                  
-									<td>
-                    <button onclick="" class="btn btn-dark" data-toggle="modal" data-target="#edit-dialog">
-                      <i class="fa fa-edit action"></i>
-                    </button>
-                    
-                  </td>
-                `)
-                $('#list-task').append(tr)
-								
-            })
-						document.querySelector('.countTask').innerHTML = (data.length);
-          })
-    } 
-
-    
-		//====================thêm task mới==========================
-    function addTask(e) {
-            e.preventDefault()
-
-            // console.log($('#file').files[0])
-
-            let maNVu = $('#maNVu').val()
-            let tenNVu = $('#tenNVu').val()
-            let maNVien = $('#maNVien').val()
-            let maPB = $('#maPB').val()
-            let hanTH = $('#time').val()
-            let moTa = $('#moTa').val()
-            let tapTin = $('#file').val()
-            let trangThai = $('#trangThai').val()
-            
-            if (maNVu == '' || tenNVu == '' || maNVien == '' || maPB == '' || hanTH == '' || moTa == '' || tapTin == '' || trangThai == '') {
-                $('.empty').removeClass('d-none')
-                return
-            } else {
-                $('.empty').addClass('d-none')
-            }
-            let data = {
-                "maNVu":maNVu,
-                "tenNVu":tenNVu,
-                "maNVien":maNVien,
-                "maPB":maPB,
-                "hanTH":hanTH,
-                "moTa":moTa,
-                "tapTin":tapTin,
-                "trangThai":trangThai
-            }
-            fetch(addAPI, {
-                'method': 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-                
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.code == 0) {
-                        $('#add-dialog').modal('toggle')
-                        $('#responseMess').html(data.message);
-                        $('#message-respone').modal('show');
-                        
-                        $('tbody').children().remove()
-                        loadTasks()
-                    } else {
-                        $('#add-dialog').modal('toggle')
-                        $('#responseMess').html(data.message);
-                        $('#message-respone').modal('show');
-                    }
-                })
-        }
-		
+	
 // chọn ngày
 	$(function(){
    $('.datepicker').datepicker({
@@ -363,7 +159,7 @@
 	});
 // chọn file
 	
-    loadTasks()
+    // loadTasks()
 
 
 
