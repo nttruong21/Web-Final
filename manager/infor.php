@@ -91,7 +91,7 @@ if (isset($_POST['submit'])){
             $stm->execute();
             if( $stm->affected_rows == 1){
                 
-                header("Location: index.php");
+                header("Location: canceled.php");
             }else{
                 $message = "cập nhật thất bại";
             }
@@ -172,6 +172,7 @@ if (isset($_POST['submit'])){
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
                        
                     </div>
 				</ul>
@@ -232,7 +233,7 @@ if (isset($_POST['submit'])){
                                 
                                 <div class="form-group">
                                     <label for="maPB">mã phòng ban</label>
-                                    <input type="text" value="<?=$row['maPhongBan']?>" class="form-control" id="maPB" name="maPB" value=<?=$_SESSION['maPB']?> />
+                                    <input type="text" value="<?=$row['maPhongBan']?>" class="form-control" id="maPB" name="maPB" />
                                 </div>
                                 <!-- <div class="form-group">
                                     <label for="time">hạn thực hiện</label>
@@ -241,7 +242,7 @@ if (isset($_POST['submit'])){
 
                                 <div class="form-group">
                                     <label for="time">Start date:</label>
-                                    <input type="text" name="time" value="<?php echo date('Y/m/d',strtotime($row['hanThucHien']))?>" class="form-control" id="maPB" value=<?=$_SESSION['maPB']?> />
+                                    <input type="text" name="time" value="<?php echo date('Y/m/d',strtotime($row['hanThucHien']))?>" class="form-control"  />
 
                                 </div>
                                 <div class="form-group">
@@ -264,7 +265,7 @@ if (isset($_POST['submit'])){
                                 </div>
 
                                 <?php
-                                    if ($row['trangThai'] == 'WAITING' || $row['trangThai'] == 'REJECTED'){
+                                    if ($row['trangThai'] == 'WAITING'){
                                         $sql = "SELECT * FROM KetQuaGui where maNhiemVu = '".$_GET['maNVu']."'";
                                         $conn = connect_db();
                                         $result2 = $conn->query($sql);

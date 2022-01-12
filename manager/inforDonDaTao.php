@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	
+	require_once('../connect_db.php');
 	// Kiểm tra người dùng đã đăng nhập chưa 
 	if (!isset($_SESSION['maNhanVien'])) {
 		header("Location: ../login.php");
@@ -19,7 +19,18 @@
     if (!$_SESSION['maChucVu'] == 'TP') {
         header("Location: /no_access.html");
     }
+    
 
+
+
+  
+        $sql = "SELECT * FROM DonXinNghiPhep where maDon = ".$_GET['maDon']."";
+        $conn = connect_db();
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+
+        // lấy thông tin của 1 task
+       
 		
 ?>
 
@@ -85,85 +96,67 @@
                         <a href="progress.php" class="list-group-item list-group-item-action "><i class="fas fa-spinner"></i> Task in progress</a>
                         <a href="waiting.php" class="list-group-item list-group-item-action"> <i class="fas fa-stopwatch"></i> Task Waiting</a>
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
-                        <a href="complete.php" class="list-group-item list-group-item-action activee"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
+                        <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
-                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
-                        
+                        <a href="calendar.php" class="list-group-item list-group-item-action activee"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
+                       
                     </div>
 				</ul>
               
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
-				
-
+				<div class="d-flex">
+					<div class="p-2">
+						<input type="checkbox" id="choose-all" name="choose-all">
+						<label for="choose-all">Chọn tất cả</label>
+					</div>
+					<div class="p-2"><i class="fas fa-redo-alt"></i>Tải lại</div>
+					<div class="ml-auto p-2 d-flex">
+						<p>Tổng số Task:</p>
+						<h5 class='countTask'></h5>
+					</div>
+				</div>
+                
 				<div class="all-task">
 					<div class="task-content">
-						<table class="table able-striped border ">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>TRẠNG THÁI</th>
-                        <th>TÊM NHIỆM VỤ</th>
-                        <th>THỜI GIAN</th>
-                    </tr>
-                </thead>
-                <!-- manager list task -->
+                        <h3 class="p-2 d-flex justify-content-center bg-dark text-white">THÔNG TIN ĐƠN XIN NGHĨ PHÉP</h3>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="modal-body mx-5">
+                                <div class="form-group">
+                                    <label for="maNVien">Mã nhân viên</label>
+                                    <input type="text" value="<?=$row['maNhanVien']?>"class="form-control" id="maNVien" name="maNVien" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="time">sô ngày nghĩ</label>
+                                    <input type="text" value="<?=$row['soNgayNghi']?>"class="form-control" id="time" name="time" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="moTa">lý do</label>
+                                    <input  id="moTa" name="moTa" class="form-control" readonly value="<?php echo $row['lyDo'];?>" ></input>
+                                
+                                </div>
+                                <div class="form-group">
+                                    <label for="fileCurrent">Tệp đính kèm</label>
+                                    <div>Nhấn vào tên file để tải về: <a href='downloadFile.php?maNVien=<?php echo $row['maNhanVien'];?>'><?php echo $row['tapTin'];?></a></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trangThai">Trạng thái</label>
+                                    <input type="text" readonly  class="form-control" id="m-trangThai"  name="trangThai" value="<?=$row['trangThai']?>" />
+                                </div>
+                                
+                            </div>
 
-                <tbody id='list-task'>
-                    <?php
-                        require_once('../connect_db.php');
-                        $maPB = $_SESSION['maPB'];
-                        $sql = "SELECT * FROM NhiemVu where maPhongBan = '$maPB' and trangThai='COMPLETED' Order by maNhiemVu DESC";
-                        $conn = connect_db();
-                        $result = $conn->query($sql);
-                        
-                        if ($result->num_rows == 0){
-                            die('Kêt nối thành công, Nhưng không có dữ liệu');
-                        }
-                    
-                        while ($row = $result->fetch_assoc()){
-                            $trangThai = $row['trangThai'];
-                            $tenNhiemVu = $row['tenNhiemVu'];
-                            $time = $row['hanThucHien'];
-                            $manv = $row['maNhiemVu'];
-                            echo "<tr>";
-                            echo  "<td><span class='badge badge-info'>$trangThai</span></td>";
-                            echo  " <td><a href='infor.php?maNVu=$manv'  class='tenNhiemVu'>$tenNhiemVu</a></td>";
-                            echo  " <td>$time</td>";
-                            echo  "</tr>";
                            
-                        }
-                       
-                    ?>
-                </tbody>
-            </table>
+                        </form>
 					</div>
 				</div>
 		</div>
 		</div>
 			
 
-		
     <!-- <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="abc"> -->
      <!-- message respone -->
-   <div class="modal fade" id="message-respone">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h4 class="modal-title">Notification</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-                    <p id="responseMess"></p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
+  
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -171,16 +164,19 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<script>
-    //        
+		
+    //====================thêm task mới==========================
+    // set disabled cho button update 
+  
 // chọn ngày
 	$(function(){
    $('.datepicker').datepicker({
       format: 'dd-mm-yyyy'
     });
 	});
-// chọn file
-	
-    // loadTasks()
+
+  
+
 
 
 

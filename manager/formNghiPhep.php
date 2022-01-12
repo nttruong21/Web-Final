@@ -19,119 +19,61 @@
     if (!$_SESSION['maChucVu'] == 'TP') {
         header("Location: /no_access.html");
     }
-if (isset($_POST['submit'])){
-    $message = '';
-    if (!isset($_POST['maNVu'])  || !isset($_POST['time'])
-        || !isset($_POST['moTa'])){
+    if(isset($_POST['guiDon'])) {
+        $message = '';
+        if (!isset($_POST['maNVien'])  || !isset($_POST['time']) || !isset($_POST['lyDo'])){
           $message = 'vui lòng nhập đầy đủ thông tin!!';
           
-        }else if (empty($_POST['maNVu']) || empty($_POST['time'])
-        || empty($_POST['moTa'])){
+        }else if (empty($_POST['maNVien']) || empty($_POST['time']) || empty($_POST['lyDo'])){
           $message = 'KHông để giá trị rỗng!!';
           
         }else{
-            // cập nhật  lại task
-          if (!isset($_FILES["file"]))
+            $maNVien = $_POST['maNVien'];
+            $maPBan = $_SESSION['maPB'];
+            $soNgayNghi = $_POST['time'];
+            $lyDo = $_POST['lyDo'];
+            $ngayTao = date("Y-m-d");
+            $trangThai = $_POST['trangThai'];
+
+            if (!isset($_FILES["file"]))
             {
                 $message =  "Dữ liệu không đúng cấu trúc";
                 
             }
-          $maNVu = $_POST['maNVu'];
-          $hanTH = $_POST['time'];
-          $moTa = $_POST['moTa'];
-          $tapTin = $_FILES["file"]['name'];
-        
-          // $tapTin = $_POST["file"];
+
+            $tapTin = $_FILES["file"]['name'];
             if ($tapTin == ''){
-                
-                $tapTin = $_POST['fileCurrent'];
-                $sql1 = "UPDATE NhiemVu SET  hanThucHien = ?, moTa = ?, trangThai = 'REJECTED' WHERE maNhiemVu = '$maNVu'";
-                $conn1 = connect_db();
-                $stm1 = $conn1->prepare($sql1);
-                $stm1->bind_param('ss',$hanTH, $moTa);
-                $stm1->execute();
-
-                
-                $sql3 = "SELECT * FROM KetQuaTraVe where maNhiemVu='$maNVu'";
-                $conn3 = connect_db();
-                $result3 = $conn3->query($sql3);
-                $count = $result3->num_rows;
-                $rowKQTV = $result3->fetch_assoc();
-            //    echo $rowKQTV['maNhiemVu'];
-            //    echo $rowKQTV['noiDung'];
-            //    echo $rowKQTV['tapTin'];
-            //    echo $rowKQTV['hanThucHien'];
-            //     die;
-                
-                if( $count > 0){
-                    // $maNVu = $row3['maNhiemVu'];
-                    $sql2 = "UPDATE KetQuaTraVe SET  noiDung = ?, tapTin = ?, hanThucHien = ? WHERE maNhiemVu = '$maNVu'";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss',$moTa, $tapTin, $hanTH);
-                    $stm2->execute();
-                    
-
-                    // die;
-                }else{
-                    $sql2 = "INSERT INTO KetQuaTraVe VALUES(?, ?, ?,?)";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('ssss', $maNVu, $moTa, $tapTin, $hanTH);
-                    $stm2->execute();
-                }
-
-                
-            }else{
+                $sql2 = "INSERT INTO DonXinNghiPhep (maNhanVien, maPhongBan, soNgayNghi, trangThai, lyDo, ngayTao, tapTin) VALUES(?, ?, ?,?, ?, ?,?)";
+                $conn2 = connect_db();
+                $stm2 = $conn2->prepare($sql2);
+                $stm2->bind_param('sssssss', $maNVien, $maPBan, $soNgayNghi, $trangThai, $lyDo, $ngayTao, $tapTin);
+                $stm2->execute();
+                if($stm2->affected_rows == 1){
+            
+                    header("Location: calendar.php");
+                  }else{
+                    $message = "cập nhật thất bại";
+                  }
+            
+            }else {
                 $tname = $_FILES["file"]["tmp_name"];
                 $uploads_dir = '../files';
-                $sql1 = "UPDATE NhiemVu SET hanThucHien = ?, moTa = ?, tapTin = ?, trangThai = 'REJECTED' WHERE maNhiemVu = '$maNVu'";
-                $conn1 = connect_db();
-                $stm1 = $conn1->prepare($sql1);
-                $stm1->bind_param('sss',$hanTH, $moTa, $tapTin);
-                $stm1->execute();
 
-                $sql3 = "SELECT * FROM KetQuaTraVe where maNhiemVu='$maNVu'";
-                $conn3 = connect_db();
-                $result3 = $conn3->query($sql3);
-                $count = $result3->num_rows;
-                
-                
-                
-                if( $count > 0){
-                    // $maNVu = $row3['maNhiemVu'];
-                    $sql2 = "UPDATE KetQuaTraVe SET  noiDung = ?, tapTin = ?, hanThucHien = ? WHERE maNhiemVu = '$maNVu'";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss',$moTa, $tapTin, $hanTH);
-                    $stm2->execute();
-
-                    // die;
+                $sql2 = "INSERT INTO DonXinNghiPhep (maNhanVien, maPhongBan, soNgayNghi, trangThai, lyDo, ngayTao, tapTin) VALUES(?, ?, ?,?, ?, ?,?)";
+                $conn2 = connect_db();
+                $stm2 = $conn2->prepare($sql2);
+                $stm2->bind_param('sssssss', $maNVien, $maPBan, $soNgayNghi, $trangThai, $lyDo, $ngayTao, $tapTin);
+                $stm2->execute();
+                if($stm2->affected_rows == 1){
+                    move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
+                    header("Location: calendar.php");
                 }else{
-                    $sql2 = "INSERT INTO KetQuaTraVe VALUES(?, ?, ?,?)";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('ssss', $maNVu, $moTa, $tapTin, $hanTH);
-                    $stm2->execute();
+                    $message = "cập nhật thất bại";
                 }
-
-                move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
             }
-
-        
-          
         }
     }
 
-   if(isset($_GET['maNVuu']) && !empty($_GET['maNVuu'])){
-        $sql = "SELECT * FROM NhiemVu where maNhiemVu = '".$_GET['maNVuu']."'";
-        $conn = connect_db();
-        $result = $conn->query($sql);
-        $row = $result->fetch_assoc();
-   }
-        // lấy thông tin của 1 task
-       
-		
 ?>
 
 <!DOCTYPE html>
@@ -189,7 +131,7 @@ if (isset($_POST['submit'])){
 				<ul class="menu ">
 					<li class="create-task add-task " ><a href="form_add.php" class="d-flex justify-content-between text-success"><i class="fas fa-plus-circle" ></i>   Tạo Task</a></li>
                     <div class="list-group">
-                    <a href="index.php" class="list-group-item list-group-item-action active">
+                    <a href="index.php" class="list-group-item list-group-item-action ">
                         <i class="fas fa-tasks"></i>   Tất cả Task
                         </a>
                         <a href="newTask.php" class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Task Mới</a>
@@ -198,7 +140,7 @@ if (isset($_POST['submit'])){
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
-                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action activee"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
                        
                     </div>
 				</ul>
@@ -219,34 +161,41 @@ if (isset($_POST['submit'])){
                 
 				<div class="all-task">
 					<div class="task-content">
-                        <h3 class="p-2 d-flex justify-content-center bg-dark text-white">THÔNG TIN PHẢN HỒI</h3>
-                        <form action="formGuiLai.php" method="post" enctype="multipart/form-data">
+                        <h3 class="p-2 d-flex justify-content-center bg-dark text-white">ĐƠN XIN NGHĨ PHÉP</h3>
+                        <form action="" method="post" enctype="multipart/form-data">
                             <div class="modal-body mx-5">
                                 <div class="form-group">
-                                    <label for="maNVu">Mã nhiệm vụ</label>
-                                    <input type="text" value="<?=$row['maNhiemVu']?>"class="form-control" id="maNVu" name="maNVu" readonly />
+                                    <label for="maNVien">Mã nhân viên</label>
+                                    <input type="text" value="<?=$_SESSION['maNhanVien']?>"class="form-control" id="maNVien" name="maNVien" readonly />
                                 </div>
                                 <div class="form-group">
-                                    <label for="time">Start date:</label>
-                                    <input type="text" name="time" value="<?php echo date('Y/m/d',strtotime($row['hanThucHien']))?>" class="form-control" />
+                                    <label for="time">Chọn số ngày nghĩ</label>
+                                    <select name="time" class="form-control">
+                                        <?php
+                                            for($i=1;$i<=15;$i++){
+                                                echo "<option value='$i'>$i</option>";
+                                            }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="moTa">mô tả</label>
-                                    <input  id="moTa" name="moTa" class="form-control" value="<?php echo $row['moTa'];?>" ></input>
+                                    <label for="lyDo">LÝ do</label>
+                                    <textarea rows="2" id="lyDo" class="form-control" name="lyDo" placeholder="Nhập lý do" required></textarea>
                                 
                                 </div>
                                 <div class="form-group">
-                                    <label for="fileCurrent">Tệp hiện tại</label>
-                                    <input  id="fileCurrent" class="form-control my-2" name="fileCurrent" value="<?=$row['tapTin']?>" readonly  ></input>
-                                    <input type="file" name="file" id="file" >
+                                    <label for="file">Tệp đính kèm</label>
+                                    <input type="file" class="form-control" name="file">
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="trangThai">Trạng thái</label>
+                                    <input type="text" readonly  class="form-control" id="m-trangThai"  name="trangThai" value="WAITING" />
+                                </div>
                                 
                             </div>
 
                             <div class="modal-footer">
-                               
-                                <button type="submit" id='sbCancel' name="submit" class="btn btn-info">Gửi</button>
+                                <button type="submit" id='m-smguiDon' name="guiDon" class='btn btn-outline-success '>Gửi đơn</button>
                                 
                             </div>
                         </form>
@@ -269,7 +218,10 @@ if (isset($_POST['submit'])){
 		
     //====================thêm task mới==========================
     // set disabled cho button update 
-   
+    if($('#m-trangThai').attr('value')!='WAITING'){
+        $('#m-smDongY').attr('disabled', true);
+        $('#m-smTuChoi').attr('disabled', true);
+    }
 // chọn ngày
 	$(function(){
    $('.datepicker').datepicker({

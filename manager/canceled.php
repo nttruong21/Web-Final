@@ -87,6 +87,7 @@
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action activee"> <i class="fas fa-trash"></i> Task đã hủy</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
                         
                     </div>
 				</ul>
@@ -94,7 +95,15 @@
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
 				
-
+			<div class="d-flex">
+											<div  class=" p-2 d-flex justify-content-start">
+                        <a href="#"><button type="button" class="btn btn-outline-dark"><i class="fas fa-calendar-alt"></i>  Nghĩ phép</button></a>
+                    	</div>
+					<div class="ml-auto p-2 d-flex">
+						<p>Tổng số Task: </p>
+						<h5 class='countTask'></h5>
+					</div>
+				</div>
 				<div class="all-task">
 					<div class="task-content">
 						<table class="table able-striped border ">

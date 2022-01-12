@@ -19,125 +19,60 @@
     if (!$_SESSION['maChucVu'] == 'TP') {
         header("Location: /no_access.html");
     }
-if (isset($_POST['submit'])){
+if (isset($_POST['xacNhan'])){
     $message = '';
     if (!isset($_POST['maNVu'])  || !isset($_POST['time'])
-        || !isset($_POST['moTa'])){
+        || !isset($_POST['mucDo'])){
           $message = 'vui lòng nhập đầy đủ thông tin!!';
           
         }else if (empty($_POST['maNVu']) || empty($_POST['time'])
-        || empty($_POST['moTa'])){
+        || empty($_POST['mucDo'])){
           $message = 'KHông để giá trị rỗng!!';
           
         }else{
             // cập nhật  lại task
-          if (!isset($_FILES["file"]))
-            {
-                $message =  "Dữ liệu không đúng cấu trúc";
-                
-            }
+       
           $maNVu = $_POST['maNVu'];
           $hanTH = $_POST['time'];
-          $moTa = $_POST['moTa'];
-          $tapTin = $_FILES["file"]['name'];
+          $mucDo = $_POST['mucDo'];
+
+          $dateCurrent = date("Y-m-d");
+          $hanTH = date('Y-m-d',strtotime($hanTH));
+
+          $danhGia = '';
+          if ($dateCurrent > $hanTH){
+            $danhGia = 0;
+          }else{
+            $danhGia = 1;
+          }
         
+
           // $tapTin = $_POST["file"];
-            if ($tapTin == ''){
-                
-                $tapTin = $_POST['fileCurrent'];
-                $sql1 = "UPDATE NhiemVu SET  hanThucHien = ?, moTa = ?, trangThai = 'REJECTED' WHERE maNhiemVu = '$maNVu'";
+           // thay đổi trạng thái khi đã xác nhận hoàn thành
+                $sql1 = "UPDATE NhiemVu SET  trangThai = 'COMPLETED' WHERE maNhiemVu = ?";
                 $conn1 = connect_db();
                 $stm1 = $conn1->prepare($sql1);
-                $stm1->bind_param('ss',$hanTH, $moTa);
+                $stm1->bind_param('s',$maNVu);
                 $stm1->execute();
+                // thêm nhiệm vị hoàn thành
+                $sql2 = "INSERT INTO NhiemVuHoanThanh VALUES(?, ?, ?)";
+                $conn2 = connect_db();
+                $stm2 = $conn2->prepare($sql2);
+                $stm2->bind_param('ssi', $maNVu, $mucDo, $danhGia);
+                $stm2->execute();
+              
 
                 
-                $sql3 = "SELECT * FROM KetQuaTraVe where maNhiemVu='$maNVu'";
-                $conn3 = connect_db();
-                $result3 = $conn3->query($sql3);
-                $count = $result3->num_rows;
-                
-                
-                if( $count > 0){
-                    // $maNVu = $row3['maNhiemVu'];
-                    $sql2 = "UPDATE KetQuaTraVe SET  noiDung = ?, tapTin = ?, hanThucHien = ? WHERE maNhiemVu = '$maNVu'";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss',$moTa, $tapTin, $hanTH);
-                    $stm2->execute();
-
-                    // die;
-                }else{
-                    $sql2 = "INSERT INTO KetQuaTraVe VALUES(?, ?, ?,?)";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('ssss', $maNVu, $moTa, $tapTin, $hanTH);
-                    $stm2->execute();
-                }
-
-                
-            }else{
-                $tname = $_FILES["file"]["tmp_name"];
-                $uploads_dir = '../files';
-                $sql1 = "UPDATE NhiemVu SET hanThucHien = ?, moTa = ?, tapTin = ?, trangThai = 'REJECTED' WHERE maNhiemVu = '$maNVu'";
-                $conn1 = connect_db();
-                $stm1 = $conn1->prepare($sql1);
-                $stm1->bind_param('sss',$hanTH, $moTa, $tapTin);
-                $stm1->execute();
-
-                $sql3 = "SELECT * FROM KetQuaTraVe where maNhiemVu='$maNVu'";
-                $conn3 = connect_db();
-                $result3 = $conn3->query($sql3);
-                $count = $result3->num_rows;
-                
-                
-                if( $count > 0){
-                    // $maNVu = $row3['maNhiemVu'];
-                    $sql2 = "UPDATE KetQuaTraVe SET  noiDung = ?, tapTin = ?, hanThucHien = ? WHERE maNhiemVu = '$maNVu'";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss',$moTa, $tapTin, $hanTH);
-                    $stm2->execute();
-
-                    // die;
-                }else{
-                    $sql2 = "INSERT INTO KetQuaTraVe VALUES(?, ?, ?,?)";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('ssss', $maNVu, $moTa, $tapTin, $hanTH);
-                    $stm2->execute();
-                }
-
-                move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
-            }
+         
 
         
           if( $stm1->affected_rows == 1 &&  $stm2->affected_rows == 1){
             
-            header("Location: index.php");
+            header("Location: complete.php");
           }else{
             $message = "cập nhật thất bại";
           }
         }
-    }else if (isset($_POST['cancel'])){
-        $message = '';
-            $maNVu = $_POST['maNVu'];
-            $trangThai = 'CANCELED';
-        
-            $sql = "UPDATE NhiemVu SET  trangThai = ? WHERE maNhiemVu = '$maNVu'";
-            $conn = connect_db();
-            $stm = $conn->prepare($sql);
-            $stm->bind_param('s',$trangThai);
-            $stm->execute();
-            if( $stm->affected_rows == 1){
-                
-                header("Location: index.php");
-            }else{
-                $message = "cập nhật thất bại";
-            }
-            
-    }else if (isset($_POST['sbGuiLai'])){
-
     }
    
         // lấy thông tin của 1 task
@@ -212,6 +147,7 @@ if (isset($_POST['submit'])){
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
                        
                     </div>
 				</ul>
@@ -225,27 +161,65 @@ if (isset($_POST['submit'])){
 				<div class="all-task">
 					<div class="task-content">
                         <h3 class="p-2 d-flex justify-content-center bg-dark text-white">XÁC NHẬN NHIỆM VỤ</h3>
-                        <form action="formGuiLai.php" method="post" enctype="multipart/form-data">
+                        <?php
+                            if(!empty($message)){
+                                echo "<div class='alert alert-danger' role='alert'>
+                                    $message
+                              </div>";
+                            }
+                        ?>
+                        <form action="formXacNhan.php" method="post" enctype="multipart/form-data">
                             <div class="modal-body mx-5">
                                 <div class="form-group">
                                     <label for="maNVu">Mã nhiệm vụ</label>
                                     <input type="text" value="<?=$row['maNhiemVu']?>"class="form-control" id="maNVu" name="maNVu" readonly />
                                 </div>
+
+                                <?php
+                                  
+
+                                    $dateCurrent = date("Y-m-d");
+                                    $deadline = date('Y-m-d',strtotime($row['hanThucHien']));
+                                    $thongBao = '';
+                                    if ($dateCurrent > $deadline){
+                                        $thongBao = "<span class='badge badge-danger'>Trể</span>";
+                                        
+                                    }else{
+                                        $thongBao = "<span class='badge badge-success'>Đúng hạn</span>";
+                                    }
+                                ?>
+
                                 <div class="form-group">
-                                    <label for="time">Start date:</label>
-                                    <input type="text" name="time" value="<?php echo date('Y/m/d',strtotime($row['hanThucHien']))?>" class="form-control" id="maPB" value=<?=$_SESSION['maPB']?> />
+                                    <label for="time">Thời gian Nộp: </label>
+                                    <input name='time' readonly value = <?php echo date('Y/m/d',strtotime($row['hanThucHien']))?> >   <?= $thongBao ?></input>
+                                    
                                 </div>
-                                <select class="form-control form-control-lg">
-                                    <option value="">---Chọn mức độ---</option>
-                                    <option value=>Good</option>
-                                    <option>OK</option>
-                                    <option>Bad</option>
-                                </select>
+                                <div class="form-group">
+                                <label for="mucDo">Chọn mức độ</label>
+                                <?php
+                                   
+                                    if ($dateCurrent > $deadline){
+                                        echo "<select name='mucDo' class='form-control'>
+                                                    <option value='ok'>OK</option>
+                                                    <option value='bad'>Bad</option>
+                                                </select>";
+                                        
+                                    }else{
+                                        echo "<select name='mucDo' class='form-control'>
+                                                <option value='good'>Good</option>
+                                                <option value='ok'>OK</option>
+                                                <option value='bad'>Bad</option>
+                                            </select>";
+                                        
+                                    }
+                                ?>
+                                   
+                                </div>
                             </div>
 
                             <div class="modal-footer">
                                
-                                <button type="submit" id='sbXacNhan' name="XacNhan" class="btn btn-info">Xác Nhận</button>
+                                <button type="submit" id='sbXacNhan' name="xacNhan" class="btn btn-info">Xác Nhận</button>
                                 
                             </div>
                         </form>

@@ -41,7 +41,7 @@
       
         if( $stm->affected_rows == 1){
           move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
-          header("Location: index.php");
+          header("Location: newTask.php");
         }else{
           $message = "thêm thất bại";
         }
@@ -117,6 +117,7 @@
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
                        
                     </div>
 				</ul>

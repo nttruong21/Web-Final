@@ -50,18 +50,7 @@
 				</button>
 
 				<div class="collapse navbar-collapse " id="navbarSupportedContent">
-					<form class="form-inline my-2 my-lg-0">
-						<input class="box-search mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-					</form>
-						<ul class="navbar-nav mr-auto">
-							<li class="nav-item">
-								<a class="nav-link" href="#"><i class="fas fa-cogs"></i></a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#"><i class="fas fa-question-circle"></i></a>
-							</li>
-						</ul>
+						<ul class="navbar-nav mr-auto"></ul>
 					<?php
 						?>
 						<div>
@@ -90,6 +79,7 @@
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
                         
                        
                     </div>
@@ -98,6 +88,7 @@
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
 				<div class="d-flex">
+                
 					<div class="ml-auto p-2 d-flex">
 						<p>Tổng số Task: </p>
 						<h5 class='countTask'></h5>
@@ -107,19 +98,19 @@
 				<div class="all-task">
 					<div class="task-content">
 						<table class="table able-striped border ">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>TRẠNG THÁI</th>
-                        <th>TÊM NHIỆM VỤ</th>
-                        <th>THỜI GIAN</th>
-                       
-                    </tr>
-                </thead>
-                <!-- manager list task -->
-                <tbody id='list-task'>
-            
-                </tbody>
-            </table>
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>TRẠNG THÁI</th>
+                                    <th>TÊM NHIỆM VỤ</th>
+                                    <th>THỜI GIAN</th>
+                                
+                                </tr>
+                            </thead>
+                            <!-- manager list task -->
+                            <tbody id='list-task'>
+                        
+                            </tbody>
+                        </table>
 					</div>
 				</div>
 		</div>

@@ -78,16 +78,16 @@
 				<ul class="menu ">
 					<li class="create-task add-task " ><a href="form_add.php" class="d-flex justify-content-between text-success"><i class="fas fa-plus-circle" ></i>   Tạo Task</a></li>
                     <div class="list-group">
-                    <a href="index.php" class="list-group-item list-group-item-action ">
-                        <i class="fas fa-tasks"></i>   Tất cả Task
+                        <a href="index.php" class="list-group-item list-group-item-action ">
+                            <i class="fas fa-tasks"></i>   Tất cả Task
                         </a>
-                        <a href="newTask.php" class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Task Mới</a>
+                        <a href="newTask.php" class="list-group-item list-group-item-action "><i class="fas fa-star"></i> Task Mới</a>
                         <a href="progress.php" class="list-group-item list-group-item-action "><i class="fas fa-spinner"></i> Task in progress</a>
                         <a href="waiting.php" class="list-group-item list-group-item-action"> <i class="fas fa-stopwatch"></i> Task Waiting</a>
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
-                        <a href="complete.php" class="list-group-item list-group-item-action activee"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
-                        <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
-                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
+                        <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
+                        <a href="canceled.php" class="list-group-item list-group-item-action "> <i class="fas fa-trash"></i> Task đã hủy</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action activee"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
                         
                     </div>
 				</ul>
@@ -98,12 +98,13 @@
 
 				<div class="all-task">
 					<div class="task-content">
+						<h3 class="d-flex justify-content-center">ĐƠN YÊU CẦU CỦA NHÂN VIÊN</h3>
 						<table class="table able-striped border ">
                 <thead class="thead-dark">
                     <tr>
                         <th>TRẠNG THÁI</th>
-                        <th>TÊM NHIỆM VỤ</th>
-                        <th>THỜI GIAN</th>
+                        <th>MÃ NHÂN VIÊN</th>
+                        <th>SỐ NGÀY NGHĨ</th>
                     </tr>
                 </thead>
                 <!-- manager list task -->
@@ -112,7 +113,8 @@
                     <?php
                         require_once('../connect_db.php');
                         $maPB = $_SESSION['maPB'];
-                        $sql = "SELECT * FROM NhiemVu where maPhongBan = '$maPB' and trangThai='COMPLETED' Order by maNhiemVu DESC";
+												$maNV = $_SESSION['maNhanVien'];
+                        $sql = "SELECT * FROM DonXinNghiPhep where maPhongBan = '$maPB' and maNhanVien!='$maNV' Order by maDon DESC";
                         $conn = connect_db();
                         $result = $conn->query($sql);
                         
@@ -122,13 +124,21 @@
                     
                         while ($row = $result->fetch_assoc()){
                             $trangThai = $row['trangThai'];
-                            $tenNhiemVu = $row['tenNhiemVu'];
-                            $time = $row['hanThucHien'];
-                            $manv = $row['maNhiemVu'];
+                            $lyDo = $row['lyDo'];
+														$maNVien= $row['maNhanVien'];
+                            $soNgay = $row['soNgayNghi'];
+														$maDon = $row['maDon'];
+                          
                             echo "<tr>";
-                            echo  "<td><span class='badge badge-info'>$trangThai</span></td>";
-                            echo  " <td><a href='infor.php?maNVu=$manv'  class='tenNhiemVu'>$tenNhiemVu</a></td>";
-                            echo  " <td>$time</td>";
+														if($trangThai == 'WAITING'){
+															echo  "<td><span class='badge badge-secondary'>$trangThai</span></td>";
+														}else if($trangThai == 'APPROVED'){
+															echo  "<td><span class='badge badge-success'>$trangThai</span></td>";
+														}else if($trangThai == 'REFUSED'){
+															echo  "<td><span class='badge badge-danger'>$trangThai</span></td>";
+														}
+                            echo  " <td><a href='inforNgayNghi.php?maDon=$maDon'  class='tenNhiemVu'>$maNVien</a></td>";
+                            echo  " <td>$soNgay</td>";
                             echo  "</tr>";
                            
                         }
@@ -138,32 +148,17 @@
             </table>
 					</div>
 				</div>
+				<div  class=" p-2 d-flex justify-content-center">
+					
+            <a href="formNghiPhep.php"><button type="button" class="btn btn-outline-dark m-2"><i class="fas fa-calendar-plus"></i>  Tạo đơn</button></a>
+						<a href="donDaTao.php"><button type="button" class="btn btn-outline-dark m-2"><i class="far fa-calendar-check"></i>  Đơn đã tạo</button></a>
+        </div>
 		</div>
 		</div>
 			
 
 		
-    <!-- <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="abc"> -->
-     <!-- message respone -->
-   <div class="modal fade" id="message-respone">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h4 class="modal-title">Notification</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-                    <p id="responseMess"></p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
+  
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -171,7 +166,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<script>
-    //        
+		
+		
 // chọn ngày
 	$(function(){
    $('.datepicker').datepicker({
