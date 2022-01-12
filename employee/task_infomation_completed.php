@@ -18,6 +18,18 @@
     if (!$_SESSION['maChucVu'] == 'NV') {
         header("Location: /no_access.html");
     }
+
+	$message = '';
+    if (!isset($_POST['maNVu']) || !isset($_POST['tenNVu']) || !isset($_POST['time'])
+        || !isset($_POST['moTa'])){
+          $message = 'vui lòng nhập đầy đủ thông tin!!';
+          
+        }else if (empty($_POST['maNVu']) || empty($_POST['tenNVu']) || empty($_POST['time'])
+        || empty($_POST['moTa'])){
+          $message = 'KHông để giá trị rỗng!!';
+		}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -115,61 +127,62 @@
 			<?php
 				require_once('sidebar.php');
 			?>
-
 			<div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 rounded border border-left-0 border-right-0 border-bottom-0">
-				<div class="border border-left-0 border-right-0">
-					<div class="scrollable-task">
-						<div class="e__task__heading">
-							<div class="d-flex">
-								<div class='task-name__heading col-xl-2 col-lg-4 col-md-3 col-sm-12 col-12 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Tên nhiệm vụ</p>
-								</div>
-								<div class='task-description__heading col-xl-6 col-lg-4 col-md-7 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Thông tin nhiệm vụ</p>
-								</div>
-								<div class='task-time col-xl-2 col-lg-0 col-md-0 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Dealine</p>
-								</div>
-								<div class='task-rate col-xl-2 col-lg-4 col-md-2 border border-top-0 border-left-0 border-right-0'>
-									<p class="mb-0 p-1">Trạng thái</p>
-								</div>								
-							</div>
-						</div>	
-						<div class="e__task__infomation">
+				<div class="task-content bg-success">
+					<h5 class="p-2 d-flex justify-content-center bg-dark text-white tex-center">
+						<i class="fas fa-hand-point-left"></i>
+						INFORMATION TASK
+					</h5>
+					<form action="" method="post" >
 						<?php
-								require_once("../connect_db.php");
-                                require_once("task_and_dayOff_db.php");
-								$sql = "SELECT * FROM NHIEMVU WHERE trangThai != 'canceled' ORDER BY hanThucHien";
-								$result = connect_db()->query($sql);
+							require_once("../connect_db.php");
+							require_once("task_and_dayOff_db.php");
 
-								while ($row = $result->fetch_assoc()) {
-									$idNV = $row['maNhiemVu'];
-									$name = $row['tenNhiemVu'];
-									$desc = $row['moTa'];
-									$time = $row['hanThucHien'];
-									$condition = $row['trangThai'];
+							$sql = "SELECT * FROM NHIEMVU WHERE maNhiemVu = '".$_GET['id']."'";
+							$result = connect_db()->query($sql);
 
-									// onclick='moveToTaskInfomationPage();
-									echo	"<div class='d-flex task-list''>
-												<div class='task-name__heading col-xl-2 col-lg-4 col-md-3 col-sm-12 col-12 border border-top-0 border-left-0'>
-													<p class='task-name  mb-0 p-1'> <a class='' href='task_infomation.php?id=$idNV'> $name </a></p>
-												</div>
-												<div class='task-description__heading col-xl-6 col-lg-4 col-md-7 border border-top-0 border-left-0'>
-													<p class='task-description mb-0 p-1'>$desc</p>
-												</div>
-												<div class='task-time col-xl-2 border border-top-0 border-left-0'>
-													<p class='mb-0 p-1'>$time</p>
-												</div>
-												<div class='task-time col-xl-2 border border-top-0 border-left-0'>
-													<p id='employee__task-rate' class='mb-0 p-1'>$condition</p>
-												</div>										
-											</div>";
-								}
-							?>		
+							while ($row = $result->fetch_assoc()) {
+
+								$idNV = $row['maNhiemVu'];
+								$name = $row['tenNhiemVu'];
+								$desc = $row['moTa'];
+								$time = $row['hanThucHien'];
+								$condition = $row['trangThai'];
+                                $file = $row['tapTin'];
+							}
+						?>
+						<div class="row">
+							<div class="col-xl-2">
+								<div class="form-group">
+									<label for="maNVu">Mã nhiệm vụ</label>
+									<input type="text" value="<?= $idNV ?>" class="form-control" id="maNVu" name="maNVu" readonly />
+								</div>
+								<div class="form-group">
+									<label for="timeNV">Hạn thực hiện</label>
+									<input type="text" value="<?= $time ?>" class="form-control" id="timeNV" name="Deadline" readonly />
+								</div>
+							</div>
+							<div class="col-xl-10">
+                                <div class="form-group">
+                                    <label for="tenNVu">Tên nhiệm vụ</label>
+									<input type="text" value="<?= $name ?>" class="form-control" id="tenNVu" name="tenNVu" readonly />
+								</div>
+								<div class="form-group">
+                                    <label for="moTa">Mô tả</label>
+									<input type="text" value="<? echo $desc ?>" class="form-control" id="moTa" name="Mô tả" readonly>
+								</div>
+                                <div class="form-group">
+                                    <label for="fileNV">Tập tin</label>
+                                    <input type="file" value="<?= $file ?>" class="form-control" id="fileNV" name="fileNV" readonly />
+                                </div>
+								<div class="form-group">
+									<button onclick="moveToGetInProgressTask();" disabled type="button" class="btn btn-primary">Start</button>
+								</div>
+							</div>
 							
 							
 						</div>
-					</div>
+					</form>
 				</div>
 			</div>
     	</div>	
@@ -224,6 +237,103 @@
             </div>
          </div>
 	</div>
+
+
+	<!-- Day off list -->
+	<div class="modal fade" id="day-off-list-dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+	
+				<div class="modal-header">
+					<h4 class="modal-title">Danh sách đơn xin nghỉ phép</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xl-12">
+							<!-- <div class="modal-list text-center">
+								<p>Danh sách đơn xin nghỉ phép</p>
+							</div> -->
+							<div class='modal-list-items scrollable'>
+							
+								<div class="modal-list-item border">
+									<!-- <div class='modal-list-name'>
+										<h5 class='mb-0'>Danh sách đơn xin nghỉ phép</h5>
+									</div> -->
+									<div class="modal-list-info">
+										<div class="modal-list__heading">
+											<div class="row">
+												<div class="col-xl-2">
+													<p>Mã đơn</p>
+												</div>
+												<div class="col-xl-2">
+													<p>Lý do</p>
+												</div>
+												<div class="col-xl-4">
+													<p>Ngày viết đơn</p>
+												</div>
+												<div class="col-xl-4">
+													<p>Kết quả phê duyệt</p>
+												</div>
+											</div>
+										</div>
+										<div class="modal-list__body">
+											<div class="row">
+												<?php
+													// $idSql = "SELECT maNhanVien FROM NhanVien";
+													$sql = "select * from DonXinNghiPhep	";
+													$result = connect_db()->query($sql);
+	
+													while ($row = $result->fetch_assoc()) {
+														$idForm = $row['maDon'];
+														$reason = $row['lyDo'];
+														$dayCreate = $row['ngayTao'];
+														$conditionDayOff = $row['trangThai'];								
+														echo "
+															<div class='col-xl-2'>
+																<p>$idForm</p>
+															</div>
+															<div class='col-xl-2'>
+																<p>$reason</p>
+															</div>
+															<div class='col-xl-4'>
+																<p>$dayCreate</p>
+															</div>
+															<div class='col-xl-4'>
+																<p>$conditionDayOff</p>
+															</div>";
+													}
+												?>
+	
+											</div>
+
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+	
+				<div class="modal-footer d-flex justify-content-between">
+					<?php
+						$sql = "select * from DonXinNghiPhep";
+						$result = connect_db()->query($sql);
+
+						while ($row = $result->fetch_assoc()) {
+							$dayLeftDayOff = $row['soNgayNghi'];
+						}
+					?>
+					<p>Số ngày đã nghỉ: <?= $dayLeftDayOff ?> </p>
+					<p>Tổng số ngày có thể nghỉ : 15 </p>
+				</div>            	
+			</div>
+		<div>
+	</div>
+
 
 	<!-- message response -->
 	
