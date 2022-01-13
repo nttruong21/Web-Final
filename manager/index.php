@@ -258,7 +258,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-	<script>
+	<script></script>
+    <script>
 		const readAPI = 'http://localhost:8080/manager/api/get_task.php'
         const addAPI = 'http://localhost:8080/manager/api/add_task.php'
   // const deleteAPI = 'http://localhost/lab9/delete_product.php'
