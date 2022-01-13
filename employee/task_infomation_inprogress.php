@@ -2,94 +2,97 @@
 	session_start();
 	
 	require_once('../connect_db.php');
-
-	$messageSuccess = '';
-	$messageError = '';
-	$message = '';
-
-	// if (!isset($_POST['noiDung']) || !isset($_POST['tapTin'])) {
-	// 	$message = "Vui lòng nhập đầy đủ thông tin";
-	// } else 
-
-	// if (empty($_POST['noiDung']) || empty($_POST['tapTin'])) {
-	// 	$messageError = "Không được để giá trị rỗng";
-	// 	$messageSuccess = '';
-	// }
-	// else if (!empty($_POST['noiDung']) && !empty($_POST['tapTin'])) {
-	// 	$messageError = "";
-	// 	$messageSuccess = 'Giá trị hợp lệ';
-	// } else {
-	// 	$maNV = $_POST['maNVu'];
-	// 		$sql = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
-	// 		$conn = connect_db();
-	// 		$stm = $conn->prepare($sql);
-   	// 		$stm -> bind_param("s", $maNV);
-	// 		$stm -> execute();
-	// 		if ($stm -> affected_rows == 1) {
-	// 			$messageSuccess = 'Cập nhật trạng thái thành công';
-	// 			$messageError = '';
-	// 			header('Location: get_waiting_task.php');
-	// 		} else {
-	// 			$messageSuccess = '';
-	// 			$messageError = 'Cập nhật trạng thái thất bại';
-	// 		}
-	// }
 	
-	
-	// function updateNVWaiting($maNV) {
-	// 	$sql = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
-	// 	$conn = connect_db();
-	// 	$stm = $conn->prepare($sql);
-	// 	$stm -> bind_param("s", $maNV);
-	// 	$stm -> execute();
-	// 	if ($stm -> affected_rows == 1) {
-	// 		$message = 'Cập nhật trạng thái thành công';
-	// 		header('Location: get_waiting_task.php');
-	// 	} else {
-	// 		$message = 'Cập nhật trạng thái thất bại';
-	// 	}
-	// }
-
-	// function updateKQGui($maNV) {
-	// 	$sql = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES (?, ?, ?)";
-	// 	$conn = connect_db();
-	// 	$stm = $conn->prepare($sql);
-	// 	$stm -> bind_param("sss", $maNV, );
-	// 	$stm -> execute();
-	// 	if ($stm -> affected_rows == 1) {
-	// 		$message = 'Cập nhật trạng thái thành công';
-	// 		header('Location: get_waiting_task.php');
-	// 	} else {
-	// 		$message = 'Cập nhật trạng thái thất bại';
-	// 	}	
-	// }
-	
-    if (!isset($_POST['maNVu'])){
+    if (isset($_POST['submit'])){
         $message = 'vui lòng nhập đầy đủ thông tin!!';
-          
-        }else if (empty($_POST['maNVu'])){
-          $message = 'KHông để giá trị rỗng!!';
+        if (!isset($_POST['noiDung'])) {
+			$message = "Vui lòng nhập đầy đủ thông tin";
+		} else if (empty($_POST['noiDung'])) {
+			$message = "Không để giá trị rỗng";
 		} else {
 			$maNV = $_POST['maNVu'];
-			$sql = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
-			$conn = connect_db();
-			$stm = $conn->prepare($sql);
-   			$stm -> bind_param("s", $maNV);
-			$stm -> execute();
+			$noiDung = $_POST['noiDung'];
+			
+			if (!isset($_FILES["tapTin"])) {
+				$message = "Dữ liệu không đúng cấu trúc";
+			}
 
-			// $sql1 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES (?, ?, ?)";
-			// $conn1 = connect_db();
-			// $stm1 = $conn->prepare($sql1);
-			// $stm1 -> bind_param("sss", $maNV, );
-			// $stm1 -> execute();
+			$taptin = $_FILES["tapTin"]["name"];
+			if ($taptin == '') {
+				
+				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
+				$conn1 = connect_db();
+				$stm1 = $conn->prepare($sql1);
+				$stm1 -> bind_param("s", $maNV);
+				$stm1 -> execute();
 
-			if ($stm -> affected_rows == 1) {
-				$message = 'Cập nhật trạng thái thành công';
-				header('Location: get_waiting_task.php');
+				$sql3 = "SELECT * FROM KetQuaTraVe where maNhiemVu='$maNV'";
+                $conn3 = connect_db();
+                $result3 = $conn3->query($sql3);
+                $count = $result3->num_rows;
+                $rowKQTV = $result3->fetch_assoc();
+
+
+				if( $count > 0){
+                    // $maNVu = $row3['maNhiemVu'];
+                    $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = '$maNV'";
+                    $conn2 = connect_db();
+                    $stm2 = $conn2->prepare($sql2);
+                    $stm2->bind_param('sss',$noiDung, $tapTin);
+                    $stm2->execute();
+                    
+                }else{
+                    $sql2 = "INSERT INTO KetQuaGui VALUES(?, ?, ?,?)";
+                    $conn2 = connect_db();
+                    $stm2 = $conn2->prepare($sql2);
+                    $stm2->bind_param('sss', $maNVu, $noiDung, $tapTin);
+                    $stm2->execute();
+                }
+
 			} else {
-				$message = 'Cập nhật trạng thái thất bại';
+				$tname = $_FILES["tapTin"]["tmp_name"];
+                $uploads_dir = '../files';
+				
+				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
+				$conn1 = connect_db();
+				$stm1 = $conn->prepare($sql1);
+				$stm1 -> bind_param("s", $maNV);
+				$stm1 -> execute();
+
+				$sql3 = "SELECT * FROM KetQuaTraVe where maNhiemVu='$maNV'";
+                $conn3 = connect_db();
+                $result3 = $conn3->query($sql3);
+                $count = $result3->num_rows;
+
+
+				if( $count > 0){
+                    // $maNVu = $row3['maNhiemVu'];
+                    $sql2 = "UPDATE KetQuaTraVe SET  noiDung = ?, tapTin = ?, hanThucHien = ? WHERE maNhiemVu = '$maNVu'";
+                    $conn2 = connect_db();
+                    $stm2 = $conn2->prepare($sql2);
+                    $stm2->bind_param('sss',$moTa, $tapTin, $hanTH);
+                    $stm2->execute();
+
+                    // die;
+                }else{
+                    $sql2 = "INSERT INTO KetQuaTraVe VALUES(?, ?, ?,?)";
+                    $conn2 = connect_db();
+                    $stm2 = $conn2->prepare($sql2);
+                    $stm2->bind_param('ssss', $maNVu, $moTa, $tapTin, $hanTH);
+                    $stm2->execute();
+                }
+
+                move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
+
+				// if ($stm->affected_rows == 1) {
+				// 	header("Location: get_waiting_task.php");
+				// } else {
+				// 	$message = "Cập nhật thất bại";
+				// }
 			}
 		}
+	}
+
 
 
 ?>
@@ -248,9 +251,7 @@
                                     <label for="tapTin">Tập tin đính kèm</label>
                                     <input type="file" class="form-control" id="tapTin" name="tapTin" class="p-0 border border-none" />
                                 </div>
-								<div class="form-group ml-3 mr-3">
-                                	<p class="empty d-none">Vui lòng nhập đầy đủ thông tin</p> 
-								</div>
+								
 								<div class="form-group ml-3 mr-3">
 									<button type="submit" name="submit" class="btn btn-primary">Submit</button>
 								</div>
@@ -286,43 +287,14 @@
     </div>
 
 	<script>
-		const insertAPIKQGui = 'http://localhost:8080/employee/update_inprogress_task.php';
-
-		function updateKQGui() {
-			
-			let maNVu = $('#maNVu').val();
-			let noiDung = $('#noiDung').val();
-			let tapTin = $('#tapTin').val();
-
-			if (maNVu == '' ||  noiDung == '' || tapTin == '') {
-				$('.empty').removeClass('d-none')
-			} else {
-				$('.empty').addClass('d-none')
-			}
-
-			let data = {
-            "maNVu":maNVu,
-            "noiDung":noiDung,
-            "tapTin":tapTin,
-        	}
-
-			fetch(insertAPIKQGui, {
-				'method': 'POST',
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data)
-			})
-			.then(res => res.json())
-
-		}
+	
 	</script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
-	<script src="/main.js"></script> 
+	<!-- <script src="/main.js"></script>  -->
 </body>
 
 </html>

@@ -1,59 +1,4 @@
 <?php
-	// session_start();
-	// require_once('../connect_db.php');
-	
-	// if (isset($_POST['submit'])) {
-	// 	$message = '';
-	// 	if (!isset($_POST['dayDayOff']) || !isset($_POST['reasonDayOff'])){
-	// 		$message = 'vui lòng nhập đầy đủ thông tin!!';
-	// 	}else if (empty($_POST['dayDayOff']) || empty($_POST['reasonDayOff'])){
-	// 		$message = 'KHông để giá trị rỗng!!';
-	// 	} else {
-	// 		$maNVDayOff = $_POST['maNVDayOff'];
-	// 		$maPBDayOff = $_POST['maPBDayOff'];
-	// 		$dayDayOff = $_POST['dayDayOff'];
-	// 		$reasonDayOff = $_POST['reasonDayOff'];
-	// 		$dayCreateDayOff = date("Y-m-d");
-	// 		$conditionDayOff = $_POST['conditionDayOff'];
-
-
-	// 		if (!isset($_FILES['fileDayOff'])) {
-	// 			$message = "Dữ liệu không đúng cấu trúc";
-	// 		}
-
-	// 		$fileDayOff = $_FILES["fileDayOff"]['name'];
-			
-	// 		if ($fileDayOff = '') {
-	// 			$sql = "INSERT INTO DonXinNghiPhep (maNhanVien, maPhongBan, soNgayNghi, trangThai, lyDo, ngayTao, tapTin) VALUES(?, ?, ?,?, ?, ?,?)";
-	// 			$conn = connect_db();
-	// 			$stm = $conn->prepare($sql);
-	// 			$stm -> bind_param("sssssss", $maNVDayOff, $maPBDayOff, $dayDayOff, $conditionDayOff, $reasonDayOff, $dayCreateDayOff, $fileDayOff);
-	// 			$stm -> execute();
-	// 			if ($stm -> affected_rows == 1) {
-	// 				header('Location: dayOff_list.php');
-	// 			} else {
-	// 				$message = "Cập nhập thất bại";
-	// 			}
-	// 		} else {
-	// 			$tname = $_FILES["fileDayOff"]["tmp_name"];
-    //             $uploads_dir = '../files';
-
-	// 			$sql = "INSERT INTO DonXinNghiPhep (maNhanVien, maPhongBan, soNgayNghi, trangThai, lyDo, ngayTao, tapTin) VALUES(?, ?, ?,?, ?, ?,?)";
-	// 			$conn = connect_db();
-	// 			$stm = $conn->prepare($sql);
-	// 			$stm -> bind_param("sssssss", $maNVDayOff, $maPBDayOff, $dayDayOff, $conditionDayOff, $reasonDayOff, $dayCreateDayOff, $fileDayOff);
-	// 			$stm -> execute();
-    //             if ($stm -> affected_rows == 1) {
-	// 				move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
-	// 				header('Location: dayOff_list.php');
-	// 			} else {
-	// 				$message = "Cập nhập thất bại";
-	// 			}
-	// 		}
-	// }
-          
-	// }
-
 
 	session_start();
 	require_once('../connect_db.php');
@@ -108,7 +53,7 @@
                 $stm2->execute();
                 if($stm2->affected_rows == 1){
             
-                    header("Location: calendar.php");
+                    header("Location: dayOff_list.php");
                   }else{
                     $message = "cập nhật thất bại";
                   }
@@ -222,63 +167,7 @@
 						<i class="fas fa-hand-point-left"></i>
 						ĐƠN XIN NGHỈ PHÉP
 					</h5>
-					<!-- <form action="" method="POST" validate="required" enctype="multipart/form">
-						<?php
-							require_once("../connect_db.php");
-							require_once("task_and_dayOff_db.php");
-							
-							$maNhanVien = $_SESSION['maNhanVien'];
-							$sql = "SELECT * FROM NhanVien WHERE maNhanVien = '$maNhanVien'";
-
-							$result = connect_db()->query($sql);
-
-							while ($row = $result->fetch_assoc()) {
-								$maPhongBan = $row['maPhongBan'];
-							}
-
-						?>
-						<div class="row">
-							<div class="col-xl-3">
-								<div class="form-group ml-3 mr-3">
-									<label for="maNVDayOff">MSNV</label>
-									<input type="text" value= '<?= $_SESSION['maNhanVien'] ?>' class="form-control" id="maNVDayOff" name="maNVDayOff" readonly/>
-								</div>
-								<div class="form-group ml-3 mr-3">
-									<label for="maPBDayOff">MÃ PB</label>
-									<input type="text" value= '<?= $maPhongBan ?>' class="form-control" id="maPBDayOff" name="maPBDayOff" readonly/>
-								</div>
-								<div class="form-group ml-3 mr-3">
-									<label for="dayDayOff">NHẬP SỐ NGÀY</label>
-									<select name="dayDayOff" id="dayDayOff" class="form-control">
-										<?php
-											for ($i=1;$i<=12;$i++) {
-												echo "<option value='$i>$i</option>";
-											}
-										?>
-									</select>
-								</div>
-								<div class="form-group ml-3 mr-3">
-									<label for="conditionDayOff">TRẠNG THÁI</label>
-									<input type="text" value= 'WAITING' class="form-control" id="conditionDayOff" name="conditionDayOff" readonly/>
-								</div>
-							</div>
-							<div class="col-xl-9">
-								<div class="form-group ml-3 mr-3">
-									<label for="fileDayOff">TẬP TIN ĐÍNH KÈM ( nếu có )</label>
-									<input type="file" class="form-control" id="fileDayOff" name="fileDayOff"/>
-								</div>
-                                <div class="form-group ml-3 mr-3">
-									<label for="reasonDayOff">LÝ DO</label>
-									<textarea rows="2" class="form-control" id="reasonDayOff" name="reasonDayOff" required></textarea>
-								</div>
-                                
-                                <div class="form-group ml-3 mr-3">
-                                    <button type="submit" name="submit" class="btn btn-success ml-auto">Gửi</button>
-                                </div>
-								
-							</div>														
-						</div>
-					</form> -->
+					
 					<form action="" method="post" enctype="multipart/form-data">
                             <div class="modal-body mx-5">
                                 <div class="form-group">

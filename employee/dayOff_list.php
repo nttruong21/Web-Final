@@ -103,35 +103,6 @@
 						DANH SÁCH ĐƠN XIN NGHỈ PHÉP
 					</h5>
 					<div class="scrollable-dayOff">
-						<div class="d-flex justify-content-between align-items-center">
-							<div class="e__sumDayOff">
-								<div>
-									<label for="sumDayOff">Tổng số ngày có thể nghỉ</label>
-									<input type="text" name="sumDayOff" id="sumDayOff" placeholder="" value="15" readonly>	
-								</div>
-								
-							</div>
-							<div class="e__sumDayOff">
-								<?php
-									// require_once('../connect_db.php');
-	
-									// $maNhanVien = $_SESSION['maNhanVien'];
-									// $sql = "SELECT SUM(soNgayNghi) FROM DonXinNghiPhep WHERE maNhanVien = '$maNhanVien'";
-	
-									// $result = connect_db() -> query($sql);
-									// $row = $result->fetch_assoc();
-									// var_dump(intval($row["SUM(soNgayNghi)"]));
-									
-								
-								?>
-								<div>
-									
-									<label for="countDayOff">Tổng số ngày đã nghỉ</label>
-									<input type="text" name="countDayOff" id="countDayOff" placeholder="" value="14" readonly>	
-								</div>
-							</div>
-							
-						</div>
 						<div class="e__dayOff__heading">
 							<div class="d-flex">
 								<div class='dayOff-id__heading col-xl-2 col-lg-2 col-md-2 col-sm-2 col-6 border border-top-0 border-left-0'>
@@ -218,14 +189,48 @@
 						</div>
 
 					</div>
-					<div class="m-auto d-flex align-items-center justify-content-center">
-						<button onclick="moveToDayOffFormPage();"
-						class="btn btn-light e__btn-task d-flex align-items-center"
-						type="submit">
-						<i class="fas fa-calendar-day"></i>
-						<p class="mb-0 ml-2 e__check-font-style e__dayOff-reason-btn">Tạo đơn nghỉ phép</p>	
-						</button>
-					</div>
+					<?php 
+						$maNhanVien = $_SESSION['maNhanVien'];
+						$sql = "SELECT * FROM `DonXinNghiPhep` where maNhanVien = '$maNhanVien' ORDER BY maDon DESC LIMIT 1";
+						$conn = connect_db();
+						$result = $conn->query($sql);
+						if ($result->num_rows == 0){
+							die('Kêt nối thành công, Nhưng không có dữ liệu');
+						}else{
+							$row = $result->fetch_assoc();
+							$ngayMoiTao = strtotime($row['ngayTao']);
+							$soNgayNghi = $row['soNgayNghi'];
+							$dateNow = strtotime(date("y-m-d"));
+							if($dateNow - $ngayMoiTao >= 60*60*24*7 && $soNgayNghi <= 12){
+								echo 	"<div class='m-auto d-flex align-items-center justify-content-center'>
+											<a href='dayOff_Form.php'>
+											<button
+											class='btn btn-light e__btn-task d-flex align-items-center'
+											type='submit'>
+											<i class='fas fa-calendar-da'></i>
+											<p class='mb-0 ml-2 e__check-font-style e__dayOff-reason-btn'>Tạo đơn nghỉ phép</p>	
+											</button>
+											</a>
+										</div>
+							
+								";
+							} else {
+								echo 	"<div class='m-auto d-flex align-items-center justify-content-center'>
+											
+											<button disabled 
+											class='btn btn-light e__btn-task d-flex align-items-center'
+											type='submit'>
+											<i class='fas fa-calendar-da'></i>
+											<p class='mb-0 ml-2 e__check-font-style e__dayOff-reason-btn'>Tạo đơn nghỉ phép</p>	
+											</button>
+											
+										</div>
+								
+								";
+						}
+					}
+					?>
+
 				</div>
 			</div>
 		</div>
