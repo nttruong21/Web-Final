@@ -176,25 +176,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-	<script>
-		
-    //====================thêm task mới==========================
-    // set disabled cho button update 
-    if($('#m-trangThai').attr('value')!='WAITING'){
-        $('#m-smDongY').attr('disabled', true);
-        $('#m-smTuChoi').attr('disabled', true);
-    }
-// chọn ngày
-	$(function(){
-   $('.datepicker').datepicker({
-      format: 'dd-mm-yyyy'
-    });
-	});
-
-  
-
-
-
+	<script src="../main.js">
+    // if($('#m-trangThai').attr('value')!='WAITING'){
+    //     $('#m-smDongY').attr('disabled', true);
+    //     $('#m-smTuChoi').attr('disabled', true);
+    // }
 
 	</script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 </body>

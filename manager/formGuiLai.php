@@ -38,7 +38,7 @@ if (isset($_POST['submit'])){
             }
           $maNVu = $_POST['maNVu'];
           $hanTH = $_POST['time'];
-          $moTa = $_POST['moTa'];
+          $moTa = $_POST['moTa'].' ';
           $tapTin = $_FILES["file"]['name'];
         
           // $tapTin = $_POST["file"];
@@ -118,7 +118,10 @@ if (isset($_POST['submit'])){
                 move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
             }
 
-        
+            if( $stm1->affected_rows == 1 ){
+                header("Location: index.php");
+
+            }
           
         }
     }
@@ -235,7 +238,7 @@ if (isset($_POST['submit'])){
 
                             <div class="modal-footer">
                                
-                                <button type="submit" id='sbCancel' name="submit" class="btn btn-info">Gửi</button>
+                                <button type="submit" id='sbGui' name="submit" class="btn btn-info">Gửi</button>
                                 
                             </div>
                         </form>
@@ -254,24 +257,7 @@ if (isset($_POST['submit'])){
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-	<script>
-		
-    //====================thêm task mới==========================
-    // set disabled cho button update 
-   
-// chọn ngày
-	$(function(){
-   $('.datepicker').datepicker({
-      format: 'dd-mm-yyyy'
-    });
-	});
-
-  
-
-
-
-
-	</script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	<script src="../main.js"> </script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 </body>
 
 </html>
