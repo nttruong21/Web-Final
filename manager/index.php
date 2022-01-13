@@ -39,7 +39,7 @@
     </style>
 </head>
 
-<body>
+<body onload="loadTasks()">
 
 	<div>
 		<div>
@@ -70,8 +70,8 @@
 				<ul class="menu ">
 					<li class="create-task add-task " ><a href="form_add.php" class="d-flex justify-content-between text-success"><i class="fas fa-plus-circle" ></i>   Tạo Task</a></li>
                     <div class="list-group">
-                        <a href="index.php" class="list-group-item list-group-item-action activee">
-                        <i class="fas fa-tasks"></i>  Tất cả Task
+                        <a href="index.php"  class="list-group-item list-group-item-action activee">
+                        <i class="fas fa-tasks"></i>  Tất cả Task 
                         </a>
                         <a href="newTask.php" class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Task Mới</a>
                         <a href="progress.php" class="list-group-item list-group-item-action "><i class="fas fa-spinner"></i> Task in progress</a>
@@ -258,104 +258,87 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-	<script></script>
-    <script>
-		const readAPI = 'http://localhost:8080/manager/api/get_task.php'
-        const addAPI = 'http://localhost:8080/manager/api/add_task.php'
-  // const deleteAPI = 'http://localhost/lab9/delete_product.php'
-  // const updateAPI = 'http://localhost/lab9/update_product.php'
 
-    function loadTasks() {
-			const countTask = 0;
-      fetch(readAPI)
-        .then(response => response.json())
-          .then(data => {
+    <script src="../main.js">
+// 		const readAPI = 'http://localhost:8080/manager/api/get_task.php'
+//         const addAPI = 'http://localhost:8080/manager/api/add_task.php'
+//   // const deleteAPI = 'http://localhost/lab9/delete_product.php'
+//   // const updateAPI = 'http://localhost/lab9/update_product.php'
+
+//     function loadTasks() {
+// 			const countTask = 0;
+//       fetch(readAPI)
+//         .then(response => response.json())
+//           .then(data => {
              
-            data.forEach(task => {
+//             data.forEach(task => {
                
-              let tr = $('<tr></tr>')
+//               let tr = $('<tr></tr>')
 				
-              // countTask = countTask+1;
+//               // countTask = countTask+1;
         
-                // console.log(data)
-                if (task.trangThai === 'IS PROGRESS'){
-                    tr.html(`
+//                 // console.log(data)
+//                 if (task.trangThai === 'IS PROGRESS'){
+//                     tr.html(`
                 
-                        <td><span class="badge mission-status-color badge-primary" >${task.trangThai}</span></td>
-                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
-                        <td>${task.hanThucHien}</td>
+//                         <td><span class="badge mission-status-color badge-primary" >${task.trangThai}</span></td>
+//                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+//                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else if (task.trangThai === 'CANCELED'){
-                    tr.html(`
+//                     `)
+//                 }else if (task.trangThai === 'CANCELED'){
+//                     tr.html(`
                 
-                        <td><span class="badge mission-status-color badge-danger" >${task.trangThai}</span></td>
-                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
-                        <td>${task.hanThucHien}</td>
+//                         <td><span class="badge mission-status-color badge-danger" >${task.trangThai}</span></td>
+//                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+//                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else if (task.trangThai === 'REJECTED'){
-                    tr.html(`
+//                     `)
+//                 }else if (task.trangThai === 'REJECTED'){
+//                     tr.html(`
                 
-                        <td><span class="badge mission-status-color badge-warning" >${task.trangThai}</span></td>
-                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
-                        <td>${task.hanThucHien}</td>
+//                         <td><span class="badge mission-status-color badge-warning" >${task.trangThai}</span></td>
+//                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+//                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else if (task.trangThai === 'WAITING'){
-                    tr.html(`
+//                     `)
+//                 }else if (task.trangThai === 'WAITING'){
+//                     tr.html(`
                 
-                        <td><span class="badge mission-status-color badge-secondary" >${task.trangThai}</span></td>
-                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
-                        <td>${task.hanThucHien}</td>
+//                         <td><span class="badge mission-status-color badge-secondary" >${task.trangThai}</span></td>
+//                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+//                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else if (task.trangThai === 'COMPLETED'){
-                    tr.html(`
+//                     `)
+//                 }else if (task.trangThai === 'COMPLETED'){
+//                     tr.html(`
                 
-                        <td><span class="badge mission-status-color badge-info" >${task.trangThai}</span></td>
-                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
-                        <td>${task.hanThucHien}</td>
+//                         <td><span class="badge mission-status-color badge-info" >${task.trangThai}</span></td>
+//                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+//                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else{
-                    tr.html(`
+//                     `)
+//                 }else{
+//                     tr.html(`
                 
-                        <td><span class="badge mission-status-color badge-success" >${task.trangThai}</span></td>
-                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
-                        <td>${task.hanThucHien}</td>
+//                         <td><span class="badge mission-status-color badge-success" >${task.trangThai}</span></td>
+//                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+//                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }
+//                     `)
+//                 }
                  
 
-                $('#list-task').append(tr)
+//                 $('#list-task').append(tr)
 								
-            })
-						document.querySelector('.countTask').innerHTML = (data.length);
-          })
-    } 
+//             })
+// 						document.querySelector('.countTask').innerHTML = (data.length);
+//           })
+//     } 
 
-    
-		//====================thêm task mới==========================
-   
-// chọn ngày
-	$(function(){
-   $('.datepicker').datepicker({
-      format: 'dd-mm-yyyy'
-    });
-	});
-// chọn file
-  
-    loadTasks()
-    // console.log(($('.badge').text()=='IS PROGRESS')==true)
-    // if($('.badge').text()=='IS PROGRESS'){
+//     // loadTasks()
 
-    // }
-
-
-	</script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
-</body>
+	</script> 
 
 </html>
 

@@ -854,28 +854,101 @@ function agreeLeaveApp(id) {
 }
 
 // ############################# TRƯỞNG PHÒNG #####################################
-const readAPI = "http://localhost:8080/manager/api/get_task.php";
-// const addAPI = 'http://localhost/lab9/add_product.php'
-// const deleteAPI = 'http://localhost/lab9/delete_product.php'
-// const updateAPI = 'http://localhost/lab9/update_product.php'
+const m_readAPI = 'http://localhost:8080/manager/api/get_task.php'
 
-function loadTasks() {
-  fetch(readAPI)
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((task) => {
-        let tr = $("<tr></tr>");
-        tr.html(`
-                  <td>${task.trangThai}</td>
-                  <td>${task.tenNhiemVu}</td>
-                  <td>${task.hanThucHien}</td>
+
+    function loadTasks() {
+			const countTask = 0;
+      fetch(m_readAPI)
+        .then(response => response.json())
+          .then(data => {
+             
+            data.forEach(task => {
                
-                `);
-        $("tbody").append(tr);
-      });
-    });
-}
+              let tr = $('<tr></tr>')
+				
+              // countTask = countTask+1;
+              console.log(task.trangThai)
+                // console.log(data)
+                if (task.trangThai === 'IS PROGRESS'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-primary" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else if (task.trangThai === 'CANCELED'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-danger" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else if (task.trangThai === 'REJECTED'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-warning" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else if (task.trangThai === 'WAITING'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-secondary" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else if (task.trangThai === 'COMPLETED'){
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-info" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }else{
+                    tr.html(`
+                
+                        <td><span class="badge mission-status-color badge-success" >${task.trangThai}</span></td>
+                        <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
+                        <td>${task.hanThucHien}</td>
+
+                    `)
+                }
+                 
+
+                $('#list-task').append(tr)
+								
+            })
+						document.querySelector('.countTask').innerHTML = (data.length);
+          })
+    } 
+
 // loadTasks();
+
+// chọn ngày
+$(function(){
+  $('.datepicker').datepicker({
+     format: 'dd-mm-yyyy'
+   });
+ });
+
+ if($('#m-trangThai').attr('value')!='WAITING'){
+  $('#m-smDongY').attr('disabled', true);
+  $('#m-smTuChoi').attr('disabled', true);
+}
+if($('#trangThai').attr('value')=='NEW'){
+  $('#sbUpdate').attr('disabled', false);
+  $('#sbCancel').attr('disabled', false);
+}else{
+  $('#sbUpdate').attr('disabled', true);
+  $('#sbCancel').attr('disabled', true);
+
+}
 
 
 

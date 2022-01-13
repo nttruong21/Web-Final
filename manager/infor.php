@@ -49,7 +49,7 @@ if (isset($_POST['submit'])){
          
           $maPB = $_POST['maPB'];
           $hanTH = $_POST['time'];
-          $moTa = $_POST['moTa'];
+          $moTa = $_POST['moTa'].' ';
           $tapTin = $_FILES["file"]['name'];
           $trangThai = $_POST['trangThai'];
           // $tapTin = $_POST["file"];
@@ -169,14 +169,7 @@ if (isset($_POST['submit'])){
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
 				<div class="d-flex">
-					<div class="p-2">
-						<input type="checkbox" id="choose-all" name="choose-all">
-						<label for="choose-all">Chọn tất cả</label>
-					</div>
-					<div class="p-2"><i class="fas fa-redo-alt"></i>Tải lại</div>
 					<div class="ml-auto p-2 d-flex">
-						<p>Tổng số Task:</p>
-						<h5 class='countTask'></h5>
 					</div>
 				</div>
                 
@@ -185,6 +178,9 @@ if (isset($_POST['submit'])){
                         <h3 class="p-2 d-flex justify-content-center bg-dark text-white">THÔNG TIN NHIỆM VỤ</h3>
                         <form action="infor.php" method="post" enctype="multipart/form-data">
                             <div class="modal-body mx-5">
+                                <div class="d-flex justify-content-center lert alert-success" role="alert">
+                                    Điền vào thông tin mới nếu muốn cập nhật!
+                                </div>
                                 <div class="form-group">
                                     <label for="maNVu">Mã nhiệm vụ</label>
                                     <input type="text" value="<?=$row['maNhiemVu']?>"class="form-control" id="maNVu" name="maNVu" readonly />
@@ -285,9 +281,9 @@ if (isset($_POST['submit'])){
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" id='sbUpdate' name="cancel" class="btn btn-danger">Hủy task</button>
-                                <button type="submit" id='sbCancel' name="submit" class="btn btn-info">Cập Nhật</button>
                                 
+                                <button type="submit" id='sbCancel' name="submit" class="btn btn-info">Cập Nhật</button>
+                                <button type="submit" id='sbUpdate' name="cancel" class="btn btn-danger">Hủy task</button>
                             </div>
                         </form>
 					</div>
@@ -305,30 +301,16 @@ if (isset($_POST['submit'])){
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-	<script>
-		
-    //====================thêm task mới==========================
-    // set disabled cho button update 
-    if($('#trangThai').attr('value')=='NEW'){
-        $('#sbUpdate').attr('disabled', false);
-        $('#sbCancel').attr('disabled', false);
-    }else{
-        $('#sbUpdate').attr('disabled', true);
-        $('#sbCancel').attr('disabled', true);
+	<script src="../main.js">
 
-    }
-// chọn ngày
-	$(function(){
-   $('.datepicker').datepicker({
-      format: 'dd-mm-yyyy'
-    });
-	});
+        // if($('#trangThai').attr('value')=='NEW'){
+        //     $('#sbUpdate').attr('disabled', false);
+        //     $('#sbCancel').attr('disabled', false);
+        // }else{
+        //     $('#sbUpdate').attr('disabled', true);
+        //     $('#sbCancel').attr('disabled', true);
 
-  
-
-
-
-
+        // }
 	</script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 </body>
 

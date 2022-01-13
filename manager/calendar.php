@@ -149,7 +149,7 @@
 								$ngayMoiTao = strtotime($row7['ngayTao']);
 								$soNgayNghi = $row7['soNgayNghi'];
 								$dateNow = strtotime(date("y-m-d"));
-								if($dateNow - $ngayMoiTao >= 60*60*24*7 && $soNgayNghi > 15){
+								if($dateNow - $ngayMoiTao >= 60*60*24*7 && $soNgayNghi <= 15){
 									echo "
 										
 											<a href='formNghiPhep.php'><button type='button' class='btn btn-outline-dark m-2'><i class='fas fa-calendar-plus'></i>  Tạo đơn </button></a>
@@ -160,7 +160,7 @@
 											<div class='alert alert-danger' role='alert'>
 												KHÔNG thể tạo đơn!
 											</div>
-											<a href='formNghiPhep.php'><button type='button' class='btn btn-outline-dark m-2 disabled'><i class='fas fa-calendar-plus'></i>  Tạo đơn</button></a>
+											<a href=''><button type='button' class='btn btn-outline-dark m-2 disabled'><i class='fas fa-calendar-plus'></i>  Tạo đơn</button></a>
 									";
 								}
 							}
@@ -180,22 +180,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-	<script>
-		
-		
-// chọn ngày
-	$(function(){
-   $('.datepicker').datepicker({
-      format: 'dd-mm-yyyy'
-    });
-	});
-// chọn file
-	
-    // loadTasks()
-
-
-
-	</script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	<script src="../main.js"></script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 </body>
 
 </html>
