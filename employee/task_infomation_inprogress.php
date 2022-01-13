@@ -22,7 +22,7 @@
 				
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
-				$stm1 = $conn->prepare($sql1);
+				$stm1 = $conn1->prepare($sql1);
 				$stm1 -> bind_param("s", $maNV);
 				$stm1 -> execute();
 
@@ -55,7 +55,7 @@
 				
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
-				$stm1 = $conn->prepare($sql1);
+				$stm1 = $conn1->prepare($sql1);
 				$stm1 -> bind_param("s", $maNV);
 				$stm1 -> execute();
 
@@ -67,28 +67,23 @@
 
 				if( $count > 0){
                     // $maNVu = $row3['maNhiemVu'];
-                    $sql2 = "UPDATE KetQuaTraVe SET  noiDung = ?, tapTin = ?, hanThucHien = ? WHERE maNhiemVu = '$maNVu'";
+                    $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = '$maNV'";
                     $conn2 = connect_db();
                     $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss',$moTa, $tapTin, $hanTH);
+                    $stm2->bind_param('sss',$noiDung, $tapTin);
                     $stm2->execute();
 
                     // die;
                 }else{
-                    $sql2 = "INSERT INTO KetQuaTraVe VALUES(?, ?, ?,?)";
+                    $sql2 = "INSERT INTO KetQuaGui VALUES(?, ?, ?)";
                     $conn2 = connect_db();
                     $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('ssss', $maNVu, $moTa, $tapTin, $hanTH);
+                    $stm2->bind_param('sss', $maNVu, $noiDung, $tapTin);
                     $stm2->execute();
                 }
 
                 move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
 
-				// if ($stm->affected_rows == 1) {
-				// 	header("Location: get_waiting_task.php");
-				// } else {
-				// 	$message = "Cập nhật thất bại";
-				// }
 			}
 		}
 	}

@@ -49,10 +49,26 @@
 </head>
 <body>
     <!-- Navigation -->
+    <div>
+		<div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between mr-2 ml-2">
+			<div class="e__home-heading">
+				<a href="employee/index.php"><h4>HOME</h4></a>
+			</div>
+			<div class="">
+				<div class="navbar-header">
+					<a class="" href="employee/index.php"><h4>THÔNG TIN NHÂN VIÊN</h4></a>
+				</div>
+			</div>
+			<div class="navbar-info nav d-flex">
+				<a class="font-weight-bold" href="../logout.php">Logout</a>
+			</div>
+			<div class="navbar-icon d-none">
+				<i class="fas fa-bars"></i>
+			</div>
+		</div>
+    </div>
 
-	<?php 
-    require_once("employee/employee_heading.php"); 
-
+    <?php
     $maNhanVien = $_SESSION["maNhanVien"];
     $sql = "SELECT * FROM NhanVien WHERE maNhanVien = '$maNhanVien'";
 
