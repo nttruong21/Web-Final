@@ -1,4 +1,5 @@
 <?php
+
 	session_start();
 	require_once('../connect_db.php');
 	// Kiểm tra người dùng đã đăng nhập chưa 
@@ -23,14 +24,14 @@
     
     if(isset($_POST['guiDon'])) {
         $message = '';
-        if (!isset($_POST['maNVien'])  || !isset($_POST['time']) || !isset($_POST['lyDo'])){
+        if (!isset($_POST['maNVDayOff'])  || !isset($_POST['time']) || !isset($_POST['lyDo'])){
           $message = 'vui lòng nhập đầy đủ thông tin!!';
           
-        }else if (empty($_POST['maNVien']) || empty($_POST['time']) || empty($_POST['lyDo'])){
+        }else if (empty($_POST['maNVDayOff']) || empty($_POST['time']) || empty($_POST['lyDo'])){
           $message = 'KHông để giá trị rỗng!!';
           
         }else{
-            $maNVien = $_POST['maNVien'];
+            $maNVien = $_POST['maNVDayOff'];
             $maPBan = $_SESSION['maPB'];
             $soNgayNghi = $_POST['time'];
             $lyDo = $_POST['lyDo'];
@@ -52,7 +53,7 @@
                 $stm2->execute();
                 if($stm2->affected_rows == 1){
             
-                    header("Location: calendar.php");
+                    header("Location: dayOff_list.php");
                   }else{
                     $message = "cập nhật thất bại";
                   }
@@ -68,102 +69,116 @@
                 $stm2->execute();
                 if($stm2->affected_rows == 1){
                     move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
-                    header("Location: calendar.php");
+                    header("Location: dayOff_list.php");
                 }else{
                     $message = "cập nhật thất bại";
                 }
             }
         }
     }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	<link rel="stylesheet" href="/style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-	<title>Trưởng Phòng</title>
+	<title>Trang thông tin nhiệm vụ mới</title>
 </head>
+<style>
+	body {
+		background-image: url(../images/background.jpg);
+		background-repeat: no-repeat;
+    	background-size: cover;
+	}
+	.task-search-input {
+		width: inherit;
+	}
+	.scrollable-task {
+		height: 500px;
+		overflow-x: auto;
+	}
 
-<body>
+	.e__dayOff-content {
+		background-color: rgb(240,255,255);
+	}
+	@media screen and (min-width: 992px) and (max-width: 1199px){
+		.task-name__heading,
+		.task-time__heading {
+			display: none;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width: 991px){
+		.employee-name,
+		.task-name__heading,
+		.task-time__heading {
+			display: none;
+		}
+		.employee-heading {
+			justify-content: space-between;
+		}
+	}	
 
-	<div>
-		<div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand" href="#">Task Manager</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse " id="navbarSupportedContent">
-						<ul class="navbar-nav mr-auto"></ul>
-					<?php
-						?>
-						<div>
-							<a class="nav-link" href="../profile.php">Xin chào <?= $_SESSION['hoTen'] ?></a>
-						</div>
-						<div>
-							<a class="font-weight-bold" href="../logout.php">Đăng xuất</a>
-						</div>
-					<?php
-						?>
-				</div>
-			</nav>
-		</div>
+	@media screen and (min-width: 576px) and (max-width: 767px){
+		.task-description__heading,
+		.task-time__heading {
+			display: none;
+		}
+	}
+	@media screen and (max-width: 576px){
+		/* .navbar {
+			padding: 0;
+    		position: absolute;
+		} */
+		.navbar-header {
+			display: none;
+		}
+		.navbar-header__none {
+			display: block;
+			font-weight: bold;
+		}
+		.employee-name {
+			display: none;
+		}
 		
-		<div class="row">
-			<div class="col-xl-2  col-sm-12">
-				<ul class="menu ">
-					<li class="create-task add-task " ><a href="form_add.php" class="d-flex justify-content-between text-success"><i class="fas fa-plus-circle" ></i>   Tạo Task</a></li>
-                    <div class="list-group">
-                    <a href="index.php" class="list-group-item list-group-item-action ">
-                        <i class="fas fa-tasks"></i>   Tất cả Task
-                        </a>
-                        <a href="newTask.php" class="list-group-item list-group-item-action"><i class="fas fa-star"></i> Task Mới</a>
-                        <a href="progress.php" class="list-group-item list-group-item-action "><i class="fas fa-spinner"></i> Task in progress</a>
-                        <a href="waiting.php" class="list-group-item list-group-item-action"> <i class="fas fa-stopwatch"></i> Task Waiting</a>
-                        <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
-                        <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
-                        <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
-                        <a href="calendar.php" class="list-group-item list-group-item-action activee"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
-                       
-                    </div>
-				</ul>
-              
-			</div>
-			<div class="col-xl-10  col-sm-12 ">
-				<div class="d-flex">
-					<div class="p-2">
-						<input type="checkbox" id="choose-all" name="choose-all">
-						<label for="choose-all">Chọn tất cả</label>
-					</div>
-					<div class="p-2"><i class="fas fa-redo-alt"></i>Tải lại</div>
-					<div class="ml-auto p-2 d-flex">
-						<p>Tổng số Task:</p>
-						<h5 class='countTask'></h5>
-					</div>
-				</div>
-                
-				<div class="all-task">
-					<div class="task-content">
-                        <h3 class="p-2 d-flex justify-content-center bg-dark text-white">ĐƠN XIN NGHĨ PHÉP</h3>
-                        <form action="" method="post" enctype="multipart/form-data">
+		.task-description__heading,
+		.task-time__heading {
+			display: none;
+		}
+	}
+</style>
+<body>
+	<?php
+		require_once('sidebar_searchTask.php');
+	?>
+	<div>
+		<div class="row m-0">
+			
+			<?php
+				require_once('sidebar.php');
+			?>
+			<div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 rounded border border-left-0 border-right-0 border-bottom-0">
+				<div class="e__dayOff-content">
+					<h5 class="p-2 d-flex justify-content-center bg-dark text-white tex-center">
+						<i class="fas fa-hand-point-left"></i>
+						ĐƠN XIN NGHỈ PHÉP
+					</h5>
+					
+					<form action="" method="post" enctype="multipart/form-data">
                             <div class="modal-body mx-5">
                                 <div class="form-group">
-                                    <label for="maNVien">Mã nhân viên</label>
-                                    <input type="text" value="<?=$_SESSION['maNhanVien']?>"class="form-control" id="maNVien" name="maNVien" readonly />
+                                    <label for="maNVDayOff">Mã nhân viên</label>
+                                    <input type="text" value="<?=$_SESSION['maNhanVien']?>"class="form-control" id="maNVDayOff" name="maNVDayOff" readonly />
                                 </div>
                                 <div class="form-group">
                                     <label for="time">Chọn số ngày nghĩ</label>
                                     <select name="time" class="form-control">
                                         <?php
-                                            for($i=1;$i<=15;$i++){
+                                            for($i=1;$i<=12;$i++){
                                                 echo "<option value='$i'>$i</option>";
                                             }
                                         ?>
@@ -190,31 +205,106 @@
                                 
                             </div>
                         </form>
-					</div>
 				</div>
-		</div>
-		</div>
-			
-
-    <!-- <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="abc"> -->
-     <!-- message respone -->
-  
+			</div>
+    	</div>	
 	</div>
+
+
+	<!-- message response -->
+	
+	<div class="modal fade" id="message-respone">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Notification</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="responseMess"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script>
+
+	// const addAPIDayOff = 'http://localhost:8080/employee/send_dayOff_form.php';
+	
+	// function addDayOffForm(e) {
+	// // e.preventDefault();
+	// // console.log("stopped")
+	// let maNVDayOff = $('#maNVDayOff').val()
+	// let maPBDayOff = $('#maPBDayOff').val();
+	// let dayDayOff = $('#dayDayOff').val()
+	// let reasonDayOff = $('#reasonDayOff').val()
+	// let fileDayOff = $('#fileDayOff').val()
+	// let conditionDayOff = $('#conditionDayOff').val()
+
+	// // Kiểm tra dữ liệu có rỗng hay không
+	// if (maNVDayOff == '' ||  maPBDayOff == '' || dayDayOff == '' 
+	// || reasonDayOff == '' || fileDayOff == '' || conditionDayOff == '') {
+	// 	$('.empty').removeClass('d-none')
+	// } else {
+	// 	$('.empty').addClass('d-none')
+	// }
+
+	// let data = {
+	// 			"maNVDayOff":maNVDayOff,
+	// 			"maPBDayOff":maPBDayOff,
+	// 			"dayDayOff":dayDayOff,
+	// 			"reasonDayOff":reasonDayOff,
+	// 			"fileDayOff":fileDayOff,
+	// 			"conditionDayOff":conditionDayOff
+	// 		}
+	// console.log(data);
+
+	
+  	// fetch(addAPIDayOff, {
+    //         'method': 'POST',
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(data)
+    //     })
+	// .then(res => res.json())
+	// .then(data => {
+	//   	console.log(data);
+        //         if (data.code === 0) {
+  		// 	console.log(0)
+        //             $('#day-off-dialog').modal('toggle')
+        //             $('#responseMess').html(data.message);
+        //             $('#message-respone').modal('show');
+                    
+        //             $('tbody').children().remove()
+        //             loadTasks()
+        //         } else {
+      	// console.log(1)
+        //             $('#add-dialog').modal('toggle')
+        //             $('#responseMess').html(data.message);
+        //             $('#message-respone').modal('show');
+        //         }
+    //         })
+  	// }
+	
+
+
+
+	</script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-	<script src="../main.js">
-		
-  
-    // if($('#m-trangThai').attr('value')!='WAITING'){
-    //     $('#m-smDongY').attr('disabled', true);
-    //     $('#m-smTuChoi').attr('disabled', true);
-    // }
 
-	</script> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	<!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	
 </body>
 
 </html>
-

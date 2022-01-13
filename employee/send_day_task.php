@@ -6,8 +6,8 @@
     require_once("../response_api.php");
 
     // Kiểm tra phương thức 
-    if ($_SERVER['REQUEST_METHOD'] != 'PUT') {
-        error_response(1, "API chỉ hỗ trợ phương thức PUT");
+    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+        error_response(1, "API chỉ hỗ trợ phương thức POST");
     }
 
     // Đọc JSON từ Client 
@@ -18,8 +18,8 @@
         error_response(2, "Dữ liệu phải ở dạng JSON");
     }
     
-    if (!property_exists($input, 'id') || !property_exists($input, 'numDayOff') || 
-    !property_exists($input, 'reason') || !property_exists($input, 'dayCreate') || !property_exists($input, 'file')) 
+    if (!property_exists($input, 'id') || !property_exists($input, 'dayDayOff') || 
+    !property_exists($input, 'reason') || !property_exists($input, 'file')) 
     {
         error_response(3, "Dữ liệu không đầy đủ");
     }

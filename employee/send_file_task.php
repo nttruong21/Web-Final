@@ -7,7 +7,7 @@
 
     // Kiểm tra phương thức 
     if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-        err_messages(1, "API chỉ hỗ trợ phương thức POST");
+        error_response(1, "API chỉ hỗ trợ phương thức POST");
     }
 
     // Đọc JSON từ Client 
@@ -15,12 +15,12 @@
 
     // Kiểm tra dữ liệu 
     if (is_null($input)) {
-        err_messages(2, "Dữ liệu phải ở dạng JSON");
+        error_response(2, "Dữ liệu phải ở dạng JSON");
     }
 
     if (!property_exists($input, 'fileInputTask')) 
     {
-        err_messages(3, "Dữ liệu không đầy đủ");
+        error_response(3, "Dữ liệu không đầy đủ");
     }
     
     // Lấy dữ liệu
@@ -29,14 +29,14 @@
 
     // Kiểm tra dữ liệu có hợp lệ?
     if(($fileInputTask) === "") {
-        err_messages(4, "Dữ liệu không hợp lệ");
+        error_response(4, "Dữ liệu không hợp lệ");
     }
 
     require_once("../manager/api/function.php");
     $result = insertFileTask($file); 
     if ($result == 1) {
-        success_messages(0, "Tạo form xin nghỉ phép thành công");
+        success_response(0, "Tạo form xin nghỉ phép thành công");
     } else {
-        err_messages(5, "Tạo form xin nghỉ phép thất bại");
+        error_response(5, "Tạo form xin nghỉ phép thất bại");
     }
 ?>
