@@ -2,7 +2,7 @@
         require_once("task_and_dayOff_db.php");
         header("Access-Control-Allow-Origin: *");
         header("Content-type: application/json");
-        require_once("../../response_api.php");
+        require_once("../response_api.php");
 
         // Kiểm tra phương thức 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -16,19 +16,24 @@
         if (is_null($input)) {
             error_response(2, "Dữ liệu phải ở dạng JSON");
         }
-        if (!property_exists($input, 'inprogressTask')) {
+
+       if (!property_exists($input, 'maNVu') || !property_exists($input, 'noiDung') || 
+        !property_exists($input, 'tapTin')) 
+        {
             error_response(3, "Dữ liệu không đầy đủ");
         }
-
         // Lấy dữ liệu 
-        $inprogressTask = $input -> inprogressTask;
+        $maNVu = $input -> maNVu;
+        $noiDung = $input -> noiDung;
+        $tapTin = $input -> tapTin;
+
         
         // Kiểm tra dữ liệu có hợp lệ?
-        if($inprogressTask === "") {
+        if($maNVu === "" || $noiDung === "" || $tapTin == '') {
             error_response(4, "Dữ liệu không hợp lệ");
         }
 
-        $result = updateInProgressTask($inprogressTask);
+        $result = insertInProgressTask($maNVu, $noiDung, $tapTin);
         if ($result) {
             success_response(0, "Cập nhật trạng thái thành công");
         } else {

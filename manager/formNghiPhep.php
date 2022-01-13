@@ -19,6 +19,8 @@
     if (!$_SESSION['maChucVu'] == 'TP') {
         header("Location: /no_access.html");
     }
+
+    
     if(isset($_POST['guiDon'])) {
         $message = '';
         if (!isset($_POST['maNVien'])  || !isset($_POST['time']) || !isset($_POST['lyDo'])){

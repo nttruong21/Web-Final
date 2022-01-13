@@ -32,13 +32,12 @@ function get_tasks(){
 };
 
 
-function insertFormDayOff($id, $numDayOff, $reason, $file) {
-    $sql = "INSERT INTO DonXinNghiPhep(maNhanVien, soNgayNghi, lyDo, tapTin) values(?, ?, ?, ?)";
+function insertFormDayOff($maNVDayOff, $maPBDayOff, $dayDayOff, $conditionDayOff, $reasonDayOff, $dayCreateDayOff, $fileDayOff) {
+    $sql = "INSERT INTO DonXinNghiPhep (maNhanVien, maPhongBan, soNgayNghi, trangThai, lyDo, ngayTao, tapTin) VALUES(?, ?, ?,?, ?, ?,?)";
     $conn = connect_db();
-
     $stm = $conn->prepare($sql);
-    $stm ->bind_param("siss", $id, $numDayOff, $reason, $file);
-    $stm->execute();
+    $stm -> bind_param("sssssss", $maNVDayOff, $maPBDayOff, $dayDayOff, $conditionDayOff, $reasonDayOff, $dayCreateDayOff, $fileDayOff);
+    $stm -> execute();
 
     return $stm -> affected_rows == 1;
 }
@@ -83,14 +82,15 @@ function insertFeedbackTask($feedBack) {
 // }
 
 
-function updateInProgressTask($inprogressTask) {
+function insertInProgressTask($maNVu, $noiDung, $tapTin) {
+    $sql = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES (?, ?, ?)";
     $conn = connect_db();
-    $sql = "UPDATE NhiemVu SET trangThai = ?";
     $stm = $conn->prepare($sql);
-    $stm -> bind_param("s", $inprogressTask);
+    $stm -> bind_param("sss", $maNVu, $noiDung, $tapTin);
     $stm -> execute();
     return $stm -> affected_rows == 1;
 }
+
 
 
 function updateWaitingTask($waitingTask) {

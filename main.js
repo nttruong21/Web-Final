@@ -903,7 +903,7 @@ function loadTasks() {
 // ------------------------index.php---------------------------------------- //
 // Lấy thông tin task có trạng thái new và render ra giao diện
 
-const addAPI = 'http://localhost:8080/employee/send_dayOff_task.php';
+const addAPIDayOff = 'http://localhost:8080/employee/send_dayOff_task.php';
 const addAPIInputTask = 'http://localhost:8080/employee/send_file_task.php';
 const getNewTask = 'http://localhost:8080/employee/get_new_task.php';
 
@@ -937,13 +937,23 @@ function moveToTaskInfomationPage() {
   
 }
 
+function moveToDayOffFormPage() {
+  let sumDayOff = $('#sumDayOff').val();
+  let countDayOff = $('#countDayOff').val();
+
+  if (countDayOff > sumDayOff) {
+    window.location.href = "dayOff_Form_disabled.php";
+  }else {
+    window.location.href = "dayOff_Form.php";
+  }
+}
 
 function moveToDayOffListPage() {
   window.location.href = 'dayOff_list.php';
 }
 
 function addDayOffForm(e) {
-  e.preventDefault();
+  // e.preventDefault();
   // console.log("stopped")
   let maNVDayOff = $('#maNVDayOff').val()
   let dayDayOff = $('#dayDayOff').val()
@@ -951,7 +961,7 @@ function addDayOffForm(e) {
   let fileDayOff = $('#fileDayOff').val()
   
   // Kiểm tra dữ liệu có rỗng hay không
-  if (maNVDayOff == '' || dayDayOff == '' || reasonDayOff == '' || fileDayOff == '') {
+  if (maNVDayOff == '' ||  dayDayOff == '' || reasonDayOff == '' || fileDayOff == '') {
       $('.empty').removeClass('d-none')
   } else {
       $('.empty').addClass('d-none')
@@ -964,7 +974,7 @@ function addDayOffForm(e) {
             "fileDayOff":fileDayOff,
         }
 
-  fetch(addAPI, {
+  fetch(addAPIDayOff, {
             'method': 'POST',
             headers: {
                 "Content-Type": "application/json",

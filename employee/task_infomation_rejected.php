@@ -1,7 +1,8 @@
 <?php
 	session_start();
-
+	
 	require_once('../connect_db.php');
+
 	$message = '';
     if (!isset($_POST['maNVu'])){
           $message = 'vui lòng nhập đầy đủ thông tin!!';
@@ -22,7 +23,6 @@
 				$message = 'Cập nhật trạng thái thất bại';
 			}
 		}
-
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/style.css"> <!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-	<title>Trang thông tin nhiệm vụ mới</title>
+	<title>Trang thông tin nhiệm vụ bị trả về</title>
 </head>
 <style>
 	body {
@@ -58,8 +58,12 @@
 	.e__task__infomation {
 		background-color: rgb(240,255,255);
 	}
+
 	.task-content {
 		background-color: rgb(240,255,255);
+	}
+	#tapTin {
+		padding: 3px 0 0 0;
 	}
 </style>
 <body>
@@ -76,49 +80,52 @@
 				<div class="task-content">
 					<h5 class="p-2 d-flex justify-content-center bg-dark text-white tex-center">
 						<i class="fas fa-hand-point-left"></i>
-						INFORMATION NEW TASK
+						INFORMATION REJECTED TASK
 					</h5>
-					<form action="" method="post" >
+					<form action="" method="post" enctype="multipart/form-data">
 						<?php
 							require_once("../connect_db.php");
 							require_once("task_and_dayOff_db.php");
 
-							$sql = "SELECT * FROM NHIEMVU WHERE maNhiemVu = '".$_GET['id']."'";
+							$sql = "SELECT * FROM KetQuaTraVe WHERE maNhiemVu = '".$_GET['id']."'";
 							$result = connect_db()->query($sql);
 
 							while ($row = $result->fetch_assoc()) {
 
 								$idNV = $row['maNhiemVu'];
-								$name = $row['tenNhiemVu'];
-								$desc = $row['moTa'];
-								$time = $row['hanThucHien'];
-								$condition = $row['trangThai'];
-							
+                                $noiDung = $row['noiDung'];
+                                $file = $row['tapTin'];
+                                $time = $row['hanThucHien'];
 							}
 						?>
 						<div class="row">
-							<div class="col-xl-3 col-lg-4 col-md-4">
+							<div class="col-xl-2 col-lg-4 ">
 								<div class="form-group ml-3 mr-3">
 									<label for="maNVu">Mã nhiệm vụ</label>
 									<input type="text" value="<?= $idNV ?>" class="form-control" id="maNVu" name="maNVu" readonly />
 								</div>
-								<div class="form-group ml-3 mr-3">
-									<label for="timeNV">Hạn thực hiện</label>
-									<input type="text" value="<?= $time ?>" class="form-control" id="timeNV" name="Deadline" readonly />
+                                <div class="form-group ml-3 mr-3">
+									<label for="hanThucHien">Hạn Thực hiện</label>
+									<input type="text" value="<?= $time ?>" class="form-control" id="hanThucHien" name="hanThucHien" readonly />
 								</div>
-								
 							</div>
-							<div class="col-xl-9 col-lg-8 col-md-8">
+							<div class="col-xl-10 col-lg-8 ">
+                                <div class="form-group ml-3 mr-3">
+									<label for="noiDung">Nội dung</label>
+									<input type="text" value="<? echo $noiDung ?>" class="form-control" id="noiDung" name="noiDung" readonly />
+								</div>
+                                <div class="form-group ml-3 mr-3">
+									<label for="file">Tập tin</label>
+                                    <div>Nhấn vào tên file để tải về: <a href='download_file.php?maNV=<?= $idNV ?>'><?= $file ?></a></div>
+									<input type="text" value="<?= $file ?>" class="form-control" id="file" name="file"/>
+
+								</div>
+                    
 								<div class="form-group ml-3 mr-3">
-									<label for="tenNVu">Tên nhiệm vụ</label>
-									<input type="text" value="<?= $name ?>" class="form-control" id="tenNVu" name="tenNVu" readonly />
+									<p><?= $message ?></p>
 								</div>
 								<div class="form-group ml-3 mr-3">
-									<label for="moTa">Mô tả</label>
-									<input type="text" value="<? echo $desc ?>" class="form-control" id="moTa" name="Mô tả" readonly>
-								</div>
-								<div class="form-group ml-3 mr-3">
-									<button type="submit" class="btn btn-primary">Start</button>
+									<button type="submit" name="submit" class="btn btn-primary"><a href="task_infomation_inprogress.php?id=<?= $idNV ?>"> </a> Bắt đầu lại </button>
 								</div>
 							</div>														
 						</div>
@@ -128,55 +135,6 @@
     	</div>	
 	</div>
 
-
-	<!-- Day off dialog -->
-	<div class="modal fade" id="day-off-dialog">
-         <div class="modal-dialog">
-            <div class="modal-content">
-        
-               <div class="modal-header">
-                  <h4 class="modal-title">Đơn xin nghỉ phép</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-               </div>
-
-               <div class="modal-body">
-				   <div class="row">
-						<div class="col-xl-12">
-							<div class="modal-off__form">
-								
-								<form action="" method="POST" onsubmit="return false;">
-									<div class="row">
-										<div class="col">
-											<input type="text" class="form-control" id="maNVDayOff" placeholder="Nhập MSNV">
-										</div>
-										<div class="col">
-											<input type="text" class="form-control" id="dayDayOff" placeholder="Số ngày xin nghỉ phép" >
-										</div>
-										
-									</div>
-									<div class="row mt-2">
-										<div class="col">
-											<input type="text" class="form-control" id="reasonDayOff" placeholder="Lý do">
-										</div>										
-									</div>
-									<div class="form-group">
-										<div class="custom-file">
-											<label for="fileDayOff">Tệp đính kèm (nếu có)</label>
-											<input type="file" class="custom-file-input" id="fileDayOff">
-										</div>
-									</div>
-									<p class="mb-0 text-center text-danger d-none empty">Please fill out all of the infomation</p>
-									<div class="modal-off__footer d-flex">
-										<button onclick="addDayOffForm();" type="submit" class="btn btn-success ml-auto">Gửi</button>
-									</div>
-								</form>								
-							</div>
-						</div>
-				   </div>
-               </div>     
-            </div>
-         </div>
-	</div>
 
 	<!-- message response -->
 	

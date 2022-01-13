@@ -37,6 +37,12 @@
 		background-repeat: no-repeat;
     	background-size: cover;
 	}
+	.navbar-header__none {
+		display: none;
+	}
+	.employee {
+		margin: 10px 15px;
+	}
 	.task-search-input {
 		width: inherit;
 	}
@@ -53,62 +59,67 @@
 	.e__task__infomation {
 		background-color: rgb(240,255,255);
 	}
+	.e__check-font-style{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.e__condition-style {
+		padding: 5px 0px 0 15px;
+	}
+	.displayNone {
+		display: none;
+	}
+	@media screen and (min-width: 992px) and (max-width: 1199px){
+		.task-name__heading,
+		.task-time__heading {
+			display: none;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width: 991px){
+		.employee-name,
+		.task-name__heading,
+		.task-time__heading {
+			display: none;
+		}
+		.employee-heading {
+			justify-content: space-between;
+		}
+	}	
+
+	@media screen and (min-width: 576px) and (max-width: 767px){
+		.task-description__heading,
+		.task-time__heading {
+			display: none;
+		}
+	}
+	@media screen and (max-width: 576px){
+		/* .navbar {
+			padding: 0;
+    		position: absolute;
+		} */
+		.navbar-header {
+			display: none;
+		}
+		.navbar-header__none {
+			display: block;
+			font-weight: bold;
+		}
+		.employee-name {
+			display: none;
+		}
+		
+		.task-description__heading,
+		.task-time__heading {
+			display: none;
+		}
+	}
 </style>
 <body>
-	<div>
-		<div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between mr-2 ml-2">
-			<div class="">
-				<div class="navbar-header">
-					<div class=""><h4>Home page Employee</h4></div>
-				</div>
-			</div>
-			<div class="navbar-info nav d-flex">
-				<a class="font-weight-bold mr-4" href="../profile.php">Profile</a>
-				<a class="font-weight-bold" href="../logout.php">Logout</a>
-			</div>
-			<div class="navbar-icon d-none">
-				<i class="fas fa-bars"></i>
-			</div>
-		</div>
-
-	</div>
-	<div class="employee m-4">
-		<div class="row">
-			<div class="d-flex w-100 align-items-center employee-heading">
-					
-				<div class="col-xl-4 col-lg-6 col-md-5 employee-name">
-					<h4 class="">Hello <?= $_SESSION['hoTen'] ?></h4>
-				</div>
-				<div class="col-xl-5 col-lg-4 col-md-6 col-sm-10 col-10">
-					<div class="form-group border rounded-lg mb-0 bg-light">
-						<form class="" methode="post">
-							<div class="d-flex align-items-center justify-content-between w-100">
-								<div class="task-search-input m-1">
-									<input class="border border-0 border-none rounded p-1 w-100" type="search" placeholder="Search task" aria-label="Search">
-								</div>
-								<div class="task-search-icon m-1">
-									<button class="btn btn-outline-info rounded-circle" type="submit"><i class="fas fa-search"></i></button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="col-xl-3 col-lg-2 col-md-3 col-sm-2 col-2">
-					<ul class="d-flex list-unstyled justify-content-end mb-0">
-						<li>
-							<button class="nav-item__day-off btn btn-light text-decoration-none d-flex align-items-center justify-content-center" data-toggle='modal' data-target='#day-off-dialog' href="">
-								<i class="fas fa-calendar-day"></i>
-								<p class="mb-0 ml-1 day-off">On leave</p> 
-							</button>
-						</li>
-					</ul>
-				</div>
-		
-				</div>
-			</div>
 	
-		</div>
-	</div>
+	<?php
+		require_once('sidebar_searchTask.php');
+	?>
 	<div>
 		<div class="row m-0">
 			
@@ -116,22 +127,25 @@
 				require_once('sidebar.php');
 			?>
 
-			<div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 rounded border border-left-0 border-right-0 border-bottom-0">
+			<div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-11 rounded border border-left-0 border-right-0 border-bottom-0">
 				<div class="border border-left-0 border-right-0">
 					<div class="scrollable-task">
 						<div class="e__task__heading">
 							<div class="d-flex">
-								<div class='task-name__heading col-xl-2 col-lg-4 col-md-3 col-sm-12 col-12 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Tên nhiệm vụ</p>
+								<div class='task-id__heading col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3 border border-top-0 border-left-0'>
+									<p class="mb-0 p-1 e__check-font-style">Mã Nhiệm vụ</p>
 								</div>
-								<div class='task-description__heading col-xl-6 col-lg-4 col-md-7 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Thông tin nhiệm vụ</p>
+								<div class='task-name__heading col-xl-2 col-sm-5 col-5 border border-top-0 border-left-0'>
+									<p class="mb-0 p-1 e__check-font-style">Tên nhiệm vụ</p>
 								</div>
-								<div class='task-time col-xl-2 col-lg-0 col-md-0 border border-top-0 border-left-0'>
-									<p class="mb-0 p-1">Dealine</p>
+								<div class='task-description__heading col-xl-4 col-lg-6 col-md-6 border border-top-0 border-left-0'>
+									<p class="mb-0 p-1 e__check-font-style">Thông tin nhiệm vụ</p>
 								</div>
-								<div class='task-rate col-xl-2 col-lg-4 col-md-2 border border-top-0 border-left-0 border-right-0'>
-									<p class="mb-0 p-1">Trạng thái</p>
+								<div class='task-time__heading col-xl-2 border border-top-0 border-left-0'>
+									<p class="mb-0 p-1 e__check-font-style">Dealine</p>
+								</div>
+								<div class='task-rate__heading col-xl-2 col-lg-4 col-md-4 col-sm-4 col-4 border border-top-0 border-left-0 border-right-0'>
+									<p class="mb-0 p-1 e__check-font-style">Trạng thái</p>
 								</div>								
 							</div>
 						</div>	
@@ -139,7 +153,7 @@
 						<?php
 								require_once("../connect_db.php");
                                 require_once("task_and_dayOff_db.php");
-								$sql = "SELECT * FROM NHIEMVU WHERE trangThai != 'canceled' ORDER BY hanThucHien";
+								$sql = "SELECT * FROM NHIEMVU WHERE trangThai != 'CANCELED' ORDER BY hanThucHien";
 								$result = connect_db()->query($sql);
 
 								while ($row = $result->fetch_assoc()) {
@@ -149,22 +163,103 @@
 									$time = $row['hanThucHien'];
 									$condition = $row['trangThai'];
 
+									if ($condition == 'NEW') {
+										echo	"<div class='d-flex task-list'>
+													<div class='task-id__heading col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3 border border-top-0 border-left-0'>
+														<p class='task-id e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation.php?id=$idNV'> $idNV </a></p>
+													</div>
+													<div class='task-name__heading col-xl-2 col-sm-5 col-5 border border-top-0 border-left-0'>
+														<p class='task-name e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation.php?id=$idNV'> $name </a></p>
+													</div>
+													<div class='task-description__heading col-xl-4 col-lg-6 col-md-6 border border-top-0 border-left-0'>
+														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation.php?id=$idNV'> $desc </a></p>
+													</div>
+													<div class='task-time__heading col-xl-2 border border-top-0 border-left-0'>
+														<p class='mb-0 p-1 e__check-font-style'>$time</p>
+													</div>
+													<div class='task-rate__heading e__condition-style col-xl-2 col-lg-4 col-md-4 col-sm-4 col-4 border border-top-0 border-left-0'>
+														<p class='badge badge-info mb-0 p-1 e__check-font-style'>$condition</p>
+													</div>										
+												</div>";
+									}
+									else if ($condition == 'COMPLETED') {
+										echo	"<div class='d-flex task-list'>
+													<div class='task-id__heading col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3 border border-top-0 border-left-0'>
+														<p class='task-id e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation_completed.php?id=$idNV'> $idNV </a></p>
+													</div>
+													<div class='task-name__heading col-xl-2 col-sm-5 col-5 border border-top-0 border-left-0'>
+														<p class='task-name e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation_completed.php?id=$idNV'> $name </a></p>
+													</div>
+													<div class='task-description__heading col-xl-4 col-lg-6 col-md-6 border border-top-0 border-left-0'>
+														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_completed.php?id=$idNV'> $desc </a></p>
+													</div>
+													<div class='task-time__heading col-xl-2 border border-top-0 border-left-0'>
+														<p class='mb-0 p-1 e__check-font-style'>$time</p>
+													</div>
+													<div class='task-rate__heading col-xl-2 col-lg-4 col-md-4 col-sm-4 col-4 border border-top-0 border-left-0'>
+														<p class='badge badge-success mb-0 p-1 e__check-font-style'>$condition</p>
+													</div>										
+												</div>";
+									}
+									else if ($condition == 'REJECTED') {
+										echo	"<div class='d-flex task-list'>
+													<div class='task-id__heading col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3 border border-top-0 border-left-0'>
+														<p class='task-id e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation_rejected.php?id=$idNV'> $idNV </a></p>
+													</div>
+													<div class='task-name__heading col-xl-2 col-lg-4 col-sm-5 col-5 border border-top-0 border-left-0'>
+														<p class='task-name e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation_rejected.php?id=$idNV'> $name </a></p>
+													</div>
+													<div class='task-description__heading col-xl-4 col-lg-6 col-md-6 border border-top-0 border-left-0'>
+														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_rejected.php?id=$idNV'> $desc </a></p>
+													</div>
+													<div class='task-time__heading col-xl-2 border border-top-0 border-left-0'>
+														<p class='mb-0 p-1 e__check-font-style'>$time</p>
+													</div>
+													<div class='task-rate__heading col-xl-2 col-lg-4 col-md-4 col-sm-4 col-4 border border-top-0 border-left-0'>
+														<p class='badge badge-danger mb-0 p-1 e__check-font-style'>$condition</p>
+													</div>										
+												</div>";
+									}
+									else if ($condition == 'IN PROGRESS') {
+										echo	"<div class='d-flex task-list'>
+													<div class='task-id__heading col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3 border border-top-0 border-left-0'>
+														<p class='task-id e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation_inprogress.php?id=$idNV'> $idNV </a></p>
+													</div>
+													<div class='task-name__heading col-xl-2 col-lg-4 col-sm-5 col-5 border border-top-0 border-left-0'>
+														<p class='task-name e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_inprogress_infomation.php?id=$idNV'> $name </a></p>
+													</div>
+													<div class='task-description__heading col-xl-4 col-lg-6 col-md-6 border border-top-0 border-left-0'>
+														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_completed.php?id=$idNV'> $desc </a></p>
+													</div>
+													<div class='task-time__heading col-xl-2 border border-top-0 border-left-0'>
+														<p class='mb-0 p-1 e__check-font-style'>$time</p>
+													</div>
+													<div class='task-rate__heading col-xl-2 col-lg-4 col-md-4 col-sm-4 col-4 border border-top-0 border-left-0'>
+														<p class='badge badge-secondary mb-0 p-1 e__check-font-style'>$condition</p>
+													</div>										
+												</div>";
+									}
+									else if ($condition == 'WAITING') {
+										echo	"<div class='d-flex task-list'>
+													<div class='task-id__heading col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3 border border-top-0 border-left-0'>
+														<p class='task-id e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation_waiting.php?id=$idNV'> $idNV </a></p>
+													</div>
+													<div class='task-name__heading col-xl-2 col-lg-4 col-sm-5 col-5 border border-top-0 border-left-0'>
+														<p class='task-name e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_waiting.php?id=$idNV'> $name </a></p>
+													</div>
+													<div class='task-description__heading col-xl-4 col-lg-6 col-md-6 border border-top-0 border-left-0'>
+														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_completed.php?id=$idNV'> $desc </a></p>
+													</div>
+													<div class='task-time__heading col-xl-2 border border-top-0 border-left-0'>
+														<p class='mb-0 p-1 e__check-font-style'>$time</p>
+													</div>
+													<div class='task-rate__heading col-xl-2 col-lg-4 col-md-4 col-sm-4 col-4 border border-top-0 border-left-0'>
+														<p class='badge badge-warning mb-0 p-1 e__check-font-style'>$condition</p>
+													</div>										
+												</div>";
 									// onclick='moveToTaskInfomationPage();
-									echo	"<div class='d-flex task-list''>
-												<div class='task-name__heading col-xl-2 col-lg-4 col-md-3 col-sm-12 col-12 border border-top-0 border-left-0'>
-													<p class='task-name  mb-0 p-1'> <a class='' href='task_infomation.php?id=$idNV'> $name </a></p>
-												</div>
-												<div class='task-description__heading col-xl-6 col-lg-4 col-md-7 border border-top-0 border-left-0'>
-													<p class='task-description mb-0 p-1'>$desc</p>
-												</div>
-												<div class='task-time col-xl-2 border border-top-0 border-left-0'>
-													<p class='mb-0 p-1'>$time</p>
-												</div>
-												<div class='task-time col-xl-2 border border-top-0 border-left-0'>
-													<p id='employee__task-rate' class='mb-0 p-1'>$condition</p>
-												</div>										
-											</div>";
 								}
+							}
 							?>		
 							
 							
@@ -175,55 +270,55 @@
     	</div>	
 	</div>
 
+		<!-- Day off dialog -->
+		<div class="modal fade" id="day-off-dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+			
+				<div class="modal-header">
+					<h4 class="modal-title">Đơn xin nghỉ phép</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
 
-	<!-- Day off dialog -->
-	<div class="modal fade" id="day-off-dialog">
-         <div class="modal-dialog">
-            <div class="modal-content">
-        
-               <div class="modal-header">
-                  <h4 class="modal-title">Đơn xin nghỉ phép</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-               </div>
-
-               <div class="modal-body">
-				   <div class="row">
-						<div class="col-xl-12">
-							<div class="modal-off__form">
-								
-								<form action="" method="POST" onsubmit="return false;">
-									<div class="row">
-										<div class="col">
-											<input type="text" class="form-control" id="maNVDayOff" placeholder="Nhập MSNV">
+				<div class="modal-body">
+					<div class="row">
+							<div class="col-xl-12">
+								<div class="modal-off__form">
+									
+									<form action="" method="POST" onsubmit="return false;">
+										<div class="row">
+											<div class="col">
+												<input type="text" class="form-control" id="maNVDayOff" placeholder="Nhập MSNV">
+											</div>
+											<div class="col">
+												<input type="text" class="form-control" id="dayDayOff" placeholder="Số ngày xin nghỉ phép" >
+											</div>
+											
 										</div>
-										<div class="col">
-											<input type="text" class="form-control" id="dayDayOff" placeholder="Số ngày xin nghỉ phép" >
+										<div class="row mt-2">
+											<div class="col">
+												<input type="text" class="form-control" id="reasonDayOff" placeholder="Lý do">
+											</div>										
 										</div>
-										
-									</div>
-									<div class="row mt-2">
-										<div class="col">
-											<input type="text" class="form-control" id="reasonDayOff" placeholder="Lý do">
-										</div>										
-									</div>
-									<div class="form-group">
-										<div class="custom-file">
-											<label for="fileDayOff">Tệp đính kèm (nếu có)</label>
-											<input type="file" class="custom-file-input" id="fileDayOff">
+										<div class="form-group">
+											<div class="custom-file">
+												<label for="fileDayOff">Tệp đính kèm (nếu có)</label>
+												<input type="file" class="custom-file-input" id="fileDayOff">
+											</div>
 										</div>
-									</div>
-									<p class="mb-0 text-center text-danger d-none empty">Please fill out all of the infomation</p>
-									<div class="modal-off__footer d-flex">
-										<button onclick="addDayOffForm();" type="submit" class="btn btn-success ml-auto">Gửi</button>
-									</div>
-								</form>								
+										<p class="mb-0 text-center text-danger d-none empty">Please fill out all of the infomation</p>
+										<div class="modal-off__footer d-flex">
+											<button onclick="addDayOffForm();" type="submit" class="btn btn-success ml-auto">Gửi</button>
+										</div>
+									</form>								
+								</div>
 							</div>
 						</div>
-				   </div>
-               </div>     
-            </div>
-         </div>
-	</div>
+					</div>     
+				</div>
+			</div>
+		</div>
+
 
 	<!-- message response -->
 	
@@ -247,42 +342,7 @@
         </div>
     </div>
 });
-	<script>
-		// function handleChooseOne(e) {
-		// 	var inputChooseOne = document.querySelector('.task-name .task-name__input');
-		// 	var taskInfo = document.querySelector('.task-infomation');
-		// 	inputChooseOne.onclick = function(e) {
-		// 		taskInfo.classList.add('bg-primary');
-		// 	}
-		// }
-
-		// $(document).ready(function() {
-		// 	$('.btn-startTask').onclick = function(e) {
-		// 		e.preventDefault();
-		// 		$('.btn-submitTask').removeAtt('disabled');
-
-		// 	}
-		// })
-		// $(".btn-start").click(function(e){
-		// 	e.preventDefault();
-		// 	$('btn-submit').prop('disabled', false);
-
-		// });
-
-		
-
-		// Thêm thông tin form xin nghỉ phép
-		// const readAPI = 'http://localhost:8080/manager/api/get_task.php';
-  		
-		
-		
 	
-		// function getNewTask(e) {
-		// 	e.preventDefault();
-
-		// 	let 
-		// }
-	</script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

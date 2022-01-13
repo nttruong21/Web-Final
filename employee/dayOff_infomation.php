@@ -61,6 +61,32 @@
 	.task-content {
 		background-color: rgb(240,255,255);
 	}
+	.e__dayOff-info-reason-none,
+	.e__dayOff-info-numDay-none {
+		display: none;
+	}
+	@media screen and (min-width: 992px) and (max-width: 1199px){
+		.e__dayOff-info-numDay-none {
+			display: block;
+		}
+	}
+	@media screen and (min-width: 768px) and (max-width: 991px){
+		.e__dayOff-info-numDay-none {
+			display: block;
+		}
+	}	
+
+	@media screen and (min-width: 576px) and (max-width: 767px){
+		.e__dayOff-info-numDay-none {
+			display: block;
+		}
+	}
+	@media screen and (max-width: 576px){
+		.e__dayOff-info-reason-none,
+		.e__dayOff-info-numDay-none {
+			display: block;
+		}
+	} 
 </style>
 <body>
 	<?php
@@ -83,43 +109,42 @@
 							require_once("../connect_db.php");
 							require_once("task_and_dayOff_db.php");
 
-							$sql = "SELECT * FROM NHIEMVU WHERE maNhiemVu = '".$_GET['id']."'";
+							$sql = "SELECT * FROM DonXinNghiPhep WHERE maNhanVien = '".$_GET['id']."'";
 							$result = connect_db()->query($sql);
 
 							while ($row = $result->fetch_assoc()) {
 
-								$idNV = $row['maNhiemVu'];
-								$name = $row['tenNhiemVu'];
-								$desc = $row['moTa'];
-								$time = $row['hanThucHien'];
-								$condition = $row['trangThai'];
-							
+                                $idNV = $row['maNhanVien'];
+                                $idForm = $row['maDon'];
+                                $lyDo = $row['lyDo'];
+                                $day = $row['soNgayNghi'];
+                                $dayCreate = $row['ngayTao'];
+                                $trangThai = $row['trangThai'];
+                                $file = $row['tapTin'];
+                                
 							}
 						?>
 						<div class="row">
-							<div class="col-xl-3 col-lg-4 col-md-4">
+							<div class="col-xl-3 col-lg-4 col-md-4 col-sm-5 col-12">
 								<div class="form-group ml-3 mr-3">
-									<label for="maNVu">Mã nhiệm vụ</label>
-									<input type="text" value="<?= $idNV ?>" class="form-control" id="maNVu" name="maNVu" readonly />
+									<label for="ngayTao">NGÀY TẠO ĐƠN</label>
+									<input type="text" value="<?= $dayCreate ?>" class="form-control" id="ngayTao" name="ngayTao" readonly />
 								</div>
+								<div class="form-group ml-3 mr-3 e__dayOff-info-reason-none">
+									<label for="lyDo">LÝ DO NGHỈ</label>
+									<input type="text" value="<?= $lyDo ?>" class="form-control" id="lyDo" name="lyDo" readonly />
+								</div>
+								<div class="form-group ml-3 mr-3 e__dayOff-info-numDay-none">
+									<label for="day">SỐ NGÀY NGHỈ</label>
+									<input type="text" value="<?= $day ?>" class="form-control" id="day" name="day" readonly />
+								</div>
+							</div>
+							<div class="col-xl-9 col-lg-8 col-md-8 col-sm-7 col-12">
 								<div class="form-group ml-3 mr-3">
-									<label for="timeNV">Hạn thực hiện</label>
-									<input type="text" value="<?= $time ?>" class="form-control" id="timeNV" name="Deadline" readonly />
+									<label for="file">TẬP TIN ĐÍNH KÈM</label>
+									<input type="text" value="<?= $file ?>" class="form-control" id="file" name="file"/>
 								</div>
 								
-							</div>
-							<div class="col-xl-9 col-lg-8 col-md-8">
-								<div class="form-group ml-3 mr-3">
-									<label for="tenNVu">Tên nhiệm vụ</label>
-									<input type="text" value="<?= $name ?>" class="form-control" id="tenNVu" name="tenNVu" readonly />
-								</div>
-								<div class="form-group ml-3 mr-3">
-									<label for="moTa">Mô tả</label>
-									<input type="text" value="<? echo $desc ?>" class="form-control" id="moTa" name="Mô tả" readonly>
-								</div>
-								<div class="form-group ml-3 mr-3">
-									<button type="submit" class="btn btn-primary">Start</button>
-								</div>
 							</div>														
 						</div>
 					</form>
@@ -129,57 +154,7 @@
 	</div>
 
 
-	<!-- Day off dialog -->
-	<div class="modal fade" id="day-off-dialog">
-         <div class="modal-dialog">
-            <div class="modal-content">
-        
-               <div class="modal-header">
-                  <h4 class="modal-title">Đơn xin nghỉ phép</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-               </div>
-
-               <div class="modal-body">
-				   <div class="row">
-						<div class="col-xl-12">
-							<div class="modal-off__form">
-								
-								<form action="" method="POST" onsubmit="return false;">
-									<div class="row">
-										<div class="col">
-											<input type="text" class="form-control" id="maNVDayOff" placeholder="Nhập MSNV">
-										</div>
-										<div class="col">
-											<input type="text" class="form-control" id="dayDayOff" placeholder="Số ngày xin nghỉ phép" >
-										</div>
-										
-									</div>
-									<div class="row mt-2">
-										<div class="col">
-											<input type="text" class="form-control" id="reasonDayOff" placeholder="Lý do">
-										</div>										
-									</div>
-									<div class="form-group">
-										<div class="custom-file">
-											<label for="fileDayOff">Tệp đính kèm (nếu có)</label>
-											<input type="file" class="custom-file-input" id="fileDayOff">
-										</div>
-									</div>
-									<p class="mb-0 text-center text-danger d-none empty">Please fill out all of the infomation</p>
-									<div class="modal-off__footer d-flex">
-										<button onclick="addDayOffForm();" type="submit" class="btn btn-success ml-auto">Gửi</button>
-									</div>
-								</form>								
-							</div>
-						</div>
-				   </div>
-               </div>     
-            </div>
-         </div>
-	</div>
-
 	<!-- message response -->
-	
 	<div class="modal fade" id="message-respone">
         <div class="modal-dialog">
             <div class="modal-content">
