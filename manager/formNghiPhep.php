@@ -51,12 +51,10 @@
                 $stm2->bind_param('sssssss', $maNVien, $maPBan, $soNgayNghi, $trangThai, $lyDo, $ngayTao, $tapTin);
                 $stm2->execute();
                 if($stm2->affected_rows == 1){
-            
                     header("Location: calendar.php");
                   }else{
                     $message = "cập nhật thất bại";
                   }
-            
             }else {
                 $tname = $_FILES["file"]["tmp_name"];
                 $uploads_dir = '../files';
@@ -67,7 +65,7 @@
                 $stm2->bind_param('sssssss', $maNVien, $maPBan, $soNgayNghi, $trangThai, $lyDo, $ngayTao, $tapTin);
                 $stm2->execute();
                 if($stm2->affected_rows == 1){
-                    move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
+                    move_uploaded_file($tname, $uploads_dir.'/'.$tapTin);
                     header("Location: calendar.php");
                 }else{
                     $message = "cập nhật thất bại";
