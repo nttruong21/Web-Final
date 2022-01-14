@@ -29,7 +29,7 @@
         $trangThai = $_POST['trangThai'];
 
         $tname = $_FILES["file"]["tmp_name"];
-        $uploads_dir = '../images';
+        $uploads_dir = '../files';
         
 
        

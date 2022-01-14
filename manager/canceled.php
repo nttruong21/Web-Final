@@ -85,13 +85,8 @@
 			<div class="col-xl-10  col-sm-12 ">
 				
 			<div class="d-flex">
-											<div  class=" p-2 d-flex justify-content-start">
-                        <a href="#"><button type="button" class="btn btn-outline-dark"><i class="fas fa-calendar-alt"></i>  Nghĩ phép</button></a>
-                    	</div>
-					<div class="ml-auto p-2 d-flex">
-						<p>Tổng số Task: </p>
-						<h5 class='countTask'></h5>
-					</div>
+											
+				
 				</div>
 				<div class="all-task">
 					<div class="task-content">
