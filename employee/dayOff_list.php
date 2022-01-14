@@ -13,75 +13,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<title>Danh sách đơn xin nghỉ phép</title>
 </head>
-<style>
-	body {
-		background-image: url(../images/background.jpg);
-		background-repeat: no-repeat;
-    	background-size: cover;
-	}
-	.e__dayOff-heading-none {
-		display: none;
-	}
-	.task-search-input {
-		width: inherit;
-	}
-	.scrollable-dayOff {
-		height: 450px;
-		overflow-x: auto;
-	}
-	.e__dayOff__heading {
-		background-color: rgb(131,124,124);
-		position: sticky;
-		color: rgb(222,215,35);
-	}
-	.e__dayOff-list-body {
-		background-color: rgb(240,255,255);
-	}
 
-	@media screen and (min-width: 992px) and (max-width: 1199px){
-		.dayOff-numDay__heading {
-			display: none;
-		}
-	}
-	@media screen and (min-width: 768px) and (max-width: 991px){
-		.dayOff-numDay__heading {
-			display: none;
-		}
-	}	
-
-	@media screen and (min-width: 576px) and (max-width: 767px){
-		.e__dayOff-heading-none {
-			display: block;
-			font-size: bold;
-		}
-		.e__dayOff-heading {
-			display: none;
-		}
-		.e__sumDayOff {
-			display: none;
-		}
-		.dayOff-numDay__heading {
-			display: none;
-		}
-	}
-	@media screen and (max-width: 576px){
-		.e__dayOff-heading-none {
-			display: block;
-			font-size: bold;
-		}
-		.e__dayOff-heading {
-			display: none;
-		}
-		.e__sumDayOff {
-			display: none;
-		}
-		.dayOff-reason__heading,
-		.dayOff-numDay__heading {
-			display: none;
-		}
-	} 
-
-</style>
 <body>
 	<?php
 		require_once('sidebar_searchTask.php');
@@ -261,16 +193,7 @@
     </div>
 
 	<script>
-// 		function moveToDayOffFormPage() {
-// 		let sumDayOff = $('#sumDayOff').val();
-// 		let countDayOff = $('#countDayOff').val();
 
-// 		if (countDayOff > sumDayOff) {
-// 			window.location.href = "dayOff_Form_disabled.php";
-// 		}else {
-// 			window.location.href = "dayOff_Form.php";
-// 		}
-// }
 	</script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

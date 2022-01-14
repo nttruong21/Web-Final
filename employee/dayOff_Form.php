@@ -89,68 +89,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<title>Trang thông tin nhiệm vụ mới</title>
 </head>
-<style>
-	body {
-		background-image: url(../images/background.jpg);
-		background-repeat: no-repeat;
-    	background-size: cover;
-	}
-	.task-search-input {
-		width: inherit;
-	}
-	.scrollable-task {
-		height: 500px;
-		overflow-x: auto;
-	}
 
-	.e__dayOff-content {
-		background-color: rgb(240,255,255);
-	}
-	@media screen and (min-width: 992px) and (max-width: 1199px){
-		.task-name__heading,
-		.task-time__heading {
-			display: none;
-		}
-	}
-	@media screen and (min-width: 768px) and (max-width: 991px){
-		.employee-name,
-		.task-name__heading,
-		.task-time__heading {
-			display: none;
-		}
-		.employee-heading {
-			justify-content: space-between;
-		}
-	}	
-
-	@media screen and (min-width: 576px) and (max-width: 767px){
-		.task-description__heading,
-		.task-time__heading {
-			display: none;
-		}
-	}
-	@media screen and (max-width: 576px){
-		/* .navbar {
-			padding: 0;
-    		position: absolute;
-		} */
-		.navbar-header {
-			display: none;
-		}
-		.navbar-header__none {
-			display: block;
-			font-weight: bold;
-		}
-		.employee-name {
-			display: none;
-		}
-		
-		.task-description__heading,
-		.task-time__heading {
-			display: none;
-		}
-	}
-</style>
 <body>
 	<?php
 		require_once('sidebar_searchTask.php');

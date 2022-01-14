@@ -167,103 +167,1152 @@ body {
   color : #ffffff;
 }
 
+
+
+
 /* ---------------- Employee ----------------- */
 /* File index.php employee folder*/
-/* .navbar {
-	opacity: 0.6;
-  }
-  
-  .navbar-icon {
-	display: none;
-  }
-  
-  .scrollable {
-	height: 500px;
-	overflow-y: auto;
-  }
-  
-  .task-heading {
-	background-color: #837c7c;
-	color: #e3dc13;
-  }
-  
-  .task-name,
-  .task-description {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-  }
-  
-  .task-infomation {
-	background-color: azure;
-  }
-  
-  .task-search-icon {
-	width: 5%;
-  }
-  
-  .task-search-input {
-	width: 90%;
-  } */
+body {
+  background-image: url(/images/background.jpg);
+  background-repeat: no-repeat;
+    background-size: cover;
+}
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
 
-/* Tablet */
-/* @media screen and (min-width: 768px) and (max-width: 992px) {
-	.employee-heading {
-	  justify-content: space-between;
-	}
-	.employee-name {
-	  display: none;
-	}
-	.task-search-input {
-	  width: 83%;
-	}
-	.task-btn {
-	  display: none;
-	}
-	.task-time,
-	.task-condition {
-	  display: none;
-	}
-  } */
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
 
-/* Mobile */
-/* @media screen and (max-width: 576px) {
-	.navbar-info {
-	  display: none;
-	}
-  
-	.nav {
-	  display: none;
-	}
-	.navbar-icon {
-	  display: block;
-	}
-	.employee-name {
-	  display: none;
-	}
-	.day-off {
-	  display: none;
-	}
-	.task-search-input {
-	  width: 73%;
-	}
-	.task-btn {
-	  display: none;
-	}
-	.all-task__heading {
-	  display: none;
-	}
-	.task-description__heading,
-	.task-time,
-	.task-condition,
-	.task-rate {
-	  display: none;
-	}
-  
-	.task-form {
-	  margin-left: 20px;
-	}
-	.task-name {
-	  text-align: center;
-	}
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+@media screen and (min-width: 576px) and (max-width: 767px){
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
   } */
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* Employee */
+/* file dayOff_form.php */
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__dayOff-content {
+  background-color: rgb(240,255,255);
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+@media screen and (min-width: 576px) and (max-width: 767px){
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* employee */
+/* dayOff_list.php */
+.e__dayOff-heading-none {
+  display: none;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-dayOff {
+  height: 450px;
+  overflow-x: auto;
+}
+.e__dayOff__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__dayOff-list-body {
+  background-color: rgb(240,255,255);
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .dayOff-numDay__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .dayOff-numDay__heading {
+    display: none;
+  }
+}	
+
+@media screen and (min-width: 576px) and (max-width: 767px){
+  .e__dayOff-heading-none {
+    display: block;
+    font-size: bold;
+  }
+  .e__dayOff-heading {
+    display: none;
+  }
+  .e__sumDayOff {
+    display: none;
+  }
+  .dayOff-numDay__heading {
+    display: none;
+  }
+}
+@media screen and (max-width: 576px){
+  .e__dayOff-heading-none {
+    display: block;
+    font-size: bold;
+  }
+  .e__dayOff-heading {
+    display: none;
+  }
+  .e__sumDayOff {
+    display: none;
+  }
+  .dayOff-reason__heading,
+  .dayOff-numDay__heading {
+    display: none;
+  }
+} 
+
+/* employee */
+/* employee_heading.php */
+
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+.e__home-heading {
+  display: none;
+}
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+@media screen and (min-width: 576px) and (max-width: 767px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .employee-name {
+    display: none;
+  }
+  /* .e__home-heading {
+    display: block;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+  }
+  .employee-name {
+    display: none;
+  } */
+}
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .e__home-heading {
+    display: block;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* employee */
+/* dayOff_infomation.php */
+
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.task-content {
+  background-color: rgb(240,255,255);
+}
+.e__dayOff-info-reason-none,
+.e__dayOff-info-numDay-none {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .e__dayOff-info-numDay-none {
+    display: block;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .e__dayOff-info-numDay-none {
+    display: block;
+  }
+}	
+
+@media screen and (min-width: 576px) and (max-width: 767px){
+  .e__dayOff-info-numDay-none {
+    display: block;
+  }
+}
+@media screen and (max-width: 576px){
+  .e__dayOff-info-reason-none,
+  .e__dayOff-info-numDay-none {
+    display: block;
+  }
+} 
+
+/* employee */
+/* get_completed_task.php */
+
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+/* @media screen and (min-width: 576px) and (max-width: 767px){
+  .navbar {
+    padding: 0;
+      position: absolute;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+  }
+  .employee-name {
+    display: none;
+  }
+} */
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* employee */
+/* get_inprogress_task.php */
+
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+/* @media screen and (min-width: 576px) and (max-width: 767px){
+  .navbar {
+    padding: 0;
+      position: absolute;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+  }
+  .employee-name {
+    display: none;
+  }
+} */
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* employee */
+/* get_new_task.php */
+
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+/* @media screen and (min-width: 576px) and (max-width: 767px){
+  .navbar {
+    padding: 0;
+      position: absolute;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+  }
+  .employee-name {
+    display: none;
+  }
+} */
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* employee */
+/* get_rejected_task.php */
+
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+/* @media screen and (min-width: 576px) and (max-width: 767px){
+  .navbar {
+    padding: 0;
+      position: absolute;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+  }
+  .employee-name {
+    display: none;
+  }
+} */
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* employee */
+/* get_waiting_task.php */
+
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+/* @media screen and (min-width: 576px) and (max-width: 767px){
+  .navbar {
+    padding: 0;
+      position: absolute;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+  }
+  .employee-name {
+    display: none;
+  }
+} */
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* employee */
+/* sidebar_searchTask.php */
+
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+.e__home-heading {
+  display: none;
+}
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+@media screen and (min-width: 576px) and (max-width: 767px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .employee-name {
+    display: none;
+  }
+  /* .e__home-heading {
+    display: block;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+  }
+  .employee-name {
+    display: none;
+  } */
+}
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .e__home-heading {
+    display: block;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+/* employee */
+/* sidebar.php */
+
+.e__check-font-style {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .e__task-name-btn {
+    display: none;
+  }
+  .e__btn-task {
+    justify-content: center;
+  }
+}	
+@media screen and (min-width: 576px) and (max-width: 767px){
+  .employee-name {
+    display: none;
+  }
+  .e__task-name-btn {
+    display: none;
+  }
+  .e__btn-task {
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 576px){
+  .e__task-name-btn {
+    display: none;
+  }
+  .e__btn-task {
+    justify-content: center;
+  }
+  .e__btn-task-list {
+    padding-left: 5px;
+  }
+}
+
+/* employee */
+/* task_infomation_completed.php */
+
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.task-content {
+  background-color: rgb(240,255,255);
+}
+.e__heading-task-none {
+  display: none;
+}
+@media screen and (max-width: 576px){
+  .e__heading-task-none {
+    display: block;
+  }
+  .e__heading-task {
+    display: none;
+  }
+}
+
+/* employee */ 
+/* task_infomation_inprogress */
+
+.navbar-header__none {
+  display: none;
+}
+.employee {
+  margin: 10px 15px;
+}
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.task-content {
+  background-color: rgb(240,255,255);
+}
+.e__check-font-style{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.e__condition-style {
+  padding: 5px 0px 0 15px;
+}
+.displayNone {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1199px){
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  .employee-name,
+  .task-name__heading,
+  .task-time__heading {
+    display: none;
+  }
+  .employee-heading {
+    justify-content: space-between;
+  }
+}	
+
+/* @media screen and (min-width: 576px) and (max-width: 767px){
+  .navbar {
+    padding: 0;
+      position: absolute;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+  }
+  .employee-name {
+    display: none;
+  }
+} */
+@media screen and (max-width: 576px){
+  /* .navbar {
+    padding: 0;
+      position: absolute;
+  } */
+  .navbar-header {
+    display: none;
+  }
+  .navbar-header__none {
+    display: block;
+    font-weight: bold;
+  }
+  .employee-name {
+    display: none;
+  }
+  
+  .task-description__heading,
+  .task-time__heading {
+    display: none;
+  }
+}
+
+
+/* employee */
+/* task_infomation_rejected.php */
+
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+
+.task-content {
+  background-color: rgb(240,255,255);
+}
+#tapTin {
+  padding: 3px 0 0 0;
+}
+
+/* employee */
+/* task_infomation_waiting.php */
+
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.task-content {
+  background-color: rgb(240,255,255);
+}
+
+/* employee */
+/* task_infomation.php */
+
+.task-search-input {
+  width: inherit;
+}
+.scrollable-task {
+  height: 500px;
+  overflow-x: auto;
+}
+
+.e__task__heading {
+  background-color: rgb(131,124,124);
+  position: sticky;
+  color: rgb(222,215,35);
+}
+.e__task__infomation {
+  background-color: rgb(240,255,255);
+}
+.task-content {
+  background-color: rgb(240,255,255);
+}

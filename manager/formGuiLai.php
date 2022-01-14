@@ -19,7 +19,7 @@
     if (!$_SESSION['maChucVu'] == 'TP') {
         header("Location: /no_access.html");
     }
-if (isset($_POST['submit'])){
+    if (isset($_POST['submit'])){
     $message = '';
     if (!isset($_POST['maNVu'])  || !isset($_POST['time'])
         || !isset($_POST['moTa'])){

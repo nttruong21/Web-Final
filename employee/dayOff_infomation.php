@@ -36,58 +36,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<title>Trang thông tin nhiệm vụ mới</title>
 </head>
-<style>
-	body {
-		background-image: url(../images/background.jpg);
-		background-repeat: no-repeat;
-    	background-size: cover;
-	}
-	.task-search-input {
-		width: inherit;
-	}
-	.scrollable-task {
-		height: 500px;
-		overflow-x: auto;
-	}
 
-	.e__task__heading {
-		background-color: rgb(131,124,124);
-		position: sticky;
-		color: rgb(222,215,35);
-	}
-	.e__task__infomation {
-		background-color: rgb(240,255,255);
-	}
-	.task-content {
-		background-color: rgb(240,255,255);
-	}
-	.e__dayOff-info-reason-none,
-	.e__dayOff-info-numDay-none {
-		display: none;
-	}
-	@media screen and (min-width: 992px) and (max-width: 1199px){
-		.e__dayOff-info-numDay-none {
-			display: block;
-		}
-	}
-	@media screen and (min-width: 768px) and (max-width: 991px){
-		.e__dayOff-info-numDay-none {
-			display: block;
-		}
-	}	
-
-	@media screen and (min-width: 576px) and (max-width: 767px){
-		.e__dayOff-info-numDay-none {
-			display: block;
-		}
-	}
-	@media screen and (max-width: 576px){
-		.e__dayOff-info-reason-none,
-		.e__dayOff-info-numDay-none {
-			display: block;
-		}
-	} 
-</style>
 <body>
 	<?php
 		require_once('sidebar_searchTask.php');
@@ -142,7 +91,7 @@
 							<div class="col-xl-9 col-lg-8 col-md-8 col-sm-7 col-12">
 								<div class="form-group ml-3 mr-3">
 									<label for="file">TẬP TIN ĐÍNH KÈM</label>
-									<input type="text" value="<?= $file ?>" class="form-control" id="file" name="file"/>
+									<a class="text-primary" target="blank" href="/files/<?= $file ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $file ?></a>
 								</div>
 								
 							</div>														

@@ -6,46 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<style>
-
-	.e__check-font-style {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-	
-	@media screen and (min-width: 768px) and (max-width: 991px){
-		.e__task-name-btn {
-			display: none;
-		}
-		.e__btn-task {
-			justify-content: center;
-		}
-	}	
-	@media screen and (min-width: 576px) and (max-width: 767px){
-		.employee-name {
-			display: none;
-		}
-		.e__task-name-btn {
-			display: none;
-		}
-		.e__btn-task {
-			justify-content: center;
-		}
-	}
-	@media screen and (max-width: 576px){
-		.e__task-name-btn {
-			display: none;
-		}
-		.e__btn-task {
-			justify-content: center;
-		}
-		.e__btn-task-list {
-			padding-left: 5px;
-		}
-	}
-
-</style>
 
 <body>
 	
