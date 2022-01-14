@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    require_once('connect_db.php');
+    require_once('../connect_db.php');
     // Kiểm tra người dùng đã đăng nhập chưa?
     if (!isset($_SESSION['maNhanVien'])) {
         header("Location: login.php");
@@ -49,7 +49,41 @@
 </head>
 <body>
     <!-- Navigation -->
-	<?php require_once("admin/header.php"); ?>
+    <div>
+		<div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between mr-2 ml-2">
+			<div class="e__home-heading">
+				<a href="index.php"><h4>HOME</h4></a>
+			</div>
+			<div class="">
+				<div class="navbar-header">
+					<h4>THÔNG TIN NHÂN VIÊN</h4>
+				</div>
+			</div>
+			<div class="navbar-info nav d-flex">
+				<a class="font-weight-bold" href="../logout.php">Logout</a>
+			</div>
+			<div class="navbar-icon d-none">
+				<i class="fas fa-bars"></i>
+			</div>
+		</div>
+    </div>
+
+    <?php
+    $maNhanVien = $_SESSION["maNhanVien"];
+    $sql = "SELECT * FROM NhanVien WHERE maNhanVien = '$maNhanVien'";
+
+    $result = connect_db()->query($sql);
+
+    while ($row = $result->fetch_assoc()) {
+        $birthDay = date('Y-m-d',strtotime($row['ngaySinh']));
+        $maPhongBan = $row['maPhongBan'];
+        $diaChi = $row['diaChi'];
+        $gioiTinh = $row['gioiTinh'];
+        $soDT = $row['sdt'];
+        $email = $row['email'];
+    }
+    ?>
+
     <div class="w-75 mx-auto mt-4">
         <div class="bg-light card pr-5">
             <div class="row py-4">
@@ -61,22 +95,28 @@
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="department-id">Mã phòng ban</label>
+                        <div class="col-sm-8">
+                            <input disabled id="department-id" value="<?= $maPhongBan ?>" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
                         <label class="control-label text-right col-sm-4 p-0 m-0" for="user-birthday">Ngày sinh</label>
                         <div class="col-sm-8">
-                            <input disabled id="user-birthday" value="<?= $_SESSION['ngaySinh'] ?>" type="date" class="form-control">
+                            <input disabled id="user-birthday" value="<?= $birthDay ?>" type="date" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
                         <label class="control-label text-right col-sm-4 p-0 m-0" for="user-address">Địa chỉ</label>
                         <div class="col-sm-8">
-                            <input disabled id="user-address" value="<?= $_SESSION['diaChi'] ?>" type="text" class="form-control">
+                            <input disabled id="user-address" value="<?= $diaChi ?>" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
                     <label class="control-label text-right col-sm-4 p-0 m-0" for="sex">Giới tính:</label>
                         <div class="col-sm-8 text-left">
                         <?php
-                            if ($_SESSION['gioiTinh'] === 1) {
+                            if ($gioiTinh === 1) {
                                 ?>
                                     <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex" checked>Nam</label>
                                     <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="sex">Nữ</label>
@@ -93,13 +133,13 @@
                     <div class="form-group row align-items-center">
                         <label class="control-label text-right col-sm-4 p-0 m-0" for="depart-id">Số điện thoại</label>
                         <div class="col-sm-8">
-                            <input disabled id="depart-id" value="<?= $_SESSION['sdt'] ?>" type="number" class="form-control">
+                            <input disabled id="depart-id" value="<?= $soDT ?>" type="number" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
                         <label class="control-label text-right col-sm-4 p-0 m-0" for="depart-id">Email</label>
                         <div class="col-sm-8">
-                            <input disabled id="depart-id" value="<?= $_SESSION['email'] ?>" type="email" class="form-control">
+                            <input disabled id="depart-id" value="<?= $email ?>" type="email" class="form-control">
                         </div>
                     </div>
                 </div>
