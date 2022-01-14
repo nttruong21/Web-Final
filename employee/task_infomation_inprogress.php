@@ -4,10 +4,10 @@
 	require_once('../connect_db.php');
 	
     if (isset($_POST['submit'])){
-        $message = 'vui lòng nhập đầy đủ thông tin!!';
-        if (!isset($_POST['noiDung'])) {
+        $message = '';
+        if (!isset($_POST['maNVu']) || !isset($_POST['noiDung'])) {
 			$message = "Vui lòng nhập đầy đủ thông tin";
-		} else if (empty($_POST['noiDung'])) {
+		} else if (empty($_POST['maNVu']) || empty($_POST['noiDung'])) {
 			$message = "Không để giá trị rỗng";
 		} else {
 			$maNV = $_POST['maNVu'];
@@ -17,76 +17,170 @@
 				$message = "Dữ liệu không đúng cấu trúc";
 			}
 
-			$taptin = $_FILES["tapTin"]["name"];
-			if ($taptin == '') {
+			$name =  $_FILES["tapTin"]['name'];
+
+			// $tapTin = $_FILES["tapTin"]["name"];
+			// var_dump($name);
+	
+			// $tmp_name = $_FILES["tapTin"]['tmp_name'];
+			// $tname = $_FILES["tapTin"]["tmp_name"];
+			// $uploads_dir = '../files';
+			// move_uploaded_file($tname,$uploads_dir.'/'.$name);
+			// die($tname.$uploads_dir);
+
+		
+	
+
+			if ($name == '') {
 				
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
 				$stm1 = $conn1->prepare($sql1);
-				$stm1 -> bind_param("s", $maNV);
+				$stm1 -> bind_param("i", $maNV);
 				$stm1 -> execute();
 
-				$sql3 = "SELECT * FROM KetQuaTraVe where maNhiemVu='$maNV'";
-                $conn3 = connect_db();
-                $result3 = $conn3->query($sql3);
-                $count = $result3->num_rows;
-                $rowKQTV = $result3->fetch_assoc();
+
+				$sql3 = "SELECT * FROM KetQuaGui where maNhiemVu='$maNV'";
+				$conn3 = connect_db();
+				$result3 = $conn3->query($sql3);
+				$count = $result3->num_rows;
+			// 	$rowKQTV = $result3->fetch_assoc();
 
 
-				if( $count > 0){
-                    // $maNVu = $row3['maNhiemVu'];
-                    $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = '$maNV'";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss',$noiDung, $tapTin);
-                    $stm2->execute();
-                    
-                }else{
-                    $sql2 = "INSERT INTO KetQuaGui VALUES(?, ?, ?,?)";
-                    $conn2 = connect_db();
-                    $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss', $maNVu, $noiDung, $tapTin);
-                    $stm2->execute();
-                }
+					if( $count > 0){
+						$sql2 = "UPDATE KetQuaGui SET noiDung = ?, tapTin = ? WHERE maNhiemVu = '$maNV'"; // chỗ này tập tin rỗng thì đưa vào làm gì?
+						$conn2 = connect_db();
+						$stm2 = $conn2->prepare($sql2);
+						$stm2->bind_param('ss',$noiDung, $name);
+						$stm2->execute();
+							
+					}else{
+						$sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
+						$conn2 = connect_db();
+						$stm2 = $conn2->prepare($sql2);
+						$stm2->bind_param('iss', $maNV, $noiDung, $name);
+						$stm2->execute();
 
-			} else {
+               		}
+
+			} else { // chỗ này có thì mưới thêm
+				// $tname = $_FILES["tapTin"]["name"];
+                // $uploads_dir = '../files';
 				$tname = $_FILES["tapTin"]["tmp_name"];
-                $uploads_dir = '../files';
-				
+				$uploads_dir = '../files';
+				// move_uploaded_file($tname,$uploads_dir.'/'.$name);
+			// 	move_uploaded_file($tname,$uploads_dir.'/'.$name);
+
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
 				$stm1 = $conn1->prepare($sql1);
-				$stm1 -> bind_param("s", $maNV);
+				$stm1 -> bind_param("i", $maNV);
 				$stm1 -> execute();
 
-				$sql3 = "SELECT * FROM KetQuaTraVe where maNhiemVu='$maNV'";
+				$sql3 = "SELECT * FROM KetQuaGui where maNhiemVu='$maNV'";
                 $conn3 = connect_db();
                 $result3 = $conn3->query($sql3);
                 $count = $result3->num_rows;
 
 
 				if( $count > 0){
-                    // $maNVu = $row3['maNhiemVu'];
-                    $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = '$maNV'";
+                    $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = ?";
                     $conn2 = connect_db();
                     $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss',$noiDung, $tapTin);
+                    $stm2->bind_param('ssi',$noiDung, $name, $maNV);
                     $stm2->execute();
 
-                    // die;
                 }else{
-                    $sql2 = "INSERT INTO KetQuaGui VALUES(?, ?, ?)";
+                    $sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
                     $conn2 = connect_db();
                     $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('sss', $maNVu, $noiDung, $tapTin);
+                    $stm2->bind_param('iss', $maNV, $noiDung, $name);
                     $stm2->execute();
                 }
+				move_uploaded_file($tname,$uploads_dir.'/'.$name);
 
-                move_uploaded_file($tname,$uploads_dir.'/'.$tapTin);
-
+			}
+			if( $stm2->affected_rows == 1 ){
+				header("Location: get_waiting_task.php");
 			}
 		}
 	}
+			// 	$desc = $_SERVER['DOCUMENT_ROOT'] . '//files/' . $name;
+			// 	move_uploaded_file($tmp_name, $desc);
+            //     // move_uploaded_file($tapTin,$uploads_dir.'/'.$tapTin);
+
+			// }
+			// if( $stm1->affected_rows == 1 ){
+            //     header("Location: get_waiting_task.php");
+				
+            // }
+
+			// $name =  $_FILES["tapTin"]['name'];
+
+			// if ($name != '') { // rỗng nè?
+			// 	$tname = $_FILES["tapTin"]["tmp_name"];
+            //     $uploads_dir = '../files';
+				
+			
+
+			// 	$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
+			// 	$conn1 = connect_db();
+			// 	$stm1 = $conn1->prepare($sql1);
+			// 	$stm1 -> bind_param("i", $maNV);
+			// 	$stm1 -> execute();
+
+				// $sql3 = "SELECT * FROM KetQuaGui where maNhiemVu='$maNV'";
+                // $conn3 = connect_db();
+                // $result3 = $conn3->query($sql3);
+                // $count = $result3->num_rows;
+
+
+				// if( $count > 0){
+                //     $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = ?";
+                //     $conn2 = connect_db();
+                //     $stm2 = $conn2->prepare($sql2);
+                //     $stm2->bind_param('ssi',$noiDung, $name, $maNV);
+                //     $stm2->execute();
+
+                // }else{
+                    // $sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
+                    // $conn2 = connect_db();
+                    // $stm2 = $conn2->prepare($sql2);
+                    // $stm2->bind_param('iss', $maNV, $noiDung, $name);
+                    // $stm2->execute();
+                // }
+				
+				// $desc = $_SERVER['DOCUMENT_ROOT'] . '//files/' . $name;
+
+				
+				// move_uploaded_file($tmp_name, $desc);
+                // move_uploaded_file($name,$uploads_dir.'/'.$name);
+			// }
+			
+// 		}
+// 		if( $stm2->affected_rows == 1 ){
+// 			move_uploaded_file($tname,$uploads_dir.'/'.$name);
+// 			header("Location: get_waiting_task.php");
+// 		} 
+// 	} 
+// }
+		// }
+	// }
+
+	// 	$file = $_FILES['file-upload']; // mày kiểm tra lại chỗ này nhé? 
+	// 	if ($file['error'] !== 0) {
+	// 		die( "Tập tin rỗng");
+	// 	}
+	// 	var_dump($file);
+	// 	$name = $file['name'];
+    //     $type = $file['type'];
+    //     $tmp_name = $file['tmp_name'];
+    //     $size = $file['size'];
+    //     $ext = pathinfo($name, PATHINFO_EXTENSION);
+
+	// 	$desc = $_SERVER['DOCUMENT_ROOT'] . '//files/';
+	// 	move_uploaded_file($tmp_name, $desc); 
+	// }
 
 
 
@@ -103,99 +197,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<title>Trang thông tin nhiệm vụ đang làm</title>
 </head>
-<style>
-	body {
-		background-image: url(../images/background.jpg);
-		background-repeat: no-repeat;
-    	background-size: cover;
-	}
-	.navbar-header__none {
-		display: none;
-	}
-	.employee {
-		margin: 10px 15px;
-	}
-	.task-search-input {
-		width: inherit;
-	}
-	.scrollable-task {
-		height: 500px;
-		overflow-x: auto;
-	}
 
-	.e__task__heading {
-		background-color: rgb(131,124,124);
-		position: sticky;
-		color: rgb(222,215,35);
-	}
-	.task-content {
-		background-color: rgb(240,255,255);
-	}
-	.e__check-font-style{
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-	.e__condition-style {
-		padding: 5px 0px 0 15px;
-	}
-	.displayNone {
-		display: none;
-	}
-	@media screen and (min-width: 992px) and (max-width: 1199px){
-		.task-name__heading,
-		.task-time__heading {
-			display: none;
-		}
-	}
-	@media screen and (min-width: 768px) and (max-width: 991px){
-		.employee-name,
-		.task-name__heading,
-		.task-time__heading {
-			display: none;
-		}
-		.employee-heading {
-			justify-content: space-between;
-		}
-	}	
-
-	/* @media screen and (min-width: 576px) and (max-width: 767px){
-		.navbar {
-			padding: 0;
-    		position: absolute;
-		}
-		.navbar-header {
-			display: none;
-		}
-		.navbar-header__none {
-			display: block;
-		}
-		.employee-name {
-			display: none;
-		}
-	} */
-	@media screen and (max-width: 576px){
-		/* .navbar {
-			padding: 0;
-    		position: absolute;
-		} */
-		.navbar-header {
-			display: none;
-		}
-		.navbar-header__none {
-			display: block;
-			font-weight: bold;
-		}
-		.employee-name {
-			display: none;
-		}
-		
-		.task-description__heading,
-		.task-time__heading {
-			display: none;
-		}
-	}
-</style>
 <body>
 	<?php
 		require_once('sidebar_searchTask.php');
@@ -240,11 +242,11 @@
 							<div class="col-xl-10">
                                 <div class="form-group ml-3 mr-3">
 									<label for="noiDung">Nội dung</label>
-									<input type="text" value="" class="form-control" id="noiDung" name="noiDung"/>
+									<input type="text"  class="form-control" id="noiDung" name="noiDung"/>
 								</div>
                                 <div class="form-group ml-3 mr-3">
                                     <label for="tapTin">Tập tin đính kèm</label>
-                                    <input type="file" class="form-control" id="tapTin" name="tapTin" class="p-0 border border-none" />
+                                    <input type="file" class="form-control" id="tapTin" name="tapTin"/>
                                 </div>
 								
 								<div class="form-group ml-3 mr-3">
@@ -253,6 +255,22 @@
 							</div>														
 						</div>
 					</form>
+
+					<!-- <form action="handle_change_admin_avatar.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <input name="admin-avatar" type="file" class="custom-file-input" id="admin-avatar">
+                            <label class="custom-file-label" for="admin-avatar">Choose file</label>
+                        </div>
+                        <div class="form-group mt-3">
+                            <div id="change-admin-avatar-error-message" class="text-center alert-danger font-weight-bold"></div>
+                        </div>
+                    </div>
+                    <div  class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                        <button onclick="handleChangeAdminAvatar(event);" type="submit" class="btn btn-primary">Thay đổi</button>
+                    </div>   
+                </form>       -->
 				</div>
 			</div>
     	</div>	

@@ -36,36 +36,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<title>Trang thông tin nhiệm vụ bị trả về</title>
 </head>
-<style>
-	body {
-		background-image: url(../images/background.jpg);
-		background-repeat: no-repeat;
-    	background-size: cover;
-	}
-	.task-search-input {
-		width: inherit;
-	}
-	.scrollable-task {
-		height: 500px;
-		overflow-x: auto;
-	}
 
-	.e__task__heading {
-		background-color: rgb(131,124,124);
-		position: sticky;
-		color: rgb(222,215,35);
-	}
-	.e__task__infomation {
-		background-color: rgb(240,255,255);
-	}
-
-	.task-content {
-		background-color: rgb(240,255,255);
-	}
-	#tapTin {
-		padding: 3px 0 0 0;
-	}
-</style>
 <body>
 	<?php
 		require_once('sidebar_searchTask.php');
@@ -116,13 +87,7 @@
 								</div>
                                 <div class="form-group ml-3 mr-3">
 									<label for="file">Tập tin</label>
-                                    <div>Nhấn vào tên file để tải về: <a href='download_file.php?maNV=<?= $idNV ?>'><?= $file ?></a></div>
-									<input type="text" value="<?= $file ?>" class="form-control" id="file" name="file"/>
-
-								</div>
-                    
-								<div class="form-group ml-3 mr-3">
-									<p><?= $message ?></p>
+									<a class="text-primary" target="blank" href="/files/<?= $file ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $file ?></a>
 								</div>
 								<div class="form-group ml-3 mr-3">
 									<button type="submit" name="submit" class="btn btn-primary"><a href="task_infomation_inprogress.php?id=<?= $idNV ?>"> </a> Bắt đầu lại </button>
