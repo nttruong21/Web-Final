@@ -45,7 +45,7 @@
 					</div>
 					<div class="col-xl-5 col-lg-4 col-md-6 col-sm-10 col-10">
 						<div class="form-group border rounded-lg mb-0 bg-light">
-							<form class="" methode="post">
+							<form class="" method="post">
 								<div class="d-flex justify-content-between align-items-center p-1">
 									<div class="task-search-input flex-fill mr-2">
 										<input class="search-input outline-none border border-none rounded p-1 w-100" type="search" placeholder="Search task" aria-label="Search">
