@@ -52,7 +52,7 @@
     <div>
 		<div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between mr-2 ml-2">
 			<div class="e__home-heading">
-				<a href="index.php"><h4>HOME</h4></a>
+				<a href="../admin/admin_profile.php"><h4>HOME</h4></a>
 			</div>
 			<div class="">
 				<div class="navbar-header">
@@ -85,6 +85,7 @@
     ?>
 
     <div class="w-75 mx-auto mt-4">
+        <div></div>
         <div class="bg-light card pr-5">
             <div class="row py-4">
                 <div class="col-6 py-4 d-flex flex-column justify-content-between">

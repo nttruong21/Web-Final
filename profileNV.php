@@ -89,9 +89,9 @@
             <div class="row py-4">
                 <div class="col-6 py-4 d-flex flex-column justify-content-between">
                     <div class="form-group row align-items-center">
-                        <label class="control-label text-right col-sm-4 p-0 m-0" for="user-id">Mã nhân viên</label>
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="employee-id">Mã nhân viên</label>
                         <div class="col-sm-8">
-                            <input disabled id="user-id" value="<?= $_SESSION['maNhanVien'] ?>" type="text" class="form-control">
+                            <input disabled id="employee-id" value="<?= $_SESSION['maNhanVien'] ?>" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
@@ -101,49 +101,56 @@
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label class="control-label text-right col-sm-4 p-0 m-0" for="user-birthday">Ngày sinh</label>
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="employee-birthday">Ngày sinh</label>
                         <div class="col-sm-8">
-                            <input disabled id="user-birthday" value="<?= $birthDay ?>" type="date" class="form-control">
+                            <input disabled id="employee-birthday" value="<?= $birthDay ?>" type="date" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label class="control-label text-right col-sm-4 p-0 m-0" for="user-address">Địa chỉ</label>
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="employee-address">Địa chỉ</label>
                         <div class="col-sm-8">
-                            <input disabled id="user-address" value="<?= $diaChi ?>" type="text" class="form-control">
+                            <input disabled id="employee-address" value="<?= $diaChi ?>" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                    <label class="control-label text-right col-sm-4 p-0 m-0" for="sex">Giới tính:</label>
+                    <label class="control-label text-right col-sm-4 p-0 m-0" for="employee-sex">Giới tính:</label>
                         <div class="col-sm-8 text-left">
                         <?php
                             if ($gioiTinh === 1) {
                                 ?>
-                                    <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex" checked>Nam</label>
-                                    <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="sex">Nữ</label>
+                                    <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="employee-sex" checked>Nam</label>
+                                    <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="employee-sex">Nữ</label>
                                 <?php
                             } else {
                                 ?>
-                                    <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="sex">Nam</label>
-                                    <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="sex" checked>Nữ</label>
+                                    <label class="radio-inline mb-0 mr-3"><input disabled id="male" class="mr-2" type="radio" name="employee-sex">Nam</label>
+                                    <label class="radio-inline mb-0"><input disabled id="female" class="mr-2" type="radio" name="employee-sex" checked>Nữ</label>
                                 <?php
                                 }
                             ?>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label class="control-label text-right col-sm-4 p-0 m-0" for="depart-id">Số điện thoại</label>
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="employee-number">Số điện thoại</label>
                         <div class="col-sm-8">
-                            <input disabled id="depart-id" value="<?= $soDT ?>" type="number" class="form-control">
+                            <input disabled id="employee-number" value="<?= $soDT ?>" type="number" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label class="control-label text-right col-sm-4 p-0 m-0" for="depart-id">Email</label>
+                        <label class="control-label text-right col-sm-4 p-0 m-0" for="employee-email">Email</label>
                         <div class="col-sm-8">
-                            <input disabled id="depart-id" value="<?= $email ?>" type="email" class="form-control">
+                            <input disabled id="employee-email" value="<?= $email ?>" type="email" class="form-control">
                         </div>
                     </div>
                 </div>
                 <div class="col-6 d-flex flex-column justify-content-between">
+                    <!-- <div class="d-flex mb-4 w-75 mx-auto flex-row-reverse align-items-center justify-content-between">
+                        <div class="">
+                            <button onclick="enableEditAdminProfileMode();" class="btn btn-secondary mr-4">Chỉnh sửa</button>
+                            <button data-toggle="modal" data-target="#change-employee-avatar-modal" class="btn btn-primary mr-4">Đổi ảnh đại diện</button>
+                            <a href="handle_update_admin_pass.php" class="btn btn-info">Đổi mật khẩu</a>
+                        </div>
+                    </div> -->
                     <div class="card m-auto" style="width: 300px;">
                         <img class="card-img-top mx-auto" style="width: 200px;" src="https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg" alt="User image">
                         <div class="card-body">
@@ -155,5 +162,42 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Dialog đổi ảnh đại diện -->
+    <div class="modal fade" id="change-employee-avatar-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Đổi ảnh đại diện</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="handle_change_admin_avatar.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <input name="admin-avatar" type="file" class="custom-file-input" id="admin-avatar">
+                            <label class="custom-file-label" for="admin-avatar">Choose file</label>
+                        </div>
+                        <div class="form-group mt-3">
+                            <div id="change-admin-avatar-error-message" class="text-center alert-danger font-weight-bold"></div>
+                        </div>
+                    </div>
+                    <div  class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                        <button onclick="handleChangeAdminAvatar(event);" type="submit" class="btn btn-primary">Thay đổi</button>
+                    </div>   
+                </form>      
+            </div>
+        </div>
+    </div>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
+	<script src="/main.js"></script> 
+
+
 </body>
 </html>

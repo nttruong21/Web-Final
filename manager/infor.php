@@ -197,11 +197,24 @@ if (isset($_POST['submit'])){
                                     $conn = connect_db();
                                     $result1 = $conn->query($sql);
                                 ?>
+                                <?php
+                                        $mNV = $row['maNhanVien'];
+                                        $sql4 = "SELECT * FROM NhanVien where maNhanVien = '$mNV'";
+                                        $conn4 = connect_db();
+                                        $result4 = $conn->query($sql4);
+                                        $row4 = $result4->fetch_assoc();
+                                     
+                                    ?>
+                                <div class="form-group">
+                                    <label for="tennv">Nhân viên hiện tại</label>
+                                    <input type="text" readonly value="<?=$row4['hoTen']?>" class="form-control" id="tennv" name="tennv"  />
+                                </div>
                                  <div class="form-group">
                                     <label for="maNVien">Mã Nhân viên hiện tại</label>
-                                    <input type="text" readonly value="<?=$row['maNhanVien']?>" class="form-control" id="maNVien" name="maNVien" value=<?=$_SESSION['maPB']?> />
+                                    <input type="text" readonly value="<?=$row['maNhanVien']?>" class="form-control" id="maNVien" name="maNVien"  />
                                 </div>
                                 <div class="form-group">
+                                    
                                     <label for="maNVienNew">Thay đổi mã nhân viên</label>
                                     <select name="maNVienNew" class="form-control">
                                         <option value="">không chọn</option>
@@ -226,7 +239,7 @@ if (isset($_POST['submit'])){
                                 </div> -->
 
                                 <div class="form-group">
-                                    <label for="time">Start date:</label>
+                                    <label for="time">Hạn chót thực hiện:</label>
                                     <input type="text" name="time" value="<?php echo date('Y/m/d',strtotime($row['hanThucHien']))?>" class="form-control"  />
 
                                 </div>
@@ -275,6 +288,43 @@ if (isset($_POST['submit'])){
                                             
                                         </div>
                                         ";
+                                        
+                                    }
+                                    if ($row['trangThai'] == 'COMPLETED'){
+                                        $sql = "SELECT * FROM NhiemVuHoanThanh where maNhiemVu = '".$_GET['maNVu']."'";
+                                        $conn = connect_db();
+                                        $result2 = $conn->query($sql);
+                                        $row2 = $result2->fetch_assoc();
+                                        $mucDo = $row2['mucDo'];
+                                        $dungHan = $row2['dungHan'];
+                                     
+                                        echo "
+                                            <h3>ĐÁNH GIÁ NHIỆM VỤ</h3>
+                                            <div class='form-group'>
+                                                <label for='noiDung'>Mức độ</label>
+                                                <input type='text' readonly  class='form-control' id='noiDung'  name='noiDung' value='$mucDo' />
+                                            </div>
+                                          
+                                        ";
+                                        if($dungHan == 1){
+                                            echo "
+                                               
+                                                <div class='form-group'>
+                                                    <label for='noiDung'>Đánh gia thời gian</label>
+                                                    <input type='text' readonly  class='form-control' id='noiDung'  name='noiDung' value='Đúng hạn' />
+                                                </div>
+                                            
+                                            ";
+                                        }else{
+                                            echo "
+                                               
+                                            <div class='form-group'>
+                                                <label for='noiDung'>Đánh gia thời gian</label>
+                                                <input type='text' readonly  class='form-control' id='noiDung'  name='noiDung' value='Trể hạn' />
+                                            </div>
+                                        
+                                        ";
+                                        }
                                         
                                     }
                                 ?>

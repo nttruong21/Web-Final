@@ -153,7 +153,7 @@
                         </div> -->
 
                         <div class="form-group">
-                            <label for="time">Start date:</label>
+                            <label for="time">Hạn Thực Hiện:</label>
                             <input type="date" id="time" name="trip-start"
                                 value="2022-01-01"
                                 min="2022-01-01" max="3000-12-31">

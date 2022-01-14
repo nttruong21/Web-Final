@@ -54,7 +54,7 @@
 						<div class="e__task__infomation">
 						<?php
 								require_once("../connect_db.php");
-								require_once("task_and_dayOff_db.php");
+								
 
 								$maNhanVien = $_SESSION['maNhanVien'];
 
@@ -147,10 +147,12 @@
 							
 								";
 							} else {
-								echo 	"<div class='m-auto d-flex align-items-center justify-content-center'>
-											
+								echo 	"<div class='m-auto d-flex align-items-center justify-content-between'>
+											<div class='ml-2 mr-2'>
+												<p class='mb-0 text-danger'>Bạn không thể tạo đơn xin nghỉ phép vì chưa đủ 7 ngày hoặc đã quá số ngày nghỉ cho phép</p>
+											</div>
 											<button disabled 
-											class='btn btn-light e__btn-task d-flex align-items-center'
+											class='btn btn-light e__btn-task d-flex align-items-center justify-content-center'
 											type='submit'>
 											<i class='fas fa-calendar-da'></i>
 											<p class='mb-0 ml-2 e__check-font-style e__dayOff-reason-btn'>Tạo đơn nghỉ phép</p>	

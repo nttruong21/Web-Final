@@ -107,7 +107,7 @@
 						ĐƠN XIN NGHỈ PHÉP
 					</h5>
 					
-					<form action="" method="post" enctype="multipart/form-data">
+					<form action="" validate method="post" enctype="multipart/form-data">
                             <div class="modal-body mx-5">
                                 <div class="form-group">
                                     <label for="maNVDayOff">Mã nhân viên</label>
@@ -140,6 +140,7 @@
                             </div>
 
                             <div class="modal-footer">
+
                                 <button type="submit" id='m-smguiDon' name="guiDon" class='btn btn-outline-success '>Gửi đơn</button>
                                 
                             </div>
@@ -172,70 +173,6 @@
         </div>
     </div>
 
-	<script>
-
-	// const addAPIDayOff = 'http://localhost:8080/employee/send_dayOff_form.php';
-	
-	// function addDayOffForm(e) {
-	// // e.preventDefault();
-	// // console.log("stopped")
-	// let maNVDayOff = $('#maNVDayOff').val()
-	// let maPBDayOff = $('#maPBDayOff').val();
-	// let dayDayOff = $('#dayDayOff').val()
-	// let reasonDayOff = $('#reasonDayOff').val()
-	// let fileDayOff = $('#fileDayOff').val()
-	// let conditionDayOff = $('#conditionDayOff').val()
-
-	// // Kiểm tra dữ liệu có rỗng hay không
-	// if (maNVDayOff == '' ||  maPBDayOff == '' || dayDayOff == '' 
-	// || reasonDayOff == '' || fileDayOff == '' || conditionDayOff == '') {
-	// 	$('.empty').removeClass('d-none')
-	// } else {
-	// 	$('.empty').addClass('d-none')
-	// }
-
-	// let data = {
-	// 			"maNVDayOff":maNVDayOff,
-	// 			"maPBDayOff":maPBDayOff,
-	// 			"dayDayOff":dayDayOff,
-	// 			"reasonDayOff":reasonDayOff,
-	// 			"fileDayOff":fileDayOff,
-	// 			"conditionDayOff":conditionDayOff
-	// 		}
-	// console.log(data);
-
-	
-  	// fetch(addAPIDayOff, {
-    //         'method': 'POST',
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-	// .then(res => res.json())
-	// .then(data => {
-	//   	console.log(data);
-        //         if (data.code === 0) {
-  		// 	console.log(0)
-        //             $('#day-off-dialog').modal('toggle')
-        //             $('#responseMess').html(data.message);
-        //             $('#message-respone').modal('show');
-                    
-        //             $('tbody').children().remove()
-        //             loadTasks()
-        //         } else {
-      	// console.log(1)
-        //             $('#add-dialog').modal('toggle')
-        //             $('#responseMess').html(data.message);
-        //             $('#message-respone').modal('show');
-        //         }
-    //         })
-  	// }
-	
-
-
-
-	</script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

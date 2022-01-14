@@ -36,7 +36,7 @@
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
 				$stm1 = $conn1->prepare($sql1);
-				$stm1 -> bind_param("i", $maNV);
+				$stm1 -> bind_param("s", $maNV);
 				$stm1 -> execute();
 
 
@@ -58,7 +58,7 @@
 						$sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
 						$conn2 = connect_db();
 						$stm2 = $conn2->prepare($sql2);
-						$stm2->bind_param('iss', $maNV, $noiDung, $name);
+						$stm2->bind_param('sss', $maNV, $noiDung, $name);
 						$stm2->execute();
 
                		}
@@ -74,7 +74,7 @@
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
 				$stm1 = $conn1->prepare($sql1);
-				$stm1 -> bind_param("i", $maNV);
+				$stm1 -> bind_param("s", $maNV);
 				$stm1 -> execute();
 
 				$sql3 = "SELECT * FROM KetQuaGui where maNhiemVu='$maNV'";
@@ -87,14 +87,14 @@
                     $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = ?";
                     $conn2 = connect_db();
                     $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('ssi',$noiDung, $name, $maNV);
+                    $stm2->bind_param('sss',$noiDung, $name, $maNV);
                     $stm2->execute();
 
                 }else{
                     $sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
                     $conn2 = connect_db();
                     $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('iss', $maNV, $noiDung, $name);
+                    $stm2->bind_param('sss', $maNV, $noiDung, $name);
                     $stm2->execute();
                 }
 				move_uploaded_file($tname,$uploads_dir.'/'.$name);
@@ -105,83 +105,6 @@
 			}
 		}
 	}
-			// 	$desc = $_SERVER['DOCUMENT_ROOT'] . '//files/' . $name;
-			// 	move_uploaded_file($tmp_name, $desc);
-            //     // move_uploaded_file($tapTin,$uploads_dir.'/'.$tapTin);
-
-			// }
-			// if( $stm1->affected_rows == 1 ){
-            //     header("Location: get_waiting_task.php");
-				
-            // }
-
-			// $name =  $_FILES["tapTin"]['name'];
-
-			// if ($name != '') { // rỗng nè?
-			// 	$tname = $_FILES["tapTin"]["tmp_name"];
-            //     $uploads_dir = '../files';
-				
-			
-
-			// 	$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
-			// 	$conn1 = connect_db();
-			// 	$stm1 = $conn1->prepare($sql1);
-			// 	$stm1 -> bind_param("i", $maNV);
-			// 	$stm1 -> execute();
-
-				// $sql3 = "SELECT * FROM KetQuaGui where maNhiemVu='$maNV'";
-                // $conn3 = connect_db();
-                // $result3 = $conn3->query($sql3);
-                // $count = $result3->num_rows;
-
-
-				// if( $count > 0){
-                //     $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = ?";
-                //     $conn2 = connect_db();
-                //     $stm2 = $conn2->prepare($sql2);
-                //     $stm2->bind_param('ssi',$noiDung, $name, $maNV);
-                //     $stm2->execute();
-
-                // }else{
-                    // $sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
-                    // $conn2 = connect_db();
-                    // $stm2 = $conn2->prepare($sql2);
-                    // $stm2->bind_param('iss', $maNV, $noiDung, $name);
-                    // $stm2->execute();
-                // }
-				
-				// $desc = $_SERVER['DOCUMENT_ROOT'] . '//files/' . $name;
-
-				
-				// move_uploaded_file($tmp_name, $desc);
-                // move_uploaded_file($name,$uploads_dir.'/'.$name);
-			// }
-			
-// 		}
-// 		if( $stm2->affected_rows == 1 ){
-// 			move_uploaded_file($tname,$uploads_dir.'/'.$name);
-// 			header("Location: get_waiting_task.php");
-// 		} 
-// 	} 
-// }
-		// }
-	// }
-
-	// 	$file = $_FILES['file-upload']; // mày kiểm tra lại chỗ này nhé? 
-	// 	if ($file['error'] !== 0) {
-	// 		die( "Tập tin rỗng");
-	// 	}
-	// 	var_dump($file);
-	// 	$name = $file['name'];
-    //     $type = $file['type'];
-    //     $tmp_name = $file['tmp_name'];
-    //     $size = $file['size'];
-    //     $ext = pathinfo($name, PATHINFO_EXTENSION);
-
-	// 	$desc = $_SERVER['DOCUMENT_ROOT'] . '//files/';
-	// 	move_uploaded_file($tmp_name, $desc); 
-	// }
-
 
 
 ?>
@@ -220,7 +143,7 @@
 					<form action="" method="post" enctype="multipart/form-data">
 						<?php
 							require_once("../connect_db.php");
-							require_once("task_and_dayOff_db.php");
+							
 
 							$sql = "SELECT * FROM NHIEMVU WHERE maNhiemVu = '".$_GET['id']."'";
 							$result = connect_db()->query($sql);
@@ -242,11 +165,11 @@
 							<div class="col-xl-10">
                                 <div class="form-group ml-3 mr-3">
 									<label for="noiDung">Nội dung</label>
-									<input type="text"  class="form-control" id="noiDung" name="noiDung"/>
+									<input type="text"  class="form-control" id="noiDung" name="noiDung" required />
 								</div>
                                 <div class="form-group ml-3 mr-3">
                                     <label for="tapTin">Tập tin đính kèm</label>
-                                    <input type="file" class="form-control" id="tapTin" name="tapTin"/>
+                                    <input type="file" class="form-control" id="tapTin" name="tapTin" required/>
                                 </div>
 								
 								<div class="form-group ml-3 mr-3">
