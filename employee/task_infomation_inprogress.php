@@ -36,7 +36,7 @@
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
 				$stm1 = $conn1->prepare($sql1);
-				$stm1 -> bind_param("s", $maNV);
+				$stm1 -> bind_param("i", $maNV);
 				$stm1 -> execute();
 
 
@@ -58,7 +58,7 @@
 						$sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
 						$conn2 = connect_db();
 						$stm2 = $conn2->prepare($sql2);
-						$stm2->bind_param('sss', $maNV, $noiDung, $name);
+						$stm2->bind_param('iss', $maNV, $noiDung, $name);
 						$stm2->execute();
 
                		}

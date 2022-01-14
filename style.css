@@ -1316,3 +1316,12 @@ body {
 .task-content {
   background-color: rgb(240,255,255);
 }
+
+/* employee */
+/* profileNV.php */
+.card-employee {
+  width: 300px;
+}
+.card-img-employee {
+   width: 200px;
+}
