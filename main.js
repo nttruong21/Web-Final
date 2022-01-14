@@ -773,7 +773,7 @@ window.addEventListener("load", () => {
         if (application.trangThai === "WAITING") {
           application_row.classList.add("font-weight-bold");
         }
-        console.log(application.trangThai);
+        // console.log(application.trangThai);
         let manager_id = application.maNhanVien;
         // Lấy thông tin trưởng phòng
         if (manager_id) {
@@ -858,79 +858,74 @@ function agreeLeaveApp(id) {
 }
 
 // ############################# TRƯỞNG PHÒNG #####################################
-const m_readAPI = 'http://localhost:8080/manager/api/get_task.php'
+const m_readAPI = "http://localhost:8080/manager/api/get_task.php";
 
+function loadTasks() {
+  const countTask = 0;
+  fetch(m_readAPI)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((task) => {
+        let tr = $("<tr></tr>");
 
-    function loadTasks() {
-			const countTask = 0;
-      fetch(m_readAPI)
-        .then(response => response.json())
-          .then(data => {
-             
-            data.forEach(task => {
-               
-              let tr = $('<tr></tr>')
-				
-              // countTask = countTask+1;
-              console.log(task.trangThai)
-                // console.log(data)
-                if (task.trangThai === 'IN PROGRESS'){
-                    tr.html(`
+        // countTask = countTask+1;
+        console.log(task.trangThai);
+        // console.log(data)
+        if (task.trangThai === "IN PROGRESS") {
+          tr.html(`
                 
                         <td><span class="badge mission-status-color badge-primary" >${task.trangThai}</span></td>
                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else if (task.trangThai === 'CANCELED'){
-                    tr.html(`
+                    `);
+        } else if (task.trangThai === "CANCELED") {
+          tr.html(`
                 
                         <td><span class="badge mission-status-color badge-danger" >${task.trangThai}</span></td>
                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else if (task.trangThai === 'REJECTED'){
-                    tr.html(`
+                    `);
+        } else if (task.trangThai === "REJECTED") {
+          tr.html(`
                 
                         <td><span class="badge mission-status-color badge-warning" >${task.trangThai}</span></td>
                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else if (task.trangThai === 'WAITING'){
-                    tr.html(`
+                    `);
+        } else if (task.trangThai === "WAITING") {
+          tr.html(`
                 
                         <td><span class="badge mission-status-color badge-secondary" >${task.trangThai}</span></td>
                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else if (task.trangThai === 'COMPLETED'){
-                    tr.html(`
+                    `);
+        } else if (task.trangThai === "COMPLETED") {
+          tr.html(`
                 
                         <td><span class="badge mission-status-color badge-info" >${task.trangThai}</span></td>
                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }else{
-                    tr.html(`
+                    `);
+        } else {
+          tr.html(`
                 
                         <td><span class="badge mission-status-color badge-success" >${task.trangThai}</span></td>
                         <td><a href="infor.php?maNVu=${task.maNhiemVu}" class="tenNhiemVu">${task.tenNhiemVu}</a></td>
                         <td>${task.hanThucHien}</td>
 
-                    `)
-                }
-                 
+                    `);
+        }
 
-                $('#list-task').append(tr)
-								
-            })
-						document.querySelector('.countTask').innerHTML = (data.length);
-          })
-    } 
+        $("#list-task").append(tr);
+      });
+      document.querySelector(".countTask").innerHTML = data.length;
+    });
+}
 
 // loadTasks();
 
@@ -941,138 +936,117 @@ const m_readAPI = 'http://localhost:8080/manager/api/get_task.php'
 //    });
 //  });
 
- if($('#m-trangThai').attr('value')!='WAITING'){
-  $('#m-smDongY').attr('disabled', true);
-  $('#m-smTuChoi').attr('disabled', true);
+if ($("#m-trangThai").attr("value") != "WAITING") {
+  $("#m-smDongY").attr("disabled", true);
+  $("#m-smTuChoi").attr("disabled", true);
 }
-if($('#trangThai').attr('value')=='NEW'){
-  $('#sbUpdate').attr('disabled', false);
-  $('#sbCancel').attr('disabled', false);
-}else{
-  $('#sbUpdate').attr('disabled', true);
-  $('#sbCancel').attr('disabled', true);
-
+if ($("#trangThai").attr("value") == "NEW") {
+  $("#sbUpdate").attr("disabled", false);
+  $("#sbCancel").attr("disabled", false);
+} else {
+  $("#sbUpdate").attr("disabled", true);
+  $("#sbCancel").attr("disabled", true);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // -----------------------Employee---------------------------------------- //
 // ------------------------index.php---------------------------------------- //
 // Lấy thông tin task có trạng thái new và render ra giao diện
 
-const addAPIDayOff = 'http://localhost:8080/employee/send_dayOff_task.php';
-const addAPIInputTask = 'http://localhost:8080/employee/send_file_task.php';
-const getNewTask = 'http://localhost:8080/employee/get_new_task.php';
-
+const addAPIDayOff = "http://localhost:8080/employee/send_dayOff_task.php";
+const addAPIInputTask = "http://localhost:8080/employee/send_file_task.php";
+const getNewTask = "http://localhost:8080/employee/get_new_task.php";
 
 function moveToGetAllTaskPage() {
-  window.location.href = 'index.php';
+  window.location.href = "index.php";
 }
 
 function moveToGetNewTaskPage() {
-  window.location.href = 'get_new_task.php';
+  window.location.href = "get_new_task.php";
 }
 
 function moveToGetCompleteTaskPage() {
-  window.location.href = 'get_completed_task.php';
+  window.location.href = "get_completed_task.php";
 }
 
 function moveToGetRejectedTaskPage() {
-  window.location.href = 'get_rejected_task.php';
+  window.location.href = "get_rejected_task.php";
 }
 
 function moveToGetInProgressTaskPage() {
-  window.location.href = 'get_inprogress_task.php';
+  window.location.href = "get_inprogress_task.php";
 }
 
 function moveToGetWaitingTaskPage() {
-  window.location.href = 'get_waiting_task.php';
+  window.location.href = "get_waiting_task.php";
 }
 
 function moveToTaskInfomationPage() {
-  window.location.href = 'task_infomation.php';
-  
+  window.location.href = "task_infomation.php";
 }
 
 function moveToDayOffFormPage() {
-  let sumDayOff = $('#sumDayOff').val();
-  let countDayOff = $('#countDayOff').val();
+  let sumDayOff = $("#sumDayOff").val();
+  let countDayOff = $("#countDayOff").val();
 
   if (countDayOff > sumDayOff) {
     window.location.href = "dayOff_Form_disabled.php";
-  }else {
+  } else {
     window.location.href = "dayOff_Form.php";
   }
 }
 
 function moveToDayOffListPage() {
-  window.location.href = 'dayOff_list.php';
+  window.location.href = "dayOff_list.php";
 }
 
 function addDayOffForm(e) {
   // e.preventDefault();
   // console.log("stopped")
-  let maNVDayOff = $('#maNVDayOff').val()
-  let dayDayOff = $('#dayDayOff').val()
-  let reasonDayOff = $('#reasonDayOff').val()
-  let fileDayOff = $('#fileDayOff').val()
-  
+  let maNVDayOff = $("#maNVDayOff").val();
+  let dayDayOff = $("#dayDayOff").val();
+  let reasonDayOff = $("#reasonDayOff").val();
+  let fileDayOff = $("#fileDayOff").val();
+
   // Kiểm tra dữ liệu có rỗng hay không
-  if (maNVDayOff == '' ||  dayDayOff == '' || reasonDayOff == '' || fileDayOff == '') {
-      $('.empty').removeClass('d-none')
+  if (
+    maNVDayOff == "" ||
+    dayDayOff == "" ||
+    reasonDayOff == "" ||
+    fileDayOff == ""
+  ) {
+    $(".empty").removeClass("d-none");
   } else {
-      $('.empty').addClass('d-none')
+    $(".empty").addClass("d-none");
   }
 
   let data = {
-            "maNVDayOff":maNVDayOff,
-            "dayDayOff":dayDayOff,
-            "reasonDayOff":reasonDayOff,
-            "fileDayOff":fileDayOff,
-        }
+    maNVDayOff: maNVDayOff,
+    dayDayOff: dayDayOff,
+    reasonDayOff: reasonDayOff,
+    fileDayOff: fileDayOff,
+  };
 
   fetch(addAPIDayOff, {
-            'method': 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        })
-  .then(res => res.json())
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((res) => res.json());
   // .then(data => {
-        //         if (data.code === 0) {
+  //         if (data.code === 0) {
   // 			console.log(0)
-                    // $('#day-off-dialog').modal('toggle')
-                    // $('#responseMess').html(data.message);
-                    // $('#message-respone').modal('show');
-                    
-                    // $('tbody').children().remove()
-                    // loadTasks()
-                // } else {
-      // 	console.log(1)
-                    // $('#add-dialog').modal('toggle')
-                    // $('#responseMess').html(data.message);
-                    // $('#message-respone').modal('show');
-                // }
-            // })
-  }
+  // $('#day-off-dialog').modal('toggle')
+  // $('#responseMess').html(data.message);
+  // $('#message-respone').modal('show');
+
+  // $('tbody').children().remove()
+  // loadTasks()
+  // } else {
+  // 	console.log(1)
+  // $('#add-dialog').modal('toggle')
+  // $('#responseMess').html(data.message);
+  // $('#message-respone').modal('show');
+  // }
+  // })
+}

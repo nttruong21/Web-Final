@@ -1,4 +1,10 @@
 <?php
+    // session_start();
+    // // Kiểm tra người dùng có phải giám đốc?
+    // if ($_SESSION['maChucVu'] != 'GD') {
+    //     header("Location: /no_access.html");
+    // }
+    
     require_once("../../connect_db.php");
 
     // Lấy toàn bộ danh sách nhân viên 

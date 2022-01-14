@@ -87,11 +87,9 @@
               
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
-				<div class="d-flex">
-                
-					<div class="ml-auto p-2 d-flex">
-						<p>Tổng số Task: </p>
-						<h5 class='countTask'></h5>
+				<div class="d-flex py-3">
+					<div class=" align-items-center d-flex text-primary font-weight-bold">
+						<h4 class="m-0">Tổng số Task: <span class='countTask'></span></h4>
 					</div>
 				</div>
 
