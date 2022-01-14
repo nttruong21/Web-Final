@@ -87,7 +87,7 @@
 								</div>
                                 <div class="form-group ml-3 mr-3">
 									<label for="file">Tập tin</label>
-									<a class="text-primary" target="blank" href="/files/<?= $file ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $file ?></a>
+									<a class="text-primary" download target="blank" href="/files/<?= $file ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $file ?></a>
 								</div>
 								<div class="form-group ml-3 mr-3">
 									<button type="submit" name="submit" class="btn btn-primary"><a href="task_infomation_inprogress.php?id=<?= $idNV ?>"> </a> Bắt đầu lại </button>

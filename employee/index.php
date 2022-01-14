@@ -144,10 +144,10 @@
 														<p class='task-id e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation_inprogress.php?id=$idNV'> $idNV </a></p>
 													</div>
 													<div class='task-name__heading col-xl-2 col-lg-4 col-sm-5 col-5 border border-top-0 border-left-0'>
-														<p class='task-name e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_inprogress_infomation.php?id=$idNV'> $name </a></p>
+														<p class='task-name e__check-font-style mb-0 p-1'> <a class='text-dark' href='task_infomation_inprogress.php?id=$idNV'> $name </a></p>
 													</div>
 													<div class='task-description__heading col-xl-4 col-lg-6 col-md-6 border border-top-0 border-left-0'>
-														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_completed.php?id=$idNV'> $desc </a></p>
+														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_inprogress.php?id=$idNV'> $desc </a></p>
 													</div>
 													<div class='task-time__heading col-xl-2 border border-top-0 border-left-0'>
 														<p class='mb-0 p-1 e__check-font-style'>$time</p>
@@ -166,7 +166,7 @@
 														<p class='task-name e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_waiting.php?id=$idNV'> $name </a></p>
 													</div>
 													<div class='task-description__heading col-xl-4 col-lg-6 col-md-6 border border-top-0 border-left-0'>
-														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_completed.php?id=$idNV'> $desc </a></p>
+														<p class='task-description e__check-font-style mb-0 p-1'><a class='text-dark' href='task_infomation_waiting.php?id=$idNV'> $desc </a></p>
 													</div>
 													<div class='task-time__heading col-xl-2 border border-top-0 border-left-0'>
 														<p class='mb-0 p-1 e__check-font-style'>$time</p>

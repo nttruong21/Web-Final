@@ -1,4 +1,5 @@
 <?php   
+    session_start();
      $errors= array();
      if (isset($_FILES['employee-avatar'])) {
          $file = $_FILES['employee-avatar'];
@@ -37,11 +38,11 @@
             // Lưu tập tin ảnh vào cơ sở dữ liệu
             require_once("../connect_db.php");
             $conn = connect_db();
-            $sql = "UPDATE NhanVien SET anhDaiDien = ? where ?";
+            $sql = "UPDATE NhanVien SET anhDaiDien = ? where maNhanVien = ?";
 
-            $condition = 1;
+            $maNhanVien = $_SESSION['maNhanVien'];
             $stm = $conn -> prepare($sql);
-            $stm -> bind_param("si", $name, $condition);
+            $stm -> bind_param("ss", $name, $maNhanVien);
             $stm -> execute();
             header("Location: ../profileNV.php");
             die();

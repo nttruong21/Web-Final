@@ -107,14 +107,14 @@
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
-                        <a href="calendar.php" class="list-group-item list-group-item-action activee"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action activee"> <i class="fas fa-calendar-week"></i>  Đơn Nghỉ Phép</a>
                        
                     </div>
 				</ul>
               
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
-				<div class="d-flex">
+				<!-- <div class="d-flex">
 					<div class="p-2">
 						<input type="checkbox" id="choose-all" name="choose-all">
 						<label for="choose-all">Chọn tất cả</label>
@@ -124,11 +124,11 @@
 						<p>Tổng số Task:</p>
 						<h5 class='countTask'></h5>
 					</div>
-				</div>
+				</div> -->
                 
 				<div class="all-task">
 					<div class="task-content">
-                        <h3 class="p-2 d-flex justify-content-center bg-dark text-white">THÔNG TIN ĐƠN XIN NGHĨ PHÉP</h3>
+                        <h3 class="p-2 d-flex justify-content-center bg-dark text-white">THÔNG TIN ĐƠN XIN NGHỈ PHÉP</h3>
                         <form action="" method="post" enctype="multipart/form-data">
                             <div class="modal-body mx-5">
                                 <div class="form-group">
@@ -136,11 +136,11 @@
                                     <input type="text" value="<?=$row['maNhanVien']?>"class="form-control" id="maNVien" name="maNVien" readonly />
                                 </div>
                                 <div class="form-group">
-                                    <label for="time">sô ngày nghĩ</label>
+                                    <label for="time">Số ngày nghỉ</label>
                                     <input type="text" value="<?=$row['soNgayNghi']?>"class="form-control" id="time" name="time" readonly />
                                 </div>
                                 <div class="form-group">
-                                    <label for="moTa">lý do</label>
+                                    <label for="moTa">Lý do</label>
                                     <input  id="moTa" name="moTa" class="form-control" readonly value="<?php echo $row['lyDo'];?>" ></input>
                                 
                                 </div>
@@ -157,7 +157,7 @@
 
                             <div class="modal-footer">
                                
-                                <button type="submit" id='m-smDongY' name="dongY" class='btn btn-outline-success'>Đông ý</button>
+                                <button type="submit" id='m-smDongY' name="dongY" class='btn btn-outline-success'>Đồng ý</button>
                                 <button type="submit" id='m-smTuChoi' name="tuChoi" class='btn btn-outline-warning'>Từ chối</button>
                             </div>
                         </form>

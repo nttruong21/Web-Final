@@ -123,9 +123,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
     <title>Đăng nhập</title>
 </head>
-<body>
+<body class="bg-image">
     <div class="card bg-light p-4 container mx-auto w-25 mt-5">
         <h3 class="text-center mb-4 text-primary font-weight-bold">Đăng nhập</h3>
         <form action="" method="POST">

@@ -56,9 +56,8 @@
 					<form action="" method="post" >
 						<?php
 							require_once("../connect_db.php");
-							
-
-							$sql = "SELECT * FROM DonXinNghiPhep WHERE maNhanVien = '".$_GET['id']."'";
+							$maNhanVien = $_GET['id'];
+							$sql = "SELECT * FROM DonXinNghiPhep WHERE maNhanVien = '$maNhanVien'" ;
 							$result = connect_db()->query($sql);
 
 							while ($row = $result->fetch_assoc()) {
@@ -91,7 +90,7 @@
 							<div class="col-xl-9 col-lg-8 col-md-8 col-sm-7 col-12">
 								<div class="form-group ml-3 mr-3">
 									<label for="file">TẬP TIN ĐÍNH KÈM</label>
-									<a class="text-primary" target="blank" href="/files/<?= $file ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $file ?></a>
+									<a class="text-primary" target="blank" href="../files/<?= $file ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $file ?></a>
 								</div>
 								
 							</div>														

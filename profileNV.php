@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    require_once('employee/handle_change_employee_avatar.php');
 
     require_once('connect_db.php');
     // Kiểm tra người dùng đã đăng nhập chưa?
@@ -30,11 +30,17 @@
     }
     
     $conn = connect_db();
-    $sql = "SELECT * FROM NhanVien";
-    $result = $conn -> query($sql);
+    $maNV = $_SESSION['maNhanVien'];
+    $sql = "SELECT * FROM NhanVien WHERE maNhanVien = ?";
     if ($conn -> connect_error) {
         die("Không thể lấy thông tin giám đốc " . $conn -> connect_error);
     }
+    $stm = $conn -> prepare($sql);
+    $stm -> bind_param('s', $maNV);
+    $stm -> execute();
+    $result = $stm -> get_result();
+// $result = $conn -> query($sql);
+
     $employee_account = $result->fetch_assoc();
     // print_r($admin_account);
     // print_r($admin_account['gioiTinh'] == 1);
@@ -110,7 +116,7 @@
         <div class="">
             <button onclick="enableEditEmployeeProfileMode();" class="btn btn-secondary mr-4">Chỉnh sửa</button>
             <button data-toggle="modal" data-target="#change-employee-avatar-modal" class="btn btn-primary mr-4">Đổi ảnh đại diện</button>
-            <!-- <a href="handle_update_admin_pass.php" class="btn btn-info">Đổi mật khẩu</a> -->
+            <a href="employee/handle_change_employee_pass.php" class="btn btn-info">Đổi mật khẩu</a>
         </div>
     </div>
 
@@ -227,7 +233,7 @@
                         </div>
                         <div class="form-group mt-3">
                             <?php
-                                require_once('employee/handle_change_employee_avatar.php');
+                                
                             ?>
                             <div id="change-employee-avatar-error-message" class="text-center alert-danger font-weight-bold"><?= implode($errors)  ?></div>
                         </div>
@@ -242,32 +248,12 @@
     </div>
 
 
-     <!-- Dialog xác nhận cập nhật thông tin
-     <div id="confirm-edit-employee-profile-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                    <h4 class="modal-title">Cập nhật thông tin</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p>Bạn có chắc rằng muốn cập nhật thông tin nhân viên <strong><?= $_SESSION['hoTen'] ?></strong> không?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy bỏ</button>
-                    <button type="submit" name="submit-info" class="btn btn-danger">Đồng ý</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 	<script src="/main.js"></script> 
-    
-    
 
 </body>
 </html>

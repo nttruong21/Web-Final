@@ -124,7 +124,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="lyDo">LÝ do</label>
+                                    <label for="lyDo">Lý do</label>
                                     <textarea rows="2" id="lyDo" class="form-control" name="lyDo" placeholder="Nhập lý do" required></textarea>
                                 
                                 </div>

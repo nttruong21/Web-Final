@@ -161,7 +161,7 @@ if (isset($_POST['submit'])){
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
-                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghỉ Phép</a>
                        
                     </div>
 				</ul>
@@ -282,7 +282,7 @@ if (isset($_POST['submit'])){
                                                <div>Nhấn vào tên file để tải về: <a href='downloadFile.php?maNVuu=$maNVuu'>$tapTin</a></div>
                                             </div>
                                             <div class=''>
-                                            <a href='formXacNhan.php?maNVuu=$maNVuu'<button class='btn btn-outline-success'>Đông ý</button></a>
+                                            <a href='formXacNhan.php?maNVuu=$maNVuu'<button class='btn btn-outline-success'>Đồng ý</button></a>
                                             <a href='formGuiLai.php?maNVuu=$maNVuu'<button class='btn btn-outline-warning'>Gửi lại</button></a>
                                             
                                             

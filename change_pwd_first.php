@@ -88,9 +88,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
     <title>Đổi mật khẩu</title>
 </head>
-<body>
+<body class="bg-image">
     <div class="container mx-auto w-50 mt-5 d-flex justify-content-between">
         <div class="form w-50 card p-4 bg-light ">
             <h3 class="text-center text-primary font-weight-bold">Change Password</h3>

@@ -106,7 +106,7 @@
                         <a href="rejected.php" class="list-group-item list-group-item-action"> <i class="fas fa-history"></i> Task Phản hồi</a>
                         <a href="complete.php" class="list-group-item list-group-item-action"><i class="fas fa-check-double"></i> Task Đã hoàn Thành</a>
                         <a href="canceled.php" class="list-group-item list-group-item-action"> <i class="fas fa-trash"></i> Task đã hủy</a>
-                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghĩ Phép</a>
+                        <a href="calendar.php" class="list-group-item list-group-item-action"> <i class="fas fa-calendar-week"></i>  Đơn Nghỉ Phép</a>
                        
                     </div>
 				</ul>
@@ -156,7 +156,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="maPB">mã phòng ban</label>
+                    <label for="maPB">Mã phòng ban</label>
                     <input type="text" readonly class="form-control" id="maPB" name="maPB" value=<?=$_SESSION['maPB']?> />
                 </div>
                 <!-- <div class="form-group">
@@ -164,13 +164,13 @@
                     <input type="text" placeholder="Thời gian thực hiện" class="form-control" name="time" id="time" required />
                 </div> -->
                 <div class="form-group">
-                    <label for="time">Start date:</label>
+                    <label for="time">Hạn thực hiện:</label>
                     <input type="date" id="time" name="time"
                         value="2022-01-01"
                         min="2022-01-01" max="3000-12-31">
                 </div>
                 <div class="form-group">
-                    <label for="moTa">mô tả</label>
+                    <label for="moTa">Mô tả</label>
                     <textarea rows="2" id="moTa" class="form-control" name="moTa" placeholder="Nhập mô tả" required></textarea>
 
                 </div>

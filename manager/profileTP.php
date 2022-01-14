@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    require_once('handle_change_employee_avatar.php');
 
     require_once('../connect_db.php');
     // Kiểm tra người dùng đã đăng nhập chưa?
@@ -30,11 +30,15 @@
     }
     
     $conn = connect_db();
-    $sql = "SELECT * FROM NhanVien";
-    $result = $conn -> query($sql);
+    $maNV = $_SESSION['maNhanVien'];
+    $sql = "SELECT * FROM NhanVien WHERE maNhanVien = ?";
     if ($conn -> connect_error) {
         die("Không thể lấy thông tin giám đốc " . $conn -> connect_error);
     }
+    $stm = $conn -> prepare($sql);
+    $stm -> bind_param('s', $maNV);
+    $stm -> execute();
+    $result = $stm -> get_result();
     $employee_account = $result->fetch_assoc();
     // print_r($admin_account);
     // print_r($admin_account['gioiTinh'] == 1);
@@ -116,7 +120,7 @@
         <div class="">
             <button onclick="enableEditEmployeeProfileMode();" class="btn btn-secondary mr-4">Chỉnh sửa</button>
             <button data-toggle="modal" data-target="#change-employee-avatar-modal" class="btn btn-primary mr-4">Đổi ảnh đại diện</button>
-            <!-- <a href="handle_update_admin_pass.php" class="btn btn-info">Đổi mật khẩu</a> -->
+            <a href="handle_update_manager_pass.php" class="btn btn-info">Đổi mật khẩu</a>
         </div>
     </div>
 
