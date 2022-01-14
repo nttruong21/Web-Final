@@ -52,7 +52,7 @@
 					<form action="" method="post" >
 						<?php
 							require_once("../connect_db.php");
-							require_once("task_and_dayOff_db.php");
+							
 
 							$sql = "SELECT * FROM NhiemVuHoanThanh WHERE maNhiemVu = '".$_GET['id']."'";
 							$result = connect_db()->query($sql);
