@@ -36,7 +36,7 @@
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
 				$stm1 = $conn1->prepare($sql1);
-				$stm1 -> bind_param("i", $maNV);
+				$stm1 -> bind_param("s", $maNV);
 				$stm1 -> execute();
 
 
@@ -58,7 +58,7 @@
 						$sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
 						$conn2 = connect_db();
 						$stm2 = $conn2->prepare($sql2);
-						$stm2->bind_param('iss', $maNV, $noiDung, $name);
+						$stm2->bind_param('sss', $maNV, $noiDung, $name);
 						$stm2->execute();
 
                		}
@@ -74,7 +74,7 @@
 				$sql1 = "UPDATE NhiemVu SET trangThai = 'WAITING' WHERE maNhiemVu = ?";
 				$conn1 = connect_db();
 				$stm1 = $conn1->prepare($sql1);
-				$stm1 -> bind_param("i", $maNV);
+				$stm1 -> bind_param("s", $maNV);
 				$stm1 -> execute();
 
 				$sql3 = "SELECT * FROM KetQuaGui where maNhiemVu='$maNV'";
@@ -87,14 +87,14 @@
                     $sql2 = "UPDATE KetQuaGui SET  noiDung = ?, tapTin = ? WHERE maNhiemVu = ?";
                     $conn2 = connect_db();
                     $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('ssi',$noiDung, $name, $maNV);
+                    $stm2->bind_param('sss',$noiDung, $name, $maNV);
                     $stm2->execute();
 
                 }else{
                     $sql2 = "INSERT INTO KetQuaGui(maNhiemVu, noiDung, tapTin) VALUES(?, ?, ?)";
                     $conn2 = connect_db();
                     $stm2 = $conn2->prepare($sql2);
-                    $stm2->bind_param('iss', $maNV, $noiDung, $name);
+                    $stm2->bind_param('sss', $maNV, $noiDung, $name);
                     $stm2->execute();
                 }
 				move_uploaded_file($tname,$uploads_dir.'/'.$name);
@@ -143,7 +143,11 @@
 					<form action="" method="post" enctype="multipart/form-data">
 						<?php
 							require_once("../connect_db.php");
+<<<<<<< HEAD
 							// require_once("task_and_dayOff_db.php");
+=======
+							
+>>>>>>> dad506238ff02d2514c9701e2c6262dc9e11917c
 
 							$sql = "SELECT * FROM NHIEMVU WHERE maNhiemVu = '".$_GET['id']."'";
 							$result = connect_db()->query($sql);
@@ -165,11 +169,11 @@
 							<div class="col-xl-10">
                                 <div class="form-group ml-3 mr-3">
 									<label for="noiDung">Nội dung</label>
-									<input type="text"  class="form-control" id="noiDung" name="noiDung"/>
+									<input type="text"  class="form-control" id="noiDung" name="noiDung" required />
 								</div>
                                 <div class="form-group ml-3 mr-3">
                                     <label for="tapTin">Tập tin đính kèm</label>
-                                    <input type="file" class="form-control" id="tapTin" name="tapTin"/>
+                                    <input type="file" class="form-control" id="tapTin" name="tapTin" required/>
                                 </div>
 								
 								<div class="form-group ml-3 mr-3">

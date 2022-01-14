@@ -52,7 +52,7 @@
 					<form action="" method="post" >
 						<?php
 							require_once("../connect_db.php");
-							require_once("task_and_dayOff_db.php");
+							
 
 							$sql = "SELECT * FROM NhiemVuHoanThanh WHERE maNhiemVu = '".$_GET['id']."'";
 							$result = connect_db()->query($sql);
@@ -81,7 +81,13 @@
 							<div class="col-xl-4 col-lg-4 col-md-3">
 								<div class="form-group ml-3 mr-3">
                                     <label for="dungHan">ĐÚNG HẠN</label>
-									<input type="text" value="<? echo $dungHan ?>" class="form-control" id="dungHan" name="dungHan" readonly>
+									<?php
+										if ($dungHan == 1) {
+											echo "<input type='text' value='Đúng hạn' class='form-control' id='dungHan' name='dungHan' readonly>";
+										} else {
+											echo "<input type='text' value='Trễ hạn' class='form-control' id='dungHan' name='dungHan' readonly>";
+										}
+									?>
 								</div>
 							</div>
 							

@@ -50,7 +50,11 @@
 						<div class="e__task__infomation">
 						<?php
 							require_once("../connect_db.php");
+<<<<<<< HEAD
 							// require_once("task_and_dayOff_db.php");
+=======
+							
+>>>>>>> dad506238ff02d2514c9701e2c6262dc9e11917c
 							$sql = "SELECT * FROM NHIEMVU WHERE trangThai = 'IN PROGRESS' ORDER BY hanThucHien";
 							$result = connect_db()->query($sql);
 
