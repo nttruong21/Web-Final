@@ -16,7 +16,7 @@
     }
 
 	// Kiểm tra người dùng có phải trưởng phòng?
-    if (!$_SESSION['maChucVu'] == 'TP') {
+    if ($_SESSION['maChucVu'] != 'TP') {
         header("Location: /no_access.html");
     }
 
