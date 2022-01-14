@@ -16,20 +16,20 @@
         if (is_null($input)) {
             error_response(2, "Dữ liệu phải ở dạng JSON");
         }
-        if (!property_exists($input, 'id') || !property_exists($input, 'result')) {
+        if (!property_exists($input, 'id') || !property_exists($input, 'status')) {
             error_response(3, "Dữ liệu không đầy đủ");
         }
 
         // Lấy dữ liệu 
         $id = $input -> id;
-        $result = $input -> result;
+        $status = $input -> status;
 
         // Kiểm tra dữ liệu có hợp lệ?
-        if(!is_numeric($id) || !is_numeric($result) || $result < 0 || $result > 1) {
+        if(!is_numeric($id) ||  $status == "") {
             error_response(4, "Dữ liệu không hợp lệ");
         }
 
-        $result = approve_leave_application($id, $result);
+        $result = approve_leave_application($id, $status);
         if ($result) {
             success_response(0, "Duyệt đơn thành công");
         } else {

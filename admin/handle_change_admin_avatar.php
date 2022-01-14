@@ -11,9 +11,9 @@
         $size = $file['size'];
         $ext = pathinfo($name, PATHINFO_EXTENSION);
         
-        if(!empty($_POST['file-name'])) {
-            $name = $_POST['file-name'] . '.' . $ext;
-        }
+        // if(!empty($_POST['file-name'])) {
+        //     $name = $_POST['file-name'] . '.' . $ext;
+        // }
 
         // Kiểm tra kích thước tệp tin 
         if ($size > 12 * 1024 * 1024) {

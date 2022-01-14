@@ -46,12 +46,11 @@
     }
 
         // Cập nhật thông tin đơn -> duyệt đơn 
-        function approve_leave_application($id, $result) {
+        function approve_leave_application($id, $status) {
             $conn = connect_db();
-            $status = 1;
-            $sql = "UPDATE DonXinNghiPhep SET ketQua = ?, trangThai = ? WHERE maDon = ?";
+            $sql = "UPDATE DonXinNghiPhep SET trangThai = ? WHERE maDon = ?";
             $stm = $conn -> prepare($sql);
-            $stm -> bind_param("iii", $result, $status, $id);
+            $stm -> bind_param("si", $status, $id);
             $stm -> execute();
             return $stm -> affected_rows === 1;
         }

@@ -10,5 +10,5 @@
     }
 
     $applications = get_applications();
-    success_response($applications, "Lấy danh sách nhân viên thành công");
+    success_response($applications, "Lấy danh sách đơn thành công");
 ?>

@@ -25,24 +25,24 @@
     $id = $_GET['maDon'];
     $hoTen = $_GET['hoTen'];
     $soNgayNghi = 0;
-    $trangThai = "Chưa xử lý";
     $lyDo = "";
+    $trangThai = "WAITING";
     $ngayTao = "";  
     $tapTin = "";
-    $ketQua = "";
     if($id) {
         require_once("application_db.php");
         $app = get_application($id);
         if ($app) {
             $soNgayNghi = $app['soNgayNghi'];
-            if (intval($app['trangThai']) === 1) {
-                $trangThai = "Đã xử lý";    
-                if (intval($app['ketQua']) === 1) {
-                    $ketQua = "Thành công";    
-                } else if (intval($app['ketQua']) === 0) {
-                    $ketQua = "Không thành công";   
-                }
-            }
+            $trangThai = $app['trangThai'];
+            // if (intval($app['trangThai']) === 1) {
+            //     $trangThai = "Đã xử lý";    
+            //     if (intval($app['ketQua']) === 1) {
+            //         $ketQua = "Thành công";    
+            //     } else if (intval($app['ketQua']) === 0) {
+            //         $ketQua = "Không thành công";   
+            //     }
+            // }
             $lyDo = $app['lyDo'];
             $ngayTao = $app['ngayTao'];  
             $tapTin = $app['tapTin'];
@@ -56,6 +56,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
     <title>Thông tin đơn xin nghỉ phép</title>
 </head>
@@ -71,7 +72,7 @@
             </div>
             <div class="">
                 <?php
-                    if ($trangThai == "Chưa xử lý") {
+                    if ($trangThai == "WAITING") {
                         ?>
                             <button data-toggle="modal" data-target="#choose-app-result-modal" class="btn btn-primary mr-4">Duyệt đơn</button>
                         <?php
@@ -144,16 +145,15 @@
                     <div class="form-group row align-items-center">
                         <label class="control-label text-right col-sm-4 p-0 m-0">Tập tin:</label>
                         <div class="col-sm-8 text-left font-italic">
-                            <!-- <input download value="<?= $tapTin ?>" type="text" class="form-control"> -->
-                            <a target="blank" href="/files/<?= $tapTin ?>"><?= $tapTin ?></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group row align-items-center">
-                        <label class="control-label text-right col-sm-4 m-0 p-0">Kết quả:</label>
-                        <div class="col-sm-8">
-                            <input disabled value="<?= $ketQua ?>" type="text" class="form-control">
+                            <!-- <input download value="" type="text" class="form-control"> -->
+                            <?php
+                                if ($tapTin) {
+                                    ?>
+                                        <a class="text-primary" target="blank" href="/files/<?= $tapTin ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $tapTin ?></a>
+                                    <?php
+                                } 
+                            ?>
+                            
                         </div>
                     </div>
                 </div>

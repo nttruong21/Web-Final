@@ -5,7 +5,6 @@ $(".custom-file-input").on("change", function () {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
-
 // ---------------------------- ADMIN ------------------------------------------
 // ---------------------------- index.php --------------------------------------
 // Lấy thông tin nhân viên và render ra giao diện
@@ -142,7 +141,8 @@ if (formAddAccount) {
             document
               .getElementById("btn-add-confirm")
               .addEventListener("click", (e) => {
-                location.reload();
+                // location.reload();
+                window.location.href = "../index.php";
               });
           }
           // Thất bại
@@ -765,11 +765,15 @@ window.addEventListener("load", () => {
       applications.forEach((application) => {
         // console.log(typeof application.trangThai);
         let application_row = document.createElement("div");
-        let trangThai = "Đã xử lý";
-        if (parseInt(application.trangThai) === 0) {
-          trangThai = "Chưa xử lý";
+        // let trangThai = "Đã xử lý";
+        // if (parseInt(application.trangThai) === 0) {
+        //   trangThai = "Chưa xử lý";
+        //   application_row.classList.add("font-weight-bold");
+        // }
+        if (application.trangThai === "WAITING") {
           application_row.classList.add("font-weight-bold");
         }
+        console.log(application.trangThai);
         let manager_id = application.maNhanVien;
         // Lấy thông tin trưởng phòng
         if (manager_id) {
@@ -794,7 +798,7 @@ window.addEventListener("load", () => {
                     <p class='mb-0 p-1'>${application.ngayTao}</p>
                   </div>
                   <div class='col-lg-3 border border-top-0 border-right-0  border-bottom-0'>
-                    <p class='mb-0 p-1'>${trangThai}</p>
+                    <p class='mb-0 p-1'>${application.trangThai}</p>
                   </div>
                 </div>
               </a>
@@ -816,7 +820,7 @@ function disagreeLeaveApp(id) {
     "http://localhost:8080/admin/application/approve_leave_application.php";
   let data = {
     id: id,
-    result: 0,
+    status: "REFUSED",
   };
   fetch(url, {
     method: "PUT",
@@ -838,7 +842,7 @@ function agreeLeaveApp(id) {
     "http://localhost:8080/admin/application/approve_leave_application.php";
   let data = {
     id: id,
-    result: 1,
+    status: "APPROVED",
   };
   fetch(url, {
     method: "PUT",
@@ -870,7 +874,7 @@ const m_readAPI = 'http://localhost:8080/manager/api/get_task.php'
               // countTask = countTask+1;
               console.log(task.trangThai)
                 // console.log(data)
-                if (task.trangThai === 'IS PROGRESS'){
+                if (task.trangThai === 'IN PROGRESS'){
                     tr.html(`
                 
                         <td><span class="badge mission-status-color badge-primary" >${task.trangThai}</span></td>
