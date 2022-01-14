@@ -935,11 +935,11 @@ const m_readAPI = 'http://localhost:8080/manager/api/get_task.php'
 // loadTasks();
 
 // chọn ngày
-$(function(){
-  $('.datepicker').datepicker({
-     format: 'dd-mm-yyyy'
-   });
- });
+// $(function(){
+//   $('.datepicker').datepicker({
+//      format: 'dd-mm-yyyy'
+//    });
+//  });
 
  if($('#m-trangThai').attr('value')!='WAITING'){
   $('#m-smDongY').attr('disabled', true);
