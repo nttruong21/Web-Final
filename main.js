@@ -870,7 +870,7 @@ const m_readAPI = 'http://localhost:8080/manager/api/get_task.php'
               // countTask = countTask+1;
               console.log(task.trangThai)
                 // console.log(data)
-                if (task.trangThai === 'IS PROGRESS'){
+                if (task.trangThai === 'IN PROGRESS'){
                     tr.html(`
                 
                         <td><span class="badge mission-status-color badge-primary" >${task.trangThai}</span></td>

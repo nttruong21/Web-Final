@@ -85,6 +85,7 @@ if (isset($_POST['submit'])){
             }else{
                 $tname = $_FILES["file"]["tmp_name"];
                 $uploads_dir = '../files';
+                // die($tname);
                 $sql1 = "UPDATE NhiemVu SET hanThucHien = ?, moTa = ?, tapTin = ?, trangThai = 'REJECTED' WHERE maNhiemVu = '$maNVu'";
                 $conn1 = connect_db();
                 $stm1 = $conn1->prepare($sql1);
@@ -198,15 +199,7 @@ if (isset($_POST['submit'])){
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
 				<div class="d-flex">
-					<div class="p-2">
-						<input type="checkbox" id="choose-all" name="choose-all">
-						<label for="choose-all">Chọn tất cả</label>
-					</div>
-					<div class="p-2"><i class="fas fa-redo-alt"></i>Tải lại</div>
-					<div class="ml-auto p-2 d-flex">
-						<p>Tổng số Task:</p>
-						<h5 class='countTask'></h5>
-					</div>
+					
 				</div>
                 
 				<div class="all-task">

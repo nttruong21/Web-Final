@@ -101,12 +101,12 @@
                     <?php
                         require_once('../connect_db.php');
                         $maPB = $_SESSION['maPB'];
-                        $sql = "SELECT * FROM NhiemVu where maPhongBan = '$maPB' and trangThai='IS PROGRESS' Order by maNhiemVu DESC";
+                        $sql = "SELECT * FROM NhiemVu where maPhongBan = '$maPB' and trangThai='IN PROGRESS' Order by maNhiemVu DESC";
                         $conn = connect_db();
                         $result = $conn->query($sql);
                         
                         if ($result->num_rows == 0){
-                            die('Kêt nối thành công, Nhưng không có dữ liệu');
+                            die();
                         }
                     
                         while ($row = $result->fetch_assoc()){
