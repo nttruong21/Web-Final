@@ -54,7 +54,10 @@
 					<?php
 						?>
 						<div>
-							<a class="nav-link" href="profileTP.php">Xin chào <?= $_SESSION['hoTen'] ?></a>
+							<p class="nav-link mb-0">Xin chào <?= $_SESSION['hoTen'] ?></p>
+						</div>
+                        <div>
+							<a class="nav-link text-primary font-weight-bold" href="profileTP.php">Thông tin Trưởng Phòng </a>
 						</div>
 						<div>
 							<a class="font-weight-bold" href="../logout.php">Đăng xuất</a>

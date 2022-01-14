@@ -149,7 +149,7 @@
 								$dateNow = strtotime(date("y-m-d"));
 								if($dateNow - $ngayMoiTao >= 60*60*24*7 && $soNgayNghi <= 15){
 									echo "
-											<a href='formNghiPhep.php'><button type='button' class='btn btn-outline-dark m-2'><i class='fas fa-calendar-plus'></i>  Tạo đơn </button></a>";
+											<a href='formNghiPhep.php'><button type='button' class='btn btn-light m-2'><i class='fas fa-calendar-plus'></i>  Tạo đơn </button></a>";
 								}else{
 									echo "
 											<div class='alert alert-danger' role='alert'>
