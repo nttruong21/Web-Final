@@ -29,7 +29,16 @@
         }
     }
     
-    // $birthDay = $_SESSION['ngaySinh'];
+    $conn = connect_db();
+    $sql = "SELECT * FROM NhanVien";
+    $result = $conn -> query($sql);
+    if ($conn -> connect_error) {
+        die("Không thể lấy thông tin giám đốc " . $conn -> connect_error);
+    }
+    $employee_account = $result->fetch_assoc();
+    // print_r($admin_account);
+    // print_r($admin_account['gioiTinh'] == 1);
+    $avatar_path = "./images/" . $employee_account['anhDaiDien'];
 
 ?>
 
@@ -47,6 +56,14 @@
       crossorigin="anonymous"
     />
 </head>
+<style>
+    .card-employee {
+       width: 300px;
+    }
+    .card-img-employee {
+        width: 200px;
+    }
+</style>
 <body>
     <!-- Navigation -->
     <div>
@@ -66,6 +83,14 @@
 				<i class="fas fa-bars"></i>
 			</div>
 		</div>
+    </div>
+
+    <div class="d-flex mt-2 mb-2 w-75 mx-auto flex-row-reverse align-items-center justify-content-between">
+        <div class="">
+            <button onclick="enableEditEmployeeProfileMode();" class="btn btn-secondary mr-4">Chỉnh sửa</button>
+            <button data-toggle="modal" data-target="#change-employee-avatar-modal" class="btn btn-primary mr-4">Đổi ảnh đại diện</button>
+            <!-- <a href="handle_update_admin_pass.php" class="btn btn-info">Đổi mật khẩu</a> -->
+        </div>
     </div>
 
     <?php
@@ -142,18 +167,14 @@
                             <input disabled id="employee-email" value="<?= $email ?>" type="email" class="form-control">
                         </div>
                     </div>
+                    <div class="form-group text-center">
+                        <button data-toggle="modal" data-target="#confirm-edit-admin-profile-modal" disabled id="btn-confirm-edit-employee-profile" class="btn btn-primary">Xác nhận</button>
+                    </div>
                 </div>
-                <div class="col-6 d-flex flex-column justify-content-between">
-                    <!-- <div class="d-flex mb-4 w-75 mx-auto flex-row-reverse align-items-center justify-content-between">
-                        <div class="">
-                            <button onclick="enableEditAdminProfileMode();" class="btn btn-secondary mr-4">Chỉnh sửa</button>
-                            <button data-toggle="modal" data-target="#change-employee-avatar-modal" class="btn btn-primary mr-4">Đổi ảnh đại diện</button>
-                            <a href="handle_update_admin_pass.php" class="btn btn-info">Đổi mật khẩu</a>
-                        </div>
-                    </div> -->
-                    <div class="card m-auto" style="width: 300px;">
-                        <img class="card-img-top mx-auto" style="width: 200px;" src="https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg" alt="User image">
-                        <div class="card-body">
+                <div class="col-6 d-flex border-none border rounded">              
+                    <div class="card-employee w-100 m-auto">
+                        <img class="card-img-employee w-100" src= <?= $avatar_path ?> alt="User image">
+                        <div class="card-body-employee">
                             <h3 class="card-title"><?= $_SESSION['hoTen'] ?></h3>
                             <p class="card-text">Chức vụ: <?= $chucVu ?></p>
                         </div>
@@ -161,6 +182,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 
@@ -172,14 +194,14 @@
                     <h4 class="modal-title">Đổi ảnh đại diện</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="handle_change_admin_avatar.php" method="POST" enctype="multipart/form-data">
+                <form action="employee/handle_change_employee_avatar.php" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="custom-file">
-                            <input name="admin-avatar" type="file" class="custom-file-input" id="admin-avatar">
-                            <label class="custom-file-label" for="admin-avatar">Choose file</label>
+                            <input name="employee-avatar" type="file" class="custom-file-input" id="employee-avatar">
+                            <label class="custom-file-label" for="employee-avatar">Choose file</label>
                         </div>
                         <div class="form-group mt-3">
-                            <div id="change-admin-avatar-error-message" class="text-center alert-danger font-weight-bold"></div>
+                            <div id="change-employee-avatar-error-message" class="text-center alert-danger font-weight-bold"></div>
                         </div>
                     </div>
                     <div  class="modal-footer">
@@ -197,7 +219,25 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 	<script src="/main.js"></script> 
+    
+    <script>
+        let employee_birthday = document.getElementById('employee-birthday');
+        let employee_address = document.getElementById('employee-address');
+        let employee_sex = document.getElementById('employee-sex');
+        let employee_number = document.getElementById('employee-number');
+        let employee_email = document.getElementById('employee-email');
+        let btn_confirm_edit_employee_profile = document.getElementById('btn-confirm-edit-employee');
 
+
+        function enableEditEmployeeProfileMode() {
+            employee_birthday.disabled = false;
+            employee_address.disabled = false;
+            employee_sex.disabled = false;
+            employee_number.disabled = false;
+            employee_email.disabled = false;
+            btn_confirm_edit_employee_profile.disabled = false;
+        }
+    </script>
 
 </body>
 </html>

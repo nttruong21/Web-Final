@@ -126,43 +126,41 @@
 						$sql = "SELECT * FROM `DonXinNghiPhep` where maNhanVien = '$maNhanVien' ORDER BY maDon DESC LIMIT 1";
 						$conn = connect_db();
 						$result = $conn->query($sql);
-						if ($result->num_rows == 0){
-							die('Kêt nối thành công, Nhưng không có dữ liệu');
-						}else{
-							$row = $result->fetch_assoc();
-							$ngayMoiTao = strtotime($row['ngayTao']);
-							$soNgayNghi = $row['soNgayNghi'];
-							$dateNow = strtotime(date("y-m-d"));
-							if($dateNow - $ngayMoiTao >= 60*60*24*7 && $soNgayNghi <= 12){
-								echo 	"<div class='m-auto d-flex align-items-center justify-content-center'>
-											<a href='dayOff_Form.php'>
-											<button
-											class='btn btn-light e__btn-task d-flex align-items-center'
-											type='submit'>
-											<i class='fas fa-calendar-da'></i>
-											<p class='mb-0 ml-2 e__check-font-style e__dayOff-reason-btn'>Tạo đơn nghỉ phép</p>	
-											</button>
-											</a>
+						
+						$row = $result->fetch_assoc();
+						$ngayMoiTao = strtotime($row['ngayTao']);
+						$soNgayNghi = $row['soNgayNghi'];
+						$dateNow = strtotime(date("y-m-d"));
+						if($dateNow - $ngayMoiTao >= 60*60*24*7 && $soNgayNghi <= 12){
+							echo 	"<div class='m-auto d-flex align-items-center justify-content-center'>
+										<a href='dayOff_Form.php'>
+										<button
+										class='btn btn-light e__btn-task d-flex align-items-center'
+										type='submit'>
+										<i class='fas fa-calendar-da'></i>
+										<p class='mb-0 ml-2 e__check-font-style e__dayOff-reason-btn'>Tạo đơn nghỉ phép</p>	
+										</button>
+										</a>
+									</div>
+						
+							";
+						} else {
+							echo 	"<div class='m-auto d-flex align-items-center justify-content-between'>
+										<div class='ml-2 mr-2'>
+											<p class='mb-0 text-danger'>Bạn không thể tạo đơn xin nghỉ phép vì chưa đủ 7 ngày hoặc đã quá số ngày nghỉ cho phép</p>
 										</div>
+										<button disabled 
+										class='btn btn-light e__btn-task d-flex align-items-center justify-content-center'
+										type='submit'>
+										<i class='fas fa-calendar-da'></i>
+										<p class='mb-0 ml-2 e__check-font-style e__dayOff-reason-btn'>Tạo đơn nghỉ phép</p>	
+										</button>
+										
+									</div>
 							
-								";
-							} else {
-								echo 	"<div class='m-auto d-flex align-items-center justify-content-between'>
-											<div class='ml-2 mr-2'>
-												<p class='mb-0 text-danger'>Bạn không thể tạo đơn xin nghỉ phép vì chưa đủ 7 ngày hoặc đã quá số ngày nghỉ cho phép</p>
-											</div>
-											<button disabled 
-											class='btn btn-light e__btn-task d-flex align-items-center justify-content-center'
-											type='submit'>
-											<i class='fas fa-calendar-da'></i>
-											<p class='mb-0 ml-2 e__check-font-style e__dayOff-reason-btn'>Tạo đơn nghỉ phép</p>	
-											</button>
-											
-										</div>
-								
-								";
+							";
 						}
-					}
+					
 					?>
 
 				</div>
