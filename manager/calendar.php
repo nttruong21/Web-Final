@@ -93,7 +93,7 @@
                     <tr>
                         <th>TRẠNG THÁI</th>
                         <th>MÃ NHÂN VIÊN</th>
-                        <th>SỐ NGÀY NGHĨ</th>
+                        <th>SỐ NGÀY NGHỈ</th>
                     </tr>
                 </thead>
                 <!-- manager list task -->
@@ -102,14 +102,14 @@
                     <?php
                         require_once('../connect_db.php');
                         $maPB = $_SESSION['maPB'];
-												$maNV = $_SESSION['maNhanVien'];
+						$maNV = $_SESSION['maNhanVien'];
                         $sql = "SELECT * FROM DonXinNghiPhep where maPhongBan = '$maPB' and maNhanVien!='$maNV' Order by maDon DESC";
                         $conn = connect_db();
                         $result = $conn->query($sql);
                         
-                        if ($result->num_rows == 0){
-                            die('Kêt nối thành công, Nhưng không có dữ liệu');
-                        }
+                        // if ($result->num_rows == 0){
+                        //     die('Kêt nối thành công, Nhưng không có dữ liệu');
+                        // }
                     
                         while ($row = $result->fetch_assoc()){
                             $trangThai = $row['trangThai'];
@@ -139,34 +139,31 @@
 				</div>
 				<div  class=" p-2 d-flex justify-content-center">
 						<?php
-							 $sql7 = "SELECT * FROM `DonXinNghiPhep` where maPhongBan = '$maPB' ORDER BY maDon DESC LIMIT 1";
+							 $sql7 = "SELECT * FROM `DonXinNghiPhep` where maPhongBan = '$maPB' AND `maNhanVien` = '$maNV' ORDER BY maDon DESC LIMIT 1";
 							 $conn7 = connect_db();
 							 $result7 = $conn->query($sql7);
-							 if ($result7->num_rows == 0){
-								die('Kêt nối thành công, Nhưng không có dữ liệu');
-							}else{
+							 if ($result7->num_rows > 0){
 								$row7 = $result7->fetch_assoc();
 								$ngayMoiTao = strtotime($row7['ngayTao']);
 								$soNgayNghi = $row7['soNgayNghi'];
 								$dateNow = strtotime(date("y-m-d"));
 								if($dateNow - $ngayMoiTao >= 60*60*24*7 && $soNgayNghi <= 15){
 									echo "
-										
-											<a href='formNghiPhep.php'><button type='button' class='btn btn-outline-dark m-2'><i class='fas fa-calendar-plus'></i>  Tạo đơn </button></a>
-											
-											";
+											<a href='formNghiPhep.php'><button type='button' class='btn btn-outline-dark m-2'><i class='fas fa-calendar-plus'></i>  Tạo đơn </button></a>";
 								}else{
 									echo "
 											<div class='alert alert-danger' role='alert'>
 												KHÔNG thể tạo đơn!
 											</div>
-											<a href=''><button type='button' class='btn btn-outline-dark m-2 disabled'><i class='fas fa-calendar-plus'></i>  Tạo đơn</button></a>
+											<a  href=''><button type='button' class='btn btn-light m-2 disabled'><i class='fas fa-calendar-plus'></i>  Tạo đơn</button></a>
 									";
 								}
+							} else {
+								echo "<a href='formNghiPhep.php'><button type='button' class='btn btn-light m-2'><i class='fas fa-calendar-plus'></i>  Tạo đơn </button></a>";
 							}
 						
 						?>		
-						<a href="donDaTao.php"><button type="button" class="btn btn-outline-dark m-2"><i class="far fa-calendar-check"></i>  Đơn đã tạo</button></a>
+						<a href="donDaTao.php"><button type="button" class="btn btn-light m-2"><i class="far fa-calendar-check"></i>  Đơn đã tạo</button></a>
         </div>
 		</div>
 		</div>

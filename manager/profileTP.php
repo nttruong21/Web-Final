@@ -85,6 +85,7 @@
     ?>
 
     <div class="w-75 mx-auto mt-4">
+        <div></div>
         <div class="bg-light card pr-5">
             <div class="row py-4">
                 <div class="col-6 py-4 d-flex flex-column justify-content-between">

@@ -2,11 +2,11 @@
   session_start();
   require_once('../connect_db.php');
   $message = '';
-  if (!isset($_POST['maNVu']) || !isset($_POST['tenNVu']) || !isset($_POST['time'])
+  if ( !isset($_POST['tenNVu']) || !isset($_POST['time'])
       || !isset($_POST['moTa'])){
         $message = 'Bạn vui lòng nhập đầy đủ thông tin!!!';
         
-      }else if (empty($_POST['maNVu']) || empty($_POST['tenNVu']) || empty($_POST['time'])
+      }else if ( empty($_POST['tenNVu']) || empty($_POST['time'])
       || empty($_POST['moTa'])){
         $message = 'KHông để giá trị rỗng!!';
         
@@ -17,7 +17,7 @@
               $message =  "Dữ liệu không đúng cấu trúc";
               
           }
-        $maNVu = $_POST['maNVu'];
+     
         $tenNVu = $_POST['tenNVu'];
         $maNVien = $_POST['maNVien'];
         $maPB = $_POST['maPB'];
@@ -33,10 +33,10 @@
         
 
        
-        $sql = "INSERT INTO NhiemVu VALUES(?, ?, ?,?,?,?,?,?)";
+        $sql = "INSERT INTO NhiemVu (tenNhiemVu, maNhanVien, maPhongBan, hanThucHien, moTa, tapTin, trangThai) VALUES(?, ?,?,?,?,?,?)";
         $conn = connect_db();
         $stm = $conn->prepare($sql);
-        $stm->bind_param('ssssssss', $maNVu, $tenNVu, $maNVien, $maPB, $hanTH, $moTa, $tapTin, $trangThai);
+        $stm->bind_param('sssssss', $tenNVu, $maNVien, $maPB, $hanTH, $moTa, $tapTin, $trangThai);
         $stm->execute();
       
         if( $stm->affected_rows == 1){
@@ -128,10 +128,7 @@
                   }
                 ?>
                 
-                <div class="form-group">
-                    <label for="maNVu">Mã nhiệm vụ</label>
-                    <input type="text" placeholder="Nhập mã nhiệm vụ" class="form-control" id="maNVu" name="maNVu" required />
-                </div>
+               
                 <div class="form-group">
                     <label for="tenNVu">Tên nhiệm vụ</label>
                     <input type="text" placeholder="Nhập tên nhiệm vụ" class="form-control" id="tenNVu" name="tenNVu" required />

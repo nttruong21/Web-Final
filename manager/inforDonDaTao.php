@@ -94,7 +94,7 @@
               
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
-				<div class="d-flex">
+				<!-- <div class="d-flex">
 					<div class="p-2">
 						<input type="checkbox" id="choose-all" name="choose-all">
 						<label for="choose-all">Chọn tất cả</label>
@@ -104,7 +104,7 @@
 						<p>Tổng số Task:</p>
 						<h5 class='countTask'></h5>
 					</div>
-				</div>
+				</div> -->
                 
 				<div class="all-task">
 					<div class="task-content">
@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="fileCurrent">Tệp đính kèm</label>
-                                    <div>Nhấn vào tên file để tải về: <a target="blank" href="/files/<?= $row['tapTin']?>"><?= $row['tapTin']?></a></div>
+                                    <div>Nhấn vào tên file để tải về: <a download href='../files/<?php echo $row['tapTin'];?>'><?php echo $row['tapTin'];?></a></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="trangThai">Trạng thái</label>
