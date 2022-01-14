@@ -81,7 +81,13 @@
 							<div class="col-xl-4 col-lg-4 col-md-3">
 								<div class="form-group ml-3 mr-3">
                                     <label for="dungHan">ĐÚNG HẠN</label>
-									<input type="text" value="<? echo $dungHan ?>" class="form-control" id="dungHan" name="dungHan" readonly>
+									<?php
+										if ($dungHan == 1) {
+											echo "<input type='text' value='Đúng hạn' class='form-control' id='dungHan' name='dungHan' readonly>";
+										} else {
+											echo "<input type='text' value='Trễ hạn' class='form-control' id='dungHan' name='dungHan' readonly>";
+										}
+									?>
 								</div>
 							</div>
 							

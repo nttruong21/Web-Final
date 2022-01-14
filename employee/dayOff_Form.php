@@ -107,7 +107,7 @@
 						ĐƠN XIN NGHỈ PHÉP
 					</h5>
 					
-					<form action="" method="post" enctype="multipart/form-data">
+					<form action="" validate method="post" enctype="multipart/form-data">
                             <div class="modal-body mx-5">
                                 <div class="form-group">
                                     <label for="maNVDayOff">Mã nhân viên</label>
