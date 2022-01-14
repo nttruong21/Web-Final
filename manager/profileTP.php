@@ -272,28 +272,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- Sử dụng link tuyệt đối tính từ root, vì vậy có dấu / đầu tiên -->
 	<script src="/main.js"></script> 
-    
-    <script>
-        let employee_birthday = document.getElementById('employee-birthday');
-        let employee_address = document.getElementById('employee-address');
-        let employee_sex_male = document.getElementById('male');
-        let employee_sex_female = document.getElementById('female');
-        let employee_sex = document.getElementById('employee-sex');
-        let employee_number = document.getElementById('employee-number');
-        let employee_email = document.getElementById('employee-email');
-        let btn_confirm_edit_employee_profile = document.getElementById('btn-confirm-edit-employee-profile');
-
-
-        function enableEditEmployeeProfileMode() {
-            employee_birthday.disabled = false;
-            employee_address.disabled = false;
-            employee_sex_male.disabled = false;
-            employee_sex_female.disabled = false;
-            employee_number.disabled = false;
-            employee_email.disabled = false;
-            btn_confirm_edit_employee_profile.disabled = false;
-        }
-    </script>
+ 
 
 </body>
 </html>
