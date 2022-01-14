@@ -82,7 +82,7 @@
 					<?php
 						?>
 						<div>
-							<a class="nav-link" href="../profile.php">Xin chào <?= $_SESSION['hoTen'] ?></a>
+							<a class="nav-link" href=".profileTP.php">Xin chào <?= $_SESSION['hoTen'] ?></a>
 						</div>
 						<div>
 							<a class="font-weight-bold" href="../logout.php">Đăng xuất</a>
