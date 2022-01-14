@@ -108,7 +108,7 @@
                         $result = $conn->query($sql);
                         
                         if ($result->num_rows == 0){
-                            die('Kêt nối thành công, Nhưng không có dữ liệu');
+                            // die('Kêt nối thành công, Nhưng không có dữ liệu');
                         }
                     
                         while ($row = $result->fetch_assoc()){

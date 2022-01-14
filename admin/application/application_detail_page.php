@@ -149,7 +149,7 @@
                             <?php
                                 if ($tapTin) {
                                     ?>
-                                        <a class="text-primary" target="blank" href="/files/<?= $tapTin ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $tapTin ?></a>
+                                        <a download class="text-primary" target="blank" href="/files/<?= $tapTin ?>"><i class="text-primary font-italic fas fa-download"></i> <?= $tapTin ?></a>
                                     <?php
                                 } 
                             ?>

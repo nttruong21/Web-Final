@@ -21,7 +21,7 @@
         }
 
         // Kiểm tra đuôi tệp tin 
-        $extensions = array('jpg', 'png', 'jpeg');
+        $extensions = array('jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG');
         if (in_array($ext, $extensions)=== false) {
             $errors[] = 'Tập tin không phải ảnh';
         }

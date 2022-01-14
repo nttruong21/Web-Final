@@ -136,7 +136,7 @@
               
 			</div>
 			<div class="col-xl-10  col-sm-12 ">
-				<div class="d-flex">
+				<!-- <div class="d-flex">
 					<div class="p-2">
 						<input type="checkbox" id="choose-all" name="choose-all">
 						<label for="choose-all">Chọn tất cả</label>
@@ -146,7 +146,7 @@
 						<p>Tổng số Task:</p>
 						<h5 class='countTask'></h5>
 					</div>
-				</div>
+				</div> -->
                 
 				<div class="all-task">
 					<div class="task-content">
